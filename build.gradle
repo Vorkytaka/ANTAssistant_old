@@ -7,6 +7,7 @@ buildscript {
     ext.coroutines_version = '0.25.3'
     ext.support_version = '28.0.0-rc02'
     ext.jsoup_version = '1.11.3'
+    ext.koin_version = '1.0.0-RC-1'
 
     repositories {
         maven {
