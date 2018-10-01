@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.assistant.ant.solidlsnake.antassistant">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".presentation.App"
         android:allowBackup="false"
@@ -10,7 +12,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MainTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
         <activity
             android:name=".presentation.ui.LaunchActivity"
             android:launchMode="singleInstance"
