@@ -10,7 +10,6 @@ object AuthRepositoryImpl : IAuthRepository {
     }
 
     override suspend fun auth(login: String, password: String): Boolean {
-        // Эмуляция задержки сети
         delay(1000)
         return false
     }
