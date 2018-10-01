@@ -25,6 +25,7 @@
         app:layout_constraintTop_toBottomOf="@+id/et_login" />
 
     <Button
+        android:id="@+id/btn_confirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/s_auth_confirm_hint"
