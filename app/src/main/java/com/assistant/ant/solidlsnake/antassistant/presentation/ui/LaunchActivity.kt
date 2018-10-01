@@ -13,7 +13,8 @@ class LaunchActivity : BaseActivity(), LaunchView {
     }
 
     override fun openAuthScreen() {
-        TODO("not implemented")
+        val intent = AuthActivity.getIntent(this)
+        startActivity(intent)
     }
 
     override fun openMainScreen() {

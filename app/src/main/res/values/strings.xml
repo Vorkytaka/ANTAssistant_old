@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ANTAssistant</string>
+
+    <string name="s_auth_login_hint">Логин</string>
+    <string name="s_auth_password_hint">Пароль</string>
+    <string name="s_auth_confirm_hint">Войти</string>
 </resources>
