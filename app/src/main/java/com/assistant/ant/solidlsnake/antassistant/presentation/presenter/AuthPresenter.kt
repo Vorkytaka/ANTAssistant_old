@@ -1,13 +1,13 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 
-import com.assistant.ant.solidlsnake.antassistant.data.repository.AuthRepositoryImpl
+import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.Auth
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.android.Main
 
 class AuthPresenter : BasePresenter<AuthView>() {
-    private val authUseCase = Auth(AuthRepositoryImpl)
+    private val authUseCase = Auth(RepositoryImpl)
 
     fun auth(login: String, password: String) = GlobalScope.launch(Dispatchers.Main) {
         _view?.setProgress(true)

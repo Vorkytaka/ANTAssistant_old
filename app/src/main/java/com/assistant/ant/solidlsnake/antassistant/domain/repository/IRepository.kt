@@ -1,6 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.repository
 
-interface IAuthRepository {
+interface IRepository {
     /**
      * Проверка залогинен ли пользователь в приложение.
      *

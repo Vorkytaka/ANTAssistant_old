@@ -1,13 +1,13 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 
-import com.assistant.ant.solidlsnake.antassistant.data.repository.AuthRepositoryImpl
+import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.IsLogged
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.android.Main
 
 class LaunchPresenter : BasePresenter<LaunchView>() {
-    private val isLoggedUseCase = IsLogged(AuthRepositoryImpl)
+    private val isLoggedUseCase = IsLogged(RepositoryImpl)
 
     override fun doOnAttach() {
         checkAuth()
