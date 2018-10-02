@@ -17,7 +17,7 @@ data class UserData(
         /**
          * Информация о тарифе
          */
-        val tariff: Tafiff,
+        val tariff: Tariff,
 
         /**
          * Текущее состояние учетной записи
@@ -53,7 +53,7 @@ data class State(
 /**
  * Информация о тарифе
  */
-data class Tafiff(
+data class Tariff(
         /**
          * Название тарифа
          */

@@ -25,6 +25,11 @@ object RepositoryImpl : IRepository {
     }
 
     override suspend fun getUserData(): UserData {
+        val login = AuthPref.login
+        val password = AuthPref.password
+
+        val body = Api.info(login, password)
+
         TODO()
     }
 }
