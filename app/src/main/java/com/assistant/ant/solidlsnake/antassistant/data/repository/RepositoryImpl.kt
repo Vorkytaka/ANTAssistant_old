@@ -1,7 +1,9 @@
 package com.assistant.ant.solidlsnake.antassistant.data.repository
 
 import com.assistant.ant.solidlsnake.antassistant.data.net.Api
+import com.assistant.ant.solidlsnake.antassistant.data.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.data.pref.AuthPref
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 
 object RepositoryImpl : IRepository {
@@ -10,7 +12,8 @@ object RepositoryImpl : IRepository {
     }
 
     override suspend fun auth(login: String, password: String): Boolean {
-        val result = Api.auth(login, password)
+        val body = Api.info(login, password)
+        val result = Parser.isLogged(body)
 
         if (result) {
             // todo: переделать на AccountManager
@@ -19,5 +22,9 @@ object RepositoryImpl : IRepository {
         }
 
         return result
+    }
+
+    override suspend fun getUserData(): UserData {
+        TODO()
     }
 }
