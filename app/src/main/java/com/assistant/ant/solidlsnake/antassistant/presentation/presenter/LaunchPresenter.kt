@@ -8,13 +8,12 @@ import kotlinx.coroutines.android.Main
 
 class LaunchPresenter : BasePresenter<LaunchView>() {
     private val isLoggedUseCase = IsLogged(AuthRepositoryImpl)
-    private val job = Job()
 
     override fun doOnAttach() {
         checkAuth()
     }
 
-    private fun checkAuth() = GlobalScope.launch(Dispatchers.Main + job) {
+    private fun checkAuth() = GlobalScope.launch(Dispatchers.Main) {
         val isLogged = withContext(Dispatchers.IO) { isLoggedUseCase.check() }
 
         if (isLogged) {
