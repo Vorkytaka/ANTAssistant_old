@@ -18,6 +18,7 @@ class LaunchActivity : BaseActivity(), LaunchView {
     }
 
     override fun openMainScreen() {
-        TODO("not implemented")
+        val intent = MainActivity.getIntent(this)
+        startActivity(intent)
     }
 }

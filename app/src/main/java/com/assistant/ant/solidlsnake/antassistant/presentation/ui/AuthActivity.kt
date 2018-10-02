@@ -3,6 +3,7 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.orEmpty
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
@@ -41,11 +42,12 @@ class AuthActivity : BaseActivity(), AuthView {
     }
 
     override fun success() {
-        // todo: проброс на главный экран
+        val intent = MainActivity.getIntent(this)
+        startActivity(intent)
     }
 
     override fun error() {
-        // todo: отображать ошибку
+        et_error.visibility = View.VISIBLE
     }
 
     override fun setProgress(progress: Boolean) {

@@ -34,4 +34,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
+    <TextView
+        android:id="@+id/et_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/s_auth_error_text"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_confirm" />
+
 </android.support.constraint.ConstraintLayout>
