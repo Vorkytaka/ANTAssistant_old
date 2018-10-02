@@ -10,6 +10,14 @@ object AuthRepositoryImpl : IAuthRepository {
     }
 
     override suspend fun auth(login: String, password: String): Boolean {
-        return Api.auth(login, password)
+        val result = Api.auth(login, password)
+
+        if (result) {
+            // todo: переделать на AccountManager
+            AuthPref.login = login
+            AuthPref.password = password
+        }
+
+        return result
     }
 }
