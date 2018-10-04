@@ -29,6 +29,7 @@ object RepositoryImpl : IRepository {
         val password = AuthPref.password
 
         val body = Api.info(login, password)
+        val netData = Parser.userData(body)
 
         TODO()
     }
