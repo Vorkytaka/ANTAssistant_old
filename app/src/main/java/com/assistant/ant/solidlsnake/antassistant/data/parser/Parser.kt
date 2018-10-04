@@ -68,6 +68,10 @@ object Parser {
                     val downloaded = tables[i + 1].text().replace(" ( Мб. )", "").toInt()
                     data.state__downloaded = downloaded
                 }
+                "Учетная запись" -> {
+                    val accountName = tables[i + 1].text()
+                    data.accountName = accountName
+                }
             }
         }
 

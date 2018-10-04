@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.data.repository
 
+import com.assistant.ant.solidlsnake.antassistant.data.model.mapper.NetUserDataMapper
 import com.assistant.ant.solidlsnake.antassistant.data.net.Api
 import com.assistant.ant.solidlsnake.antassistant.data.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.data.pref.AuthPref
@@ -31,6 +32,6 @@ object RepositoryImpl : IRepository {
         val body = Api.info(login, password)
         val netData = Parser.userData(body)
 
-        TODO()
+        return NetUserDataMapper().map(netData)
     }
 }
