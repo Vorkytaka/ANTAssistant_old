@@ -1,3 +1,5 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.interactor
 
-interface UseCase
+interface UseCase<P, R> {
+    suspend fun execute(params: P): R
+}

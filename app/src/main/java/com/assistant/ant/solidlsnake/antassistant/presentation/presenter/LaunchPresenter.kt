@@ -14,7 +14,7 @@ class LaunchPresenter : BasePresenter<LaunchView>() {
     }
 
     private fun checkAuth() = GlobalScope.launch(Dispatchers.Main) {
-        val isLogged = withContext(Dispatchers.IO) { isLoggedUseCase.check() }
+        val isLogged = withContext(Dispatchers.IO) { isLoggedUseCase.execute(Unit) }
 
         if (isLogged) {
             _view?.openMainScreen()

@@ -8,6 +8,6 @@ import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
  */
 class GetUserData(
         private val repository: IRepository
-) : UseCase {
-    suspend fun get(): UserData = repository.getUserData()
+) : UseCase<Unit, UserData> {
+    override suspend fun execute(params: Unit): UserData = repository.getUserData()
 }

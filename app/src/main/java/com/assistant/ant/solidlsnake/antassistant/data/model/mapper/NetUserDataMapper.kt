@@ -9,10 +9,10 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 class NetUserDataMapper : Mapper<NetUserData, UserData> {
     override fun map(from: NetUserData): UserData {
         val state = State(
-                from.state__balance,
-                from.state__downloaded,
-                from.status,
-                from.credit
+                from.state_balance,
+                from.state_downloaded,
+                from.state_status,
+                from.state_credit
         )
 
         val tariff = Tariff(

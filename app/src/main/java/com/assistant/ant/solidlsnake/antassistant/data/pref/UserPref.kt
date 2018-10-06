@@ -6,10 +6,10 @@ object UserPref : KotprefModel() {
     var accountName by stringPref(default = "")
     var userId by stringPref(default = "")
 
-    var state__balance by floatPref(default = 0f)
-    var state__downloaded by intPref(default = 0)
-    var status by booleanPref(default = false)
-    var credit by intPref(default = 0)
+    var state_balance by floatPref(default = 0f)
+    var state_downloaded by intPref(default = 0)
+    var state_status by booleanPref(default = false)
+    var state_credit by intPref(default = 0)
 
     var tariff_name by stringPref(default = "")
     var tariff_downloadSpeed by intPref(default = 0)

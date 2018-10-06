@@ -4,10 +4,10 @@ class NetUserData {
     var accountName: String = ""
     var userId: String = ""
 
-    var state__balance: Double = 0.0
-    var state__downloaded: Int = 0
-    var status: Boolean = false
-    var credit: Int = 0
+    var state_balance: Double = 0.0
+    var state_downloaded: Int = 0
+    var state_status: Boolean = false
+    var state_credit: Int = 0
 
     var tariff_name: String = ""
     var tariff_downloadSpeed: Int = 0

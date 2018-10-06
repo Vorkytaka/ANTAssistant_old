@@ -12,7 +12,7 @@ class AuthPresenter : BasePresenter<AuthView>() {
     fun auth(login: String, password: String) = GlobalScope.launch(Dispatchers.Main) {
         _view?.setProgress(true)
 
-        val result = withContext(Dispatchers.IO) { authUseCase.execute(login, password) }
+        val result = withContext(Dispatchers.IO) { authUseCase.execute(Auth.Params(login, password)) }
 
         _view?.setProgress(false)
 

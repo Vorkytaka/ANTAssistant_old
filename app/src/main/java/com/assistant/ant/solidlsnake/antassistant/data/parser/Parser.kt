@@ -1,6 +1,9 @@
 package com.assistant.ant.solidlsnake.antassistant.data.parser
 
 import com.assistant.ant.solidlsnake.antassistant.data.model.NetUserData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import java.util.regex.Pattern
 
@@ -8,18 +11,18 @@ object Parser {
     private const val SUCCESS_TITLE = "Информация о счете"
     private const val STATUS_ACTIVE = "Активна"
 
-    suspend fun isLogged(body: String): Boolean {
+    suspend fun isLogged(body: String): Boolean = withContext(Dispatchers.IO) {
         val doc = Jsoup.parse(body)
-        return doc.title() == SUCCESS_TITLE
+        doc.title() == SUCCESS_TITLE
     }
 
-    suspend fun userData(body: String): NetUserData {
+    suspend fun userData(body: String): NetUserData = withContext(Dispatchers.IO) {
         val data = NetUserData()
 
         val doc = Jsoup.parse(body)
 
         val balance = doc.select("td.num").first().ownText().replace(" руб.", "").toDouble()
-        data.state__balance = balance
+        data.state_balance = balance
 
         val tables = doc.select("td.tables")
         for (i in 0 until tables.size step 3) {
@@ -57,16 +60,16 @@ object Parser {
                 }
                 "Кредит доверия, руб" -> {
                     val credit = tables[i + 1].text().toInt()
-                    data.credit = credit
+                    data.state_credit = credit
                 }
                 "Статус учетной записи" -> {
                     val statusStr = tables[i + 1].text()
                     val status = statusStr == STATUS_ACTIVE
-                    data.status = status
+                    data.state_status = status
                 }
                 "Скачано за текущий месяц" -> {
                     val downloaded = tables[i + 1].text().replace(" ( Мб. )", "").toInt()
-                    data.state__downloaded = downloaded
+                    data.state_downloaded = downloaded
                 }
                 "Учетная запись" -> {
                     val accountName = tables[i + 1].text()
@@ -75,6 +78,6 @@ object Parser {
             }
         }
 
-        return data
+        data
     }
 }

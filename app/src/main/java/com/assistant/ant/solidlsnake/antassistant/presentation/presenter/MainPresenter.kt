@@ -16,7 +16,7 @@ class MainPresenter : BasePresenter<MainView>() {
     fun getUserData() = GlobalScope.launch(Dispatchers.Main) {
         _view?.setProgress(true)
 
-        val data = withContext(Dispatchers.IO) { getUserDataUseCase.get() }
+        val data = withContext(Dispatchers.IO) { getUserDataUseCase.execute(Unit) }
 
         _view?.setProgress(false)
         _view?.showUserData(data)
