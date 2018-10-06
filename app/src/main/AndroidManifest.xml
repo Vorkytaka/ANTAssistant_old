@@ -4,6 +4,9 @@
     package="com.assistant.ant.solidlsnake.antassistant">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
         android:name=".presentation.App"
@@ -35,6 +38,17 @@
             android:name=".presentation.ui.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name=".data.account.AuthenticatorService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
     </application>
 
 </manifest>

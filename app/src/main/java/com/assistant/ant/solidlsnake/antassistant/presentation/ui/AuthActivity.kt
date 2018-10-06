@@ -1,5 +1,8 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui
 
+import android.accounts.AccountAuthenticatorResponse
+import android.accounts.AccountManager
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
@@ -13,8 +16,15 @@ class AuthActivity : BaseActivity(), AuthView {
 
     private val presenter = AuthPresenter()
 
+    private var mAccountAuthenticatorResponse: AccountAuthenticatorResponse? = null
+    private var mResultBundle: Bundle? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mAccountAuthenticatorResponse = intent.getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE)
+        mAccountAuthenticatorResponse?.onRequestContinued()
+
         setContentView(R.layout.activity_auth)
 
         btn_confirm.setOnClickListener {
@@ -34,7 +44,18 @@ class AuthActivity : BaseActivity(), AuthView {
         presenter.detachView()
     }
 
+    override fun finish() {
+        if (mResultBundle != null) {
+            mAccountAuthenticatorResponse?.onResult(mResultBundle)
+        } else {
+            mAccountAuthenticatorResponse?.onError(AccountManager.ERROR_CODE_CANCELED, "canceled")
+        }
+        mAccountAuthenticatorResponse = null
+        super.finish()
+    }
+
     override fun success() {
+        setResult(Activity.RESULT_OK, intent)
         SimpleNavigator.goToMainScreen(this)
     }
 

@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    def accountType = "com.assistant.ant.solidlsnake.antassistant.ACCOUNT"
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.assistant.ant.solidlsnake.antassistant"
@@ -11,6 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        resValue "string", "account_type", "$accountType"
+        buildConfigField "String", "ACCOUNT_TYPE", "\"$accountType\""
     }
     buildTypes {
         debug {
