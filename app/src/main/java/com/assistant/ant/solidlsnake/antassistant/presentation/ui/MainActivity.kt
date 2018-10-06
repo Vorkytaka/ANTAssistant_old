@@ -1,7 +1,5 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
@@ -9,13 +7,6 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPre
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 
 class MainActivity : BaseActivity(), MainView {
-    companion object {
-        fun getIntent(activity: Activity): Intent {
-            val intent = Intent(activity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            return intent
-        }
-    }
 
     private val presenter = MainPresenter()
 

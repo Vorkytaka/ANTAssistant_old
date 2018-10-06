@@ -1,22 +1,15 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.orEmpty
+import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : BaseActivity(), AuthView {
-    companion object {
-        @JvmStatic
-        fun getIntent(activity: Activity): Intent {
-            return Intent(activity, AuthActivity::class.java)
-        }
-    }
 
     private val presenter = AuthPresenter()
 
@@ -42,8 +35,7 @@ class AuthActivity : BaseActivity(), AuthView {
     }
 
     override fun success() {
-        val intent = MainActivity.getIntent(this)
-        startActivity(intent)
+        SimpleNavigator.goToMainScreen(this)
     }
 
     override fun error() {
