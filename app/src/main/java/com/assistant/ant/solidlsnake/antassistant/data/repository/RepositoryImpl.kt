@@ -9,7 +9,12 @@ import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 
 object RepositoryImpl : IRepository {
     override suspend fun isLogged(): Boolean {
-        return AccountManagerHolder.hasAccount()
+        if (!AccountManagerHolder.hasAccount()) return false
+
+        val login = AccountManagerHolder.getAccount().name
+        val password = AccountManagerHolder.getPassword()
+
+        return auth(login, password)
     }
 
     override suspend fun auth(login: String, password: String): Boolean {
