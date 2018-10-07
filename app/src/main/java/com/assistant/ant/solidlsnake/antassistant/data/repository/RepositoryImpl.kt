@@ -18,7 +18,7 @@ object RepositoryImpl : IRepository {
     }
 
     override suspend fun auth(login: String, password: String): Boolean {
-        val body = Api.info(login, password)
+        val body = Api.info(login, password).await().string()
         val result = Parser.isLogged(body)
 
         if (result) {
@@ -32,7 +32,7 @@ object RepositoryImpl : IRepository {
         val login = AccountManagerHolder.getAccount().name
         val password = AccountManagerHolder.getPassword()
 
-        val body = Api.info(login, password)
+        val body = Api.info(login, password).await().string()
         val netData = Parser.userData(body)
 
         return NetUserDataMapper().map(netData)

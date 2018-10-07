@@ -1,10 +1,9 @@
 package com.assistant.ant.solidlsnake.antassistant.data.net
 
-import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import okhttp3.*
 import java.io.IOException
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 object Api {
     private const val BASE_URL = "http://cabinet.a-n-t.ru/cabinet.php"
@@ -30,46 +29,42 @@ object Api {
      *
      * @return полную верстку страницы в виде строки
      */
-    suspend fun info(login: String, password: String): String {
-        return suspendCancellableCoroutine { coroutine ->
-            val params = FormBody.Builder()
-                    .add(PARAM_ACTION, ACTION_INFO)
-                    .add(PARAM_USERNAME, login)
-                    .add(PARAM_PASSWORD, password)
-                    .build()
+    fun info(login: String, password: String): Deferred<ResponseBody> {
+        val deferred = CompletableDeferred<ResponseBody>()
 
-            val request = Request.Builder()
-                    .url(BASE_URL)
-                    .post(params)
-                    .build()
+        val params = FormBody.Builder()
+                .add(PARAM_ACTION, ACTION_INFO)
+                .add(PARAM_USERNAME, login)
+                .add(PARAM_PASSWORD, password)
+                .build()
 
-            val call = client.newCall(request)
-            call.enqueue(object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    response.body()?.use {
-                        val body = it.string()
-                        if (body == null) {
-                            coroutine.resumeWithException(NullPointerException("There's no body, buddy"))
-                        } else {
-                            coroutine.resume(body)
-                        }
-                    }
-                }
+        val request = Request.Builder()
+                .url(BASE_URL)
+                .post(params)
+                .build()
 
-                override fun onFailure(call: Call, e: IOException) {
-                    if (coroutine.isCancelled) return
-                    coroutine.resumeWithException(e)
-                }
-            })
+        val call = client.newCall(request)
 
-            coroutine.invokeOnCompletion() {
-                if (coroutine.isCancelled)
-                    try {
-                        call.cancel()
-                    } catch (ex: Throwable) {
-                        // Ignore cancel exception
-                    }
+        deferred.invokeOnCompletion {
+            if (deferred.isCancelled) {
+                call.cancel()
             }
         }
+
+        call.enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    deferred.complete(response.body()!!)
+                } else {
+                    deferred.cancel(IllegalStateException(""))
+                }
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                deferred.cancel(e)
+            }
+        })
+
+        return deferred
     }
 }
