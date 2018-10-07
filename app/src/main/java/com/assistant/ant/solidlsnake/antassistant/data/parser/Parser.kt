@@ -1,9 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.data.parser
 
 import com.assistant.ant.solidlsnake.antassistant.data.model.NetUserData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import java.util.regex.Pattern
 
@@ -26,54 +24,56 @@ object Parser {
 
         val tables = doc.select("td.tables")
         for (i in 0 until tables.size step 3) {
-            when (tables[i].ownText()) {
-                "Код плательщика" -> {
-                    val userId = tables[i + 1].text()
-                    data.userId = userId
-                }
-                "Тариф" -> {
-                    val tariffStr = tables[i + 1].text()
-
-                    val name = tariffStr.substring(0, tariffStr.indexOf(':'))
-                    data.tariff_name = name
-
-                    var pattern = Pattern.compile("\\d{3,}")
-                    var matcher = pattern.matcher(tariffStr)
-
-                    if (matcher.find()) {
-                        val price = Math.round(matcher.group(0).toDouble() / 10.0) * 10.0
-                        data.tariff_price = price
+            GlobalScope.launch {
+                when (tables[i].ownText()) {
+                    "Код плательщика" -> {
+                        val userId = tables[i + 1].text()
+                        data.userId = userId
                     }
+                    "Тариф" -> {
+                        val tariffStr = tables[i + 1].text()
 
-                    pattern = Pattern.compile("\\d+/\\d+")
-                    matcher = pattern.matcher(tariffStr)
+                        val name = tariffStr.substring(0, tariffStr.indexOf(':'))
+                        data.tariff_name = name
 
-                    if (matcher.find()) {
-                        val speeds = matcher.group().split("/")
+                        var pattern = Pattern.compile("\\d{3,}")
+                        var matcher = pattern.matcher(tariffStr)
 
-                        val downloadSpeed = speeds[0].toInt()
-                        val uploadSpeed = speeds[1].toInt()
+                        if (matcher.find()) {
+                            val price = Math.round(matcher.group(0).toDouble() / 10.0) * 10.0
+                            data.tariff_price = price
+                        }
 
-                        data.tariff_downloadSpeed = downloadSpeed
-                        data.tariff_uploadSpeed = uploadSpeed
+                        pattern = Pattern.compile("\\d+/\\d+")
+                        matcher = pattern.matcher(tariffStr)
+
+                        if (matcher.find()) {
+                            val speeds = matcher.group().split("/")
+
+                            val downloadSpeed = speeds[0].toInt()
+                            val uploadSpeed = speeds[1].toInt()
+
+                            data.tariff_downloadSpeed = downloadSpeed
+                            data.tariff_uploadSpeed = uploadSpeed
+                        }
                     }
-                }
-                "Кредит доверия, руб" -> {
-                    val credit = tables[i + 1].text().toInt()
-                    data.state_credit = credit
-                }
-                "Статус учетной записи" -> {
-                    val statusStr = tables[i + 1].text()
-                    val status = statusStr == STATUS_ACTIVE
-                    data.state_status = status
-                }
-                "Скачано за текущий месяц" -> {
-                    val downloaded = tables[i + 1].text().replace(" ( Мб. )", "").toInt()
-                    data.state_downloaded = downloaded
-                }
-                "Учетная запись" -> {
-                    val accountName = tables[i + 1].text()
-                    data.accountName = accountName
+                    "Кредит доверия, руб" -> {
+                        val credit = tables[i + 1].text().toInt()
+                        data.state_credit = credit
+                    }
+                    "Статус учетной записи" -> {
+                        val statusStr = tables[i + 1].text()
+                        val status = statusStr == STATUS_ACTIVE
+                        data.state_status = status
+                    }
+                    "Скачано за текущий месяц" -> {
+                        val downloaded = tables[i + 1].text().replace(" ( Мб. )", "").toInt()
+                        data.state_downloaded = downloaded
+                    }
+                    "Учетная запись" -> {
+                        val accountName = tables[i + 1].text()
+                        data.accountName = accountName
+                    }
                 }
             }
         }
