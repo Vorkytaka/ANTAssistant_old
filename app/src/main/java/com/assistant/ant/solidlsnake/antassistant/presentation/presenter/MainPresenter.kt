@@ -9,7 +9,7 @@ import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class MainPresenter : BasePresenter<MainView>() {
-    private val getUserDataUseCase = GetUserData(RepositoryImpl)
+    private val getUserDataUseCase = GetUserData(RepositoryImpl())
 
     override fun doOnAttach() {
         getUserData()

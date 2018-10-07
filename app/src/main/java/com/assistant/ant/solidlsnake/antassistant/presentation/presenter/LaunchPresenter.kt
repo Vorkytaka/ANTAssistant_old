@@ -9,7 +9,7 @@ import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class LaunchPresenter : BasePresenter<LaunchView>() {
-    private val isLoggedUseCase = IsLogged(RepositoryImpl)
+    private val isLoggedUseCase = IsLogged(RepositoryImpl())
 
     override fun doOnAttach() {
         checkAuth()

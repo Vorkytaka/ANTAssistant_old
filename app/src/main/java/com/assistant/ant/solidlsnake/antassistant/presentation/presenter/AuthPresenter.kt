@@ -9,7 +9,7 @@ import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class AuthPresenter : BasePresenter<AuthView>() {
-    private val authUseCase = Auth(RepositoryImpl)
+    private val authUseCase = Auth(RepositoryImpl())
 
     fun auth(login: String, password: String) = GlobalScope.launch(Dispatchers.Main) {
         _view?.setProgress(true)

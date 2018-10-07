@@ -10,7 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
 
-object RepositoryImpl : IRepository {
+class RepositoryImpl : IRepository {
     override suspend fun isLogged(): ReceiveChannel<Boolean> = GlobalScope.produce {
         if (!AccountManagerHolder.hasAccount()) {
             send(false)
