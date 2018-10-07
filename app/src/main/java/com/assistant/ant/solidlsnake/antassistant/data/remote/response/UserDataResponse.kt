@@ -1,6 +1,6 @@
-package com.assistant.ant.solidlsnake.antassistant.data.model
+package com.assistant.ant.solidlsnake.antassistant.data.remote.response
 
-class NetUserData {
+class UserDataResponse {
     var accountName: String = ""
     var userId: String = ""
 

@@ -1,6 +1,6 @@
-package com.assistant.ant.solidlsnake.antassistant.data.parser
+package com.assistant.ant.solidlsnake.antassistant.data.remote.parser
 
-import com.assistant.ant.solidlsnake.antassistant.data.model.NetUserData
+import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import java.util.regex.Pattern
@@ -14,8 +14,8 @@ object Parser {
         doc.title() == SUCCESS_TITLE
     }
 
-    suspend fun userData(body: String): NetUserData = withContext(Dispatchers.IO) {
-        val data = NetUserData()
+    suspend fun userData(body: String): UserDataResponse = withContext(Dispatchers.IO) {
+        val data = UserDataResponse()
 
         val doc = Jsoup.parse(body)
 

@@ -1,17 +1,19 @@
-package com.assistant.ant.solidlsnake.antassistant.data.net
+package com.assistant.ant.solidlsnake.antassistant.data.remote.net
 
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import okhttp3.*
 import java.io.IOException
 
-object Api {
-    private const val BASE_URL = "http://cabinet.a-n-t.ru/cabinet.php"
+class Api {
+    companion object {
+        private const val BASE_URL = "http://cabinet.a-n-t.ru/cabinet.php"
 
-    private const val PARAM_ACTION = "action"
-    private const val ACTION_INFO = "info"
-    private const val PARAM_USERNAME = "user_name"
-    private const val PARAM_PASSWORD = "user_pass"
+        private const val PARAM_ACTION = "action"
+        private const val ACTION_INFO = "info"
+        private const val PARAM_USERNAME = "user_name"
+        private const val PARAM_PASSWORD = "user_pass"
+    }
 
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()

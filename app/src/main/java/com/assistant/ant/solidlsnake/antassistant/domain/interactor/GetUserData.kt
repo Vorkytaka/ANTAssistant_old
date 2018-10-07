@@ -12,7 +12,11 @@ class GetUserData(
 ) : UseCase<Unit, UserData>() {
     override suspend fun execute(success: (UserData) -> Unit, error: (Throwable) -> Unit) {
         repository.getUserData().consumeEach {
-            success(it)
+            if (it != null) {
+                success(it)
+            } else {
+                error(NullPointerException(""))
+            }
         }
     }
 }

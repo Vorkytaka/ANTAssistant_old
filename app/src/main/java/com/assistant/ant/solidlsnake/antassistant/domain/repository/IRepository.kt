@@ -26,5 +26,5 @@ interface IRepository {
     /**
      * Получение информации о пользователе
      */
-    suspend fun getUserData(): ReceiveChannel<UserData>
+    suspend fun getUserData(): ReceiveChannel<UserData?>
 }
