@@ -1,6 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.repository
 
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
+import kotlinx.coroutines.channels.ReceiveChannel
 
 interface IRepository {
     /**
@@ -9,7 +10,7 @@ interface IRepository {
      * @return  true если залогинен
      *          false если нет
      */
-    suspend fun isLogged(): Boolean
+    suspend fun isLogged(): ReceiveChannel<Boolean>
 
     /**
      * Авторизация пользователя.
@@ -20,10 +21,10 @@ interface IRepository {
      * @return  true если вход успешен
      *          false иначе
      */
-    suspend fun auth(login: String, password: String): Boolean
+    suspend fun auth(login: String, password: String): ReceiveChannel<Boolean>
 
     /**
      * Получение информации о пользователе
      */
-    suspend fun getUserData(): UserData
+    suspend fun getUserData(): ReceiveChannel<UserData>
 }

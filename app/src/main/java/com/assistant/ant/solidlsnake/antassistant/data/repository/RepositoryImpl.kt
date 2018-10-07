@@ -6,18 +6,24 @@ import com.assistant.ant.solidlsnake.antassistant.data.net.Api
 import com.assistant.ant.solidlsnake.antassistant.data.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.produce
 
 object RepositoryImpl : IRepository {
-    override suspend fun isLogged(): Boolean {
-        if (!AccountManagerHolder.hasAccount()) return false
+    override suspend fun isLogged(): ReceiveChannel<Boolean> = GlobalScope.produce {
+        if (!AccountManagerHolder.hasAccount()) {
+            send(false)
+            this.close()
+        }
 
         val login = AccountManagerHolder.getAccount().name
         val password = AccountManagerHolder.getPassword()
 
-        return auth(login, password)
+        send(auth(login, password).receive())
     }
 
-    override suspend fun auth(login: String, password: String): Boolean {
+    override suspend fun auth(login: String, password: String): ReceiveChannel<Boolean> = GlobalScope.produce {
         val body = Api.info(login, password).await().string()
         val result = Parser.isLogged(body)
 
@@ -25,16 +31,16 @@ object RepositoryImpl : IRepository {
             AccountManagerHolder.setAccount(login, password)
         }
 
-        return result
+        send(result)
     }
 
-    override suspend fun getUserData(): UserData {
+    override suspend fun getUserData(): ReceiveChannel<UserData> = GlobalScope.produce {
         val login = AccountManagerHolder.getAccount().name
         val password = AccountManagerHolder.getPassword()
 
         val body = Api.info(login, password).await().string()
         val netData = Parser.userData(body)
 
-        return NetUserDataMapper().map(netData)
+        send(NetUserDataMapper().map(netData))
     }
 }
