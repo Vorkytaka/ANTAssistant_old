@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 
+import com.assistant.ant.solidlsnake.antassistant.data.local.LocalServiceImpl
 import com.assistant.ant.solidlsnake.antassistant.data.remote.RemoteServiceImpl
 import com.assistant.ant.solidlsnake.antassistant.data.remote.net.Api
 import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
@@ -11,7 +12,7 @@ import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class MainPresenter : BasePresenter<MainView>() {
-    private val getUserDataUseCase = GetUserData(RepositoryImpl(RemoteServiceImpl(Api())))
+    private val getUserDataUseCase = GetUserData(RepositoryImpl(RemoteServiceImpl(Api()), LocalServiceImpl()))
 
     override fun doOnAttach() {
         getUserData()

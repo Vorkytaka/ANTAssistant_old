@@ -1,13 +1,13 @@
-package com.assistant.ant.solidlsnake.antassistant.data.remote.response.mapper
+package com.assistant.ant.solidlsnake.antassistant.data.mapper
 
-import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
+import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.domain.Mapper
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.State
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Tariff
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
-class UserDataResponseMapper : Mapper<UserDataResponse, UserData> {
-    override fun map(from: UserDataResponse): UserData {
+class UserDataModelMapper : Mapper<UserDataModel, UserData> {
+    override fun map(from: UserDataModel): UserData {
         val state = State(
                 from.state_balance,
                 from.state_downloaded,
