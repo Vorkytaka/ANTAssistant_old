@@ -10,9 +10,10 @@ class Api {
         private const val BASE_URL = "http://cabinet.a-n-t.ru/cabinet.php"
 
         private const val PARAM_ACTION = "action"
-        private const val ACTION_INFO = "info"
         private const val PARAM_USERNAME = "user_name"
         private const val PARAM_PASSWORD = "user_pass"
+
+        private const val ACTION_INFO = "info"
     }
 
     private val client: OkHttpClient by lazy {
@@ -24,12 +25,10 @@ class Api {
      * Пытается получить данные со страницы [http://cabinet.a-n-t.ru/cabinet.php?action=info]
      * используя переданные логин и пароль.
      *
-     * Возвращает полную верстку страницы
-     *
      * @param login имя пользователя
      * @param password пароль пользователя
      *
-     * @return полную верстку страницы в виде строки
+     * @return ответ сервера на запрос
      */
     fun info(login: String, password: String): Deferred<ResponseBody> {
         val deferred = CompletableDeferred<ResponseBody>()
