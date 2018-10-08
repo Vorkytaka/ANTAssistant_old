@@ -11,10 +11,11 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import kotlinx.android.synthetic.main.activity_auth.*
+import org.koin.android.ext.android.inject
 
 class AuthActivity : BaseActivity(), AuthView {
 
-    private val presenter = AuthPresenter()
+    private val presenter: AuthPresenter by inject()
 
     private var mAccountAuthenticatorResponse: AccountAuthenticatorResponse? = null
     private var mResultBundle: Bundle? = null

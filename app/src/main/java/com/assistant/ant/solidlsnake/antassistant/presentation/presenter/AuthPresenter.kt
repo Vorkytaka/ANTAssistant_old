@@ -1,10 +1,5 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 
-import com.assistant.ant.solidlsnake.antassistant.data.local.LocalServiceImpl
-import com.assistant.ant.solidlsnake.antassistant.data.remote.RemoteServiceImpl
-import com.assistant.ant.solidlsnake.antassistant.data.remote.net.Api
-import com.assistant.ant.solidlsnake.antassistant.data.remote.parser.Parser
-import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.Auth
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import kotlinx.coroutines.Dispatchers
@@ -12,8 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
-class AuthPresenter : BasePresenter<AuthView>() {
-    private val authUseCase = Auth(RepositoryImpl(RemoteServiceImpl(Api(), Parser()), LocalServiceImpl()))
+class AuthPresenter(private val authUseCase: Auth) : BasePresenter<AuthView>() {
 
     fun auth(login: String, password: String) = GlobalScope.launch(Dispatchers.Main) {
         _view?.setProgress(true)
