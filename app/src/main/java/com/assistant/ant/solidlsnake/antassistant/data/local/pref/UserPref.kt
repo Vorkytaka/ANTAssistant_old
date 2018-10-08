@@ -1,4 +1,4 @@
-package com.assistant.ant.solidlsnake.antassistant.data.pref
+package com.assistant.ant.solidlsnake.antassistant.data.local.pref
 
 import com.chibatching.kotpref.KotprefModel
 
