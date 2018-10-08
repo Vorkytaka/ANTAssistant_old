@@ -1,7 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.data.repository
 
-import com.assistant.ant.solidlsnake.antassistant.data.account.AccountManagerHolder
 import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
+import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMapper
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
@@ -16,22 +16,21 @@ class RepositoryImpl(
         private val localService: ILocalService
 ) : IRepository {
     override suspend fun isLogged(): ReceiveChannel<Boolean> = GlobalScope.produce {
-        if (!AccountManagerHolder.hasAccount()) {
+        if (!localService.hasAccount()) {
             send(false)
             this.close()
         }
 
-        val login = AccountManagerHolder.getAccount().name
-        val password = AccountManagerHolder.getPassword()
+        val accountData = localService.getAccountData()
 
-        send(auth(login, password).receive())
+        send(auth(accountData.login, accountData.password).receive())
     }
 
     override suspend fun auth(login: String, password: String): ReceiveChannel<Boolean> = GlobalScope.produce {
         val result = remoteService.auth(login, password)
 
         if (result) {
-            AccountManagerHolder.setAccount(login, password)
+            localService.setAccountData(AccountData(login, password))
         }
 
         send(result)
@@ -41,10 +40,9 @@ class RepositoryImpl(
         val localData = localService.getUserData()
         send(UserDataModelMapper().map(localData))
 
-        val login = AccountManagerHolder.getAccount().name
-        val password = AccountManagerHolder.getPassword()
+        val accountData = localService.getAccountData()
 
-        val remoteData = remoteService.getUserData(login, password)
+        val remoteData = remoteService.getUserData(accountData.login, accountData.password)
 
         if (remoteData != null) {
             val userData = UserDataResponseMapper().map(remoteData)

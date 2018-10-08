@@ -1,5 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.data.local
 
+import com.assistant.ant.solidlsnake.antassistant.data.account.AccountManagerHolder
+import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.data.local.pref.UserPref
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
@@ -34,4 +36,19 @@ class LocalServiceImpl : ILocalService {
         UserPref.tariff_uploadSpeed = data.tariff.uploadSpeed
         UserPref.tariff_price = data.tariff.price.toFloat()
     }
+
+    override suspend fun hasAccount(): Boolean {
+        return AccountManagerHolder.hasAccount()
+    }
+
+    override suspend fun getAccountData(): AccountData {
+        val login = AccountManagerHolder.getAccount().name
+        val password = AccountManagerHolder.getPassword()
+        return AccountData(login, password)
+    }
+
+    override suspend fun setAccountData(data: AccountData) {
+        AccountManagerHolder.setAccount(data.login, data.password)
+    }
+
 }
