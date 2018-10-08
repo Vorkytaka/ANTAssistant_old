@@ -40,7 +40,7 @@
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".data.account.AuthenticatorService"
+            android:name="com.assistant.ant.solidlsnake.antassistant.data.local.account.AuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />

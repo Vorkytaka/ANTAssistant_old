@@ -1,4 +1,4 @@
-package com.assistant.ant.solidlsnake.antassistant.data.account
+package com.assistant.ant.solidlsnake.antassistant.data.local.account
 
 import android.accounts.*
 import android.content.Context

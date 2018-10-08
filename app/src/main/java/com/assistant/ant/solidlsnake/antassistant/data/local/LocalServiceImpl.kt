@@ -1,12 +1,14 @@
 package com.assistant.ant.solidlsnake.antassistant.data.local
 
-import com.assistant.ant.solidlsnake.antassistant.data.account.AccountManagerHolder
+import com.assistant.ant.solidlsnake.antassistant.data.local.account.IAccountHolder
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.data.local.pref.UserPref
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
-class LocalServiceImpl : ILocalService {
+class LocalServiceImpl(
+        private val accountHolder: IAccountHolder
+) : ILocalService {
     override suspend fun getUserData(): UserDataModel {
         val data = UserDataModel()
 
@@ -38,17 +40,15 @@ class LocalServiceImpl : ILocalService {
     }
 
     override suspend fun hasAccount(): Boolean {
-        return AccountManagerHolder.hasAccount()
+        return accountHolder.hasAccount()
     }
 
     override suspend fun getAccountData(): AccountData {
-        val login = AccountManagerHolder.getAccount().name
-        val password = AccountManagerHolder.getPassword()
-        return AccountData(login, password)
+        return accountHolder.getAccount()
     }
 
     override suspend fun setAccountData(data: AccountData) {
-        AccountManagerHolder.setAccount(data.login, data.password)
+        accountHolder.saveAccount(data)
     }
 
 }
