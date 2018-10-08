@@ -5,9 +5,11 @@ import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import java.util.regex.Pattern
 
-object Parser {
-    private const val SUCCESS_TITLE = "Информация о счете"
-    private const val STATUS_ACTIVE = "Активна"
+class Parser {
+    companion object {
+        private const val SUCCESS_TITLE = "Информация о счете"
+        private const val STATUS_ACTIVE = "Активна"
+    }
 
     suspend fun isLogged(body: String): Boolean = withContext(Dispatchers.IO) {
         val doc = Jsoup.parse(body)

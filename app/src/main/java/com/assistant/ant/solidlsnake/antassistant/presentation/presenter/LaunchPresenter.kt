@@ -3,6 +3,7 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 import com.assistant.ant.solidlsnake.antassistant.data.local.LocalServiceImpl
 import com.assistant.ant.solidlsnake.antassistant.data.remote.RemoteServiceImpl
 import com.assistant.ant.solidlsnake.antassistant.data.remote.net.Api
+import com.assistant.ant.solidlsnake.antassistant.data.remote.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.IsLogged
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
@@ -12,7 +13,7 @@ import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class LaunchPresenter : BasePresenter<LaunchView>() {
-    private val isLoggedUseCase = IsLogged(RepositoryImpl(RemoteServiceImpl(Api()), LocalServiceImpl()))
+    private val isLoggedUseCase = IsLogged(RepositoryImpl(RemoteServiceImpl(Api(), Parser()), LocalServiceImpl()))
 
     override fun doOnAttach() {
         checkAuth()
