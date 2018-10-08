@@ -1,7 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.data.repository
 
 import com.assistant.ant.solidlsnake.antassistant.data.account.AccountManagerHolder
-import com.assistant.ant.solidlsnake.antassistant.data.local.LocalServiceImpl
+import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMapper
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
@@ -13,7 +13,7 @@ import kotlinx.coroutines.channels.produce
 
 class RepositoryImpl(
         private val remoteService: IRemoteService,
-        private val localService: LocalServiceImpl
+        private val localService: ILocalService
 ) : IRepository {
     override suspend fun isLogged(): ReceiveChannel<Boolean> = GlobalScope.produce {
         if (!AccountManagerHolder.hasAccount()) {
@@ -47,7 +47,9 @@ class RepositoryImpl(
         val remoteData = remoteService.getUserData(login, password)
 
         if (remoteData != null) {
-            send(UserDataResponseMapper().map(remoteData))
+            val userData = UserDataResponseMapper().map(remoteData)
+            send(userData)
+            localService.saveUserData(userData)
         }
     }
 }

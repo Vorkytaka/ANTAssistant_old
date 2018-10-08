@@ -2,6 +2,7 @@ package com.assistant.ant.solidlsnake.antassistant.data.local
 
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.data.local.pref.UserPref
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
 class LocalServiceImpl : ILocalService {
     override suspend fun getUserData(): UserDataModel {
@@ -19,5 +20,18 @@ class LocalServiceImpl : ILocalService {
         data.tariff_price = UserPref.tariff_price.toDouble()
 
         return data
+    }
+
+    override suspend fun saveUserData(data: UserData) {
+        UserPref.accountName = data.accountName
+        UserPref.userId = data.userId
+        UserPref.state_balance = data.state.balance.toFloat()
+        UserPref.state_credit = data.state.credit
+        UserPref.state_downloaded = data.state.downloaded
+        UserPref.state_status = data.state.status
+        UserPref.tariff_name = data.tariff.name
+        UserPref.tariff_downloadSpeed = data.tariff.downloadSpeed
+        UserPref.tariff_uploadSpeed = data.tariff.uploadSpeed
+        UserPref.tariff_price = data.tariff.price.toFloat()
     }
 }
