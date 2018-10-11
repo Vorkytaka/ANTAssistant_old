@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.repository
 
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import kotlinx.coroutines.channels.ReceiveChannel
 
@@ -32,4 +33,9 @@ interface IRepository {
      * Определение, можем ли мы выставить кредит доверия
      */
     suspend fun canSetCredit(): ReceiveChannel<Boolean>
+
+    /**
+     * Получение максимально возможного значения кредита доверия
+     */
+    suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue>
 }

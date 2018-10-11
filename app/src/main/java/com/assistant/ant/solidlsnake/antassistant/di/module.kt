@@ -9,10 +9,7 @@ import com.assistant.ant.solidlsnake.antassistant.data.remote.RemoteServiceImpl
 import com.assistant.ant.solidlsnake.antassistant.data.remote.net.Api
 import com.assistant.ant.solidlsnake.antassistant.data.remote.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
-import com.assistant.ant.solidlsnake.antassistant.domain.interactor.Auth
-import com.assistant.ant.solidlsnake.antassistant.domain.interactor.CanSetCredit
-import com.assistant.ant.solidlsnake.antassistant.domain.interactor.GetUserData
-import com.assistant.ant.solidlsnake.antassistant.domain.interactor.IsLogged
+import com.assistant.ant.solidlsnake.antassistant.domain.interactor.*
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
@@ -34,6 +31,7 @@ val appModule = module {
     factory { GetUserData(get()) }
     factory { IsLogged(get()) }
     factory { CanSetCredit(get()) }
+    factory { MaxAvailableCredit(get()) }
 
     factory { AuthPresenter(get()) }
     factory { MainPresenter(get(), get()) }

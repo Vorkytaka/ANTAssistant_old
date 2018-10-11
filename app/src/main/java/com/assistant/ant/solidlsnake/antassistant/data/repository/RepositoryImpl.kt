@@ -5,6 +5,7 @@ import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMappe
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 import kotlinx.coroutines.GlobalScope
@@ -68,6 +69,36 @@ class RepositoryImpl(
 
             val canSetCredit = daysLeft <= 1 && credit < 300
             send(canSetCredit)
+        } else {
+            // todo: Exception
+        }
+    }
+
+    override suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue> = GlobalScope.produce {
+        val authData = localService.getAuthData()
+
+        val remoteData = remoteService.getUserData(authData.login, authData.password)
+
+        if (remoteData != null) {
+            val userData = UserDataResponseMapper().map(remoteData)
+
+            val credit = userData.state.credit
+            val balance = userData.state.balance
+            val payForDay = userData.tariff.price / 30
+
+            // todo: Проверить правильный подсчет дней
+            val daysLeftWithoutCredit = balance / payForDay
+            val canSetCredit = daysLeftWithoutCredit <= 1
+
+            if (canSetCredit) {
+                when {
+                    credit < 300 -> send(CreditValue.V_300)
+                    credit == 300 -> send(CreditValue.V_BONUS)
+                    else -> send(CreditValue.V_0)
+                }
+            } else {
+                send(CreditValue.V_0)
+            }
         } else {
             // todo: Exception
         }
