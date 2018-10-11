@@ -25,8 +25,9 @@ class Parser {
         data.state_balance = balance
 
         val tables = doc.select("td.tables")
+        val jobs = arrayListOf<Job>()
         for (i in 0 until tables.size step 3) {
-            GlobalScope.launch {
+            val job = GlobalScope.launch {
                 when (tables[i].ownText()) {
                     "Код плательщика" -> {
                         val userId = tables[i + 1].text()
@@ -78,7 +79,10 @@ class Parser {
                     }
                 }
             }
+            jobs.add(job)
         }
+
+        joinAll(*jobs.toTypedArray())
 
         data
     }
