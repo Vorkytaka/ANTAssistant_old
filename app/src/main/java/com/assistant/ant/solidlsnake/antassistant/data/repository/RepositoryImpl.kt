@@ -50,4 +50,26 @@ class RepositoryImpl(
             localService.saveUserData(userData)
         }
     }
+
+    override suspend fun canSetCredit(): ReceiveChannel<Boolean> = GlobalScope.produce {
+        val authData = localService.getAuthData()
+
+        val remoteData = remoteService.getUserData(authData.login, authData.password)
+
+        if (remoteData != null) {
+            val userData = UserDataResponseMapper().map(remoteData)
+
+            val credit = userData.state.credit
+            val balance = userData.state.balance
+            val payForDay = userData.tariff.price / 30
+
+            // todo: Проверить правильный подсчет дней
+            val daysLeft = balance / payForDay
+
+            val canSetCredit = daysLeft <= 1 && credit < 300
+            send(canSetCredit)
+        } else {
+            // todo: Exception
+        }
+    }
 }

@@ -27,4 +27,9 @@ interface IRepository {
      * Получение информации о пользователе
      */
     suspend fun getUserData(): ReceiveChannel<UserData?>
+
+    /**
+     * Определение, можем ли мы выставить кредит доверия
+     */
+    suspend fun canSetCredit(): ReceiveChannel<Boolean>
 }
