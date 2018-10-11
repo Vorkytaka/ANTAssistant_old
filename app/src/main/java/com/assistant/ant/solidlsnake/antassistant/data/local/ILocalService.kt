@@ -1,7 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.data.local
 
-import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
 interface ILocalService {
@@ -23,10 +23,10 @@ interface ILocalService {
     /**
      * Получение логина и пароля пользователя
      */
-    suspend fun getAccountData(): AccountData
+    suspend fun getAuthData(): AuthData
 
     /**
      * Сохранение логина и пароля пользователя
      */
-    suspend fun setAccountData(data: AccountData)
+    suspend fun setAuthData(data: AuthData)
 }

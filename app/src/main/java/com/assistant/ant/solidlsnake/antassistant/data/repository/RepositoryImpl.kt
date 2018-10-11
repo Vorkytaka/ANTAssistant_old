@@ -1,10 +1,10 @@
 package com.assistant.ant.solidlsnake.antassistant.data.repository
 
 import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
-import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMapper
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 import kotlinx.coroutines.GlobalScope
@@ -21,16 +21,16 @@ class RepositoryImpl(
             this.close()
         }
 
-        val accountData = localService.getAccountData()
+        val authData = localService.getAuthData()
 
-        send(auth(accountData.login, accountData.password).receive())
+        send(auth(authData.login, authData.password).receive())
     }
 
     override suspend fun auth(login: String, password: String): ReceiveChannel<Boolean> = GlobalScope.produce {
         val result = remoteService.auth(login, password)
 
         if (result) {
-            localService.setAccountData(AccountData(login, password))
+            localService.setAuthData(AuthData(login, password))
         }
 
         send(result)
@@ -40,9 +40,9 @@ class RepositoryImpl(
         val localData = localService.getUserData()
         send(UserDataModelMapper().map(localData))
 
-        val accountData = localService.getAccountData()
+        val authData = localService.getAuthData()
 
-        val remoteData = remoteService.getUserData(accountData.login, accountData.password)
+        val remoteData = remoteService.getUserData(authData.login, authData.password)
 
         if (remoteData != null) {
             val userData = UserDataResponseMapper().map(remoteData)

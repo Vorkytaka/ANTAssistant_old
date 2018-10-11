@@ -1,9 +1,9 @@
 package com.assistant.ant.solidlsnake.antassistant.data.local
 
 import com.assistant.ant.solidlsnake.antassistant.data.local.account.IAccountHolder
-import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.data.local.pref.UserPref
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
 class LocalServiceImpl(
@@ -43,11 +43,11 @@ class LocalServiceImpl(
         return accountHolder.hasAccount()
     }
 
-    override suspend fun getAccountData(): AccountData {
+    override suspend fun getAuthData(): AuthData {
         return accountHolder.getAccount()
     }
 
-    override suspend fun setAccountData(data: AccountData) {
+    override suspend fun setAuthData(data: AuthData) {
         accountHolder.saveAccount(data)
     }
 

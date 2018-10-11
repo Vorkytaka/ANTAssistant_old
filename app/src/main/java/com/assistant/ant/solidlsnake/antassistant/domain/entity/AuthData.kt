@@ -1,4 +1,4 @@
-package com.assistant.ant.solidlsnake.antassistant.data.local.model
+package com.assistant.ant.solidlsnake.antassistant.domain.entity
 
 /**
  * Данные для авторизации пользователя.
@@ -6,4 +6,4 @@ package com.assistant.ant.solidlsnake.antassistant.data.local.model
  * @param login логин пользователя
  * @param password пароль пользователя
  */
-data class AccountData(val login: String, val password: String)
+data class AuthData(val login: String, val password: String)

@@ -1,6 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.data.local.account
 
-import com.assistant.ant.solidlsnake.antassistant.data.local.model.AccountData
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
 
 interface IAccountHolder {
     /**
@@ -13,14 +13,14 @@ interface IAccountHolder {
      *
      * @param data данные пользователя
      */
-    fun saveAccount(data: AccountData)
+    fun saveAccount(data: AuthData)
 
     /**
      * Получение данных аккаунта пользователя
      *
      * @return данные пользователя
      */
-    fun getAccount(): AccountData
+    fun getAccount(): AuthData
 
     /**
      * Удаление всех аккаунтов пользователя
