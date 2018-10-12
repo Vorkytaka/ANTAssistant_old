@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.data.remote.net
 
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import okhttp3.*
@@ -12,8 +13,10 @@ class Api {
         private const val PARAM_ACTION = "action"
         private const val PARAM_USERNAME = "user_name"
         private const val PARAM_PASSWORD = "user_pass"
+        private const val PARAM_CREDIT = "credit"
 
         private const val ACTION_INFO = "info"
+        private const val ACTION_CREDIT = "changecredit2"
     }
 
     private val client: OkHttpClient by lazy {
@@ -31,8 +34,6 @@ class Api {
      * @return ответ сервера на запрос
      */
     fun info(login: String, password: String): Deferred<ResponseBody> {
-        val deferred = CompletableDeferred<ResponseBody>()
-
         val params = FormBody.Builder()
                 .add(PARAM_ACTION, ACTION_INFO)
                 .add(PARAM_USERNAME, login)
@@ -44,20 +45,61 @@ class Api {
                 .post(params)
                 .build()
 
-        val call = client.newCall(request)
+        return client.newCall(request).toDeferred()
+    }
+
+    /**
+     * Выставление кредита доверия.
+     *
+     * @param   login имя пользователя
+     * @param   password пароль пользователя
+     * @param   creditValue желаемый кредит доверия.
+     *          Пока поддерживаются только значения V_100, V_200, V_300.
+     *          В остальных случаях будет выкидываться IllegalStateException
+     */
+    fun credit(login: String, password: String, creditValue: CreditValue): Deferred<ResponseBody> {
+        val credit = when (creditValue) {
+            CreditValue.V_100 -> 100
+            CreditValue.V_200 -> 200
+            CreditValue.V_300 -> 300
+            else -> throw IllegalStateException()
+        }
+
+        val params = FormBody.Builder()
+                .add(PARAM_ACTION, ACTION_CREDIT)
+                .add(PARAM_USERNAME, login)
+                .add(PARAM_PASSWORD, password)
+                .add(PARAM_CREDIT, credit.toString())
+                .build()
+
+        val request = Request.Builder()
+                .url(BASE_URL)
+                .post(params)
+                .build()
+
+        return client.newCall(request).toDeferred()
+    }
+
+    /**
+     * Вспомогательаня функция для переделки {@see Call}
+     * на {@link Deferred}
+     */
+    private fun Call.toDeferred(): Deferred<ResponseBody> {
+        val deferred = CompletableDeferred<ResponseBody>()
 
         deferred.invokeOnCompletion {
             if (deferred.isCancelled) {
-                call.cancel()
+                this.cancel()
             }
         }
 
-        call.enqueue(object : Callback {
+        this.enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    deferred.complete(response.body()!!)
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    deferred.complete(body)
                 } else {
-                    deferred.cancel(IllegalStateException(""))
+                    deferred.cancel()
                 }
             }
 
