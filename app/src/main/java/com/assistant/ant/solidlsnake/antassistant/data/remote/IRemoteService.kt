@@ -1,6 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.data.remote
 
 import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 
 interface IRemoteService {
     /**
@@ -25,4 +26,9 @@ interface IRemoteService {
      *          null - если произошла ошибка
      */
     suspend fun getUserData(login: String, password: String): UserDataResponse?
+
+    /**
+     * Выставление кредита доверия
+     */
+    suspend fun setCredit(login: String, password: String, creditValue: CreditValue): Boolean
 }

@@ -86,4 +86,9 @@ class Parser {
 
         data
     }
+
+    suspend fun isCreditSet(body: String): Boolean = withContext(Dispatchers.IO) {
+        // todo
+        false
+    }
 }

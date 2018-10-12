@@ -38,4 +38,6 @@ interface IRepository {
      * Получение максимально возможного значения кредита доверия
      */
     suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue>
+
+    suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean>
 }

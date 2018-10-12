@@ -103,4 +103,12 @@ class RepositoryImpl(
             // todo: Exception
         }
     }
+
+    override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean> = GlobalScope.produce {
+        val authData = localService.getAuthData()
+
+        val successful = remoteService.setCredit(authData.login, authData.password, creditValue)
+
+        send(successful)
+    }
 }

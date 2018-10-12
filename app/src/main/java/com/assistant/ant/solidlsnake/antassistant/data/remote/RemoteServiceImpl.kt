@@ -3,6 +3,7 @@ package com.assistant.ant.solidlsnake.antassistant.data.remote
 import com.assistant.ant.solidlsnake.antassistant.data.remote.net.Api
 import com.assistant.ant.solidlsnake.antassistant.data.remote.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 
 class RemoteServiceImpl(
         private val api: Api,
@@ -23,6 +24,15 @@ class RemoteServiceImpl(
             parser.userData(body)
         } catch (e: Exception) {
             null
+        }
+    }
+
+    override suspend fun setCredit(login: String, password: String, creditValue: CreditValue): Boolean {
+        return try {
+            val body = api.credit(login, password, creditValue).await().string()
+            parser.isCreditSet(body)
+        } catch (e: Exception) {
+            false
         }
     }
 }
