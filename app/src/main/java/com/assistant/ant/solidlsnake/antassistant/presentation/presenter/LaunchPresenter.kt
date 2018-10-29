@@ -4,7 +4,6 @@ import com.assistant.ant.solidlsnake.antassistant.domain.interactor.IsLogged
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class LaunchPresenter(

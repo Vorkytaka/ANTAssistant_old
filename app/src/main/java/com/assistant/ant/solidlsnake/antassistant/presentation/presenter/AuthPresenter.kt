@@ -5,7 +5,6 @@ import com.assistant.ant.solidlsnake.antassistant.domain.interactor.Auth
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class AuthPresenter(private val authUseCase: Auth) : BasePresenter<AuthView>() {

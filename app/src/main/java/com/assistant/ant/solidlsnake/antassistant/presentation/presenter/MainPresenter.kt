@@ -5,7 +5,6 @@ import com.assistant.ant.solidlsnake.antassistant.domain.interactor.MaxAvailable
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 
 class MainPresenter(
