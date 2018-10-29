@@ -12,14 +12,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
+        android:background="#000000"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1"
-        app:srcCompat="@drawable/background" />
+        app:layout_constraintVertical_weight="1" />
 
     <View
         android:id="@+id/view"
@@ -54,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -106,10 +106,26 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/auth_data_container"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:drawableEnd="@drawable/ic_phone"
+                android:drawableRight="@drawable/ic_phone"
+                android:drawablePadding="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/s_auth_phone_text" />
+
+            <TextView
                 android:id="@+id/et_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/auth_data_container"
+                android:layout_below="@+id/tv_phone"
                 android:text="@string/s_auth_error_text"
                 android:textColor="@android:color/holo_red_dark"
                 android:visibility="gone" />
@@ -123,8 +139,8 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:elevation="10dp"
         android:stateListAnimator="@null"
         android:text="@string/s_auth_confirm_hint"

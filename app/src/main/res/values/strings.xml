@@ -5,4 +5,5 @@
     <string name="s_auth_password_hint">Пароль</string>
     <string name="s_auth_confirm_hint">Войти</string>
     <string name="s_auth_error_text">Неверный логин и/или пароль</string>
+    <string name="s_auth_phone_text">Звонок в службу поддержки\n+7 (495) 940–92–11</string>
 </resources>

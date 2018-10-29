@@ -7,6 +7,8 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -43,6 +45,12 @@ class AuthActivity : BaseActivity(), AuthView {
             val login = et_login.text.orEmpty()
             val password = et_password.text.orEmpty()
             presenter.auth(login, password)
+        }
+
+        tv_phone.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:+74959409211")
+            startActivity(intent)
         }
     }
 
