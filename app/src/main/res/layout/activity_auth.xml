@@ -12,14 +12,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        android:background="#000000"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1" />
+        app:layout_constraintVertical_weight="1"
+        app:srcCompat="@drawable/background" />
 
     <View
         android:id="@+id/view"
@@ -112,14 +112,14 @@
                 android:layout_below="@+id/auth_data_container"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:textSize="12sp"
                 android:drawableEnd="@drawable/ic_phone"
                 android:drawableRight="@drawable/ic_phone"
                 android:drawablePadding="5dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:lineSpacingExtra="2dp"
-                android:text="@string/s_auth_phone_text" />
+                android:text="@string/s_auth_phone_text"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/et_error"
