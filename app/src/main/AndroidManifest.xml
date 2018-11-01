@@ -22,7 +22,8 @@
             android:name=".presentation.ui.LaunchActivity"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme.LaunchScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
