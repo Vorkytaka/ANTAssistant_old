@@ -109,8 +109,6 @@ class AuthActivity : BaseActivity(), AuthView {
         val pos = (screenSize - auth_container.top).toFloat()
 
         val authContainerAppearance = ObjectAnimator.ofFloat(auth_container, View.TRANSLATION_Y, pos, 0f)
-        authContainerAppearance.duration = 600
-        authContainerAppearance.interpolator = OvershootInterpolator(0.5f)
 
         val btnConfirmAppearance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val x = btn_confirm.measuredWidth / 2
@@ -150,6 +148,12 @@ class AuthActivity : BaseActivity(), AuthView {
             }
         }
 
-        authContainerAppearance.start()
+        val viewAppearance = ObjectAnimator.ofFloat(view, View.SCALE_Y, 3f, 1f)
+
+        val startAnimation = AnimatorSet()
+        startAnimation.playTogether(authContainerAppearance, viewAppearance)
+        startAnimation.duration = 600
+        startAnimation.interpolator = OvershootInterpolator(0.5f)
+        startAnimation.start()
     }
 }
