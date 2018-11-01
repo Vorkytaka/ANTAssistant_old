@@ -57,7 +57,7 @@ class AuthActivity : BaseActivity(), AuthView {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
 
-        if (hasFocus) {
+        if (hasFocus && !animationEnd) {
             startAnimation()
         }
     }
