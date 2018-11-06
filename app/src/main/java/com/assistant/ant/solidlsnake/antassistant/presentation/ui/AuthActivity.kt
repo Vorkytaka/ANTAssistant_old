@@ -15,6 +15,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.OvershootInterpolator
+import android.view.inputmethod.EditorInfo
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.orEmpty
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
@@ -51,6 +52,18 @@ class AuthActivity : BaseActivity(), AuthView {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:+74959409211")
             startActivity(intent)
+        }
+
+        et_password.setOnEditorActionListener { _, actionId, _ ->
+            if (EditorInfo.IME_ACTION_DONE == actionId) {
+                if (btn_confirm.isEnabled) {
+                    btn_confirm.performClick()
+                }
+
+                true
+            } else {
+                false
+            }
         }
     }
 
@@ -109,6 +122,7 @@ class AuthActivity : BaseActivity(), AuthView {
         val pos = (screenSize - auth_container.top).toFloat()
 
         val authContainerAppearance = ObjectAnimator.ofFloat(auth_container, View.TRANSLATION_Y, pos, 0f)
+        authContainerAppearance.duration = 600
 
         val btnConfirmAppearance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val x = btn_confirm.measuredWidth / 2
@@ -134,6 +148,7 @@ class AuthActivity : BaseActivity(), AuthView {
         }
 
         btnConfirmAppearance.duration = 300
+        btnConfirmAppearance.startDelay = 400
 
         btnConfirmAppearance.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
@@ -141,18 +156,11 @@ class AuthActivity : BaseActivity(), AuthView {
             }
         })
 
-        authContainerAppearance.addUpdateListener {
-            if (!animationEnd && it.animatedFraction >= 0.7f) {
-                animationEnd = true
-                btnConfirmAppearance.start()
-            }
-        }
-
         val viewAppearance = ObjectAnimator.ofFloat(view, View.SCALE_Y, 3f, 1f)
+        viewAppearance.duration = 600
 
         val startAnimation = AnimatorSet()
-        startAnimation.playTogether(authContainerAppearance, viewAppearance)
-        startAnimation.duration = 600
+        startAnimation.playTogether(authContainerAppearance, viewAppearance, btnConfirmAppearance)
         startAnimation.interpolator = OvershootInterpolator(0.5f)
         startAnimation.start()
     }
