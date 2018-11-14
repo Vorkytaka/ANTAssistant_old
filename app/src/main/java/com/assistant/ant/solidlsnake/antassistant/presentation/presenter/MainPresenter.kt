@@ -2,6 +2,7 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.GetUserData
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.MaxAvailableCredit
+import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,7 +20,7 @@ class MainPresenter(
         _view?.setProgress(true)
 
         getUserDataUseCase.execute({
-            _view?.showUserData(it)
+            _view?.showUserData(UserDataUI(it))
         }, {})
 
         _view?.setProgress(false)

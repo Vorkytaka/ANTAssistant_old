@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
         android:name=".presentation.App"
@@ -19,7 +20,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
         <activity
-            android:name=".presentation.ui.LaunchActivity"
+            android:name=".presentation.ui.activity.LaunchActivity"
             android:launchMode="singleInstance"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -31,12 +32,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.ui.AuthActivity"
+            android:name=".presentation.ui.activity.AuthActivity"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.ui.MainActivity"
+            android:name=".presentation.ui.activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 

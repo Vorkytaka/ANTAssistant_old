@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import com.assistant.ant.solidlsnake.antassistant.BuildConfig
-import com.assistant.ant.solidlsnake.antassistant.presentation.ui.AuthActivity
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.AuthActivity
 
 class Authenticator(private val context: Context) : AbstractAccountAuthenticator(context) {
     private val handler = Handler()

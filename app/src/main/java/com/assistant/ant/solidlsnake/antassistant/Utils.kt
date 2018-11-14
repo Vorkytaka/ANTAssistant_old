@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant
 
+import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.TextView
@@ -33,4 +34,11 @@ fun TextView.textChanges(capacity: Int = 1): ReceiveChannel<CharSequence> {
     }
 
     return channel
+}
+
+fun <T : Number> T.dpToPx(): Int {
+    val metrics = Resources.getSystem().displayMetrics
+    val px = this.toFloat() * (metrics.densityDpi / 160f)
+
+    return px.toInt()
 }

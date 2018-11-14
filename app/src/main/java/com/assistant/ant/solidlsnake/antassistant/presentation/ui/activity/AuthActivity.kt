@@ -1,4 +1,4 @@
-package com.assistant.ant.solidlsnake.antassistant.presentation.ui
+package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
 import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager
