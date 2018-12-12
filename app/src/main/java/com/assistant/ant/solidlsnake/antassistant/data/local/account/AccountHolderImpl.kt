@@ -4,7 +4,7 @@ import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
 import com.assistant.ant.solidlsnake.antassistant.BuildConfig
-import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 
 class AccountHolderImpl(context: Context) : IAccountHolder {
     override fun hasAccount(): Boolean {
@@ -12,17 +12,17 @@ class AccountHolderImpl(context: Context) : IAccountHolder {
         return accounts.isNotEmpty()
     }
 
-    override fun saveAccount(data: AuthData) {
-        val account = Account(data.login, accountType)
-        manager.addAccountExplicitly(account, data.password, null)
+    override fun saveAccount(credentials: Credentials) {
+        val account = Account(credentials.login, accountType)
+        manager.addAccountExplicitly(account, credentials.password, null)
     }
 
-    override fun getAccount(): AuthData {
+    override fun getAccount(): Credentials {
         val account = manager.getAccountsByType(accountType).first()
         val login = account.name
         val password = manager.getPassword(account)
 
-        return AuthData(login, password)
+        return Credentials(login, password)
     }
 
     override fun removeAccount() {

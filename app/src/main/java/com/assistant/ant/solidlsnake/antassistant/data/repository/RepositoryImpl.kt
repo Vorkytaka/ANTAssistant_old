@@ -4,7 +4,7 @@ import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMapper
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
-import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
@@ -22,16 +22,16 @@ class RepositoryImpl(
             this.close()
         }
 
-        val authData = localService.getAuthData()
+        val credentials = localService.getCredentials()
 
-        send(auth(authData.login, authData.password).receive())
+        send(auth(credentials).receive())
     }
 
-    override suspend fun auth(login: String, password: String): ReceiveChannel<Boolean> = GlobalScope.produce {
-        val result = remoteService.auth(login, password)
+    override suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean> = GlobalScope.produce {
+        val result = remoteService.auth(credentials)
 
         if (result) {
-            localService.setAuthData(AuthData(login, password))
+            localService.setAuthData(credentials)
         }
 
         send(result)
@@ -41,9 +41,9 @@ class RepositoryImpl(
         val localData = localService.getUserData()
         send(UserDataModelMapper().map(localData))
 
-        val authData = localService.getAuthData()
+        val credentials = localService.getCredentials()
 
-        val remoteData = remoteService.getUserData(authData.login, authData.password)
+        val remoteData = remoteService.getUserData(credentials)
 
         if (remoteData != null) {
             val userData = UserDataResponseMapper().map(remoteData)
@@ -53,9 +53,9 @@ class RepositoryImpl(
     }
 
     override suspend fun canSetCredit(): ReceiveChannel<Boolean> = GlobalScope.produce {
-        val authData = localService.getAuthData()
+        val credentials = localService.getCredentials()
 
-        val remoteData = remoteService.getUserData(authData.login, authData.password)
+        val remoteData = remoteService.getUserData(credentials)
 
         if (remoteData != null) {
             val userData = UserDataResponseMapper().map(remoteData)
@@ -75,9 +75,9 @@ class RepositoryImpl(
     }
 
     override suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue> = GlobalScope.produce {
-        val authData = localService.getAuthData()
+        val credentials = localService.getCredentials()
 
-        val remoteData = remoteService.getUserData(authData.login, authData.password)
+        val remoteData = remoteService.getUserData(credentials)
 
         if (remoteData != null) {
             val userData = UserDataResponseMapper().map(remoteData)
@@ -105,10 +105,8 @@ class RepositoryImpl(
     }
 
     override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean> = GlobalScope.produce {
-        val authData = localService.getAuthData()
-
-        val successful = remoteService.setCredit(authData.login, authData.password, creditValue)
-
+        val credentials = localService.getCredentials()
+        val successful = remoteService.setCredit(credentials, creditValue)
         send(successful)
     }
 }

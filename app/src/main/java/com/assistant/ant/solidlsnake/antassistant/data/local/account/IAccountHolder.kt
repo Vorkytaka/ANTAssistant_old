@@ -1,6 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.data.local.account
 
-import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 
 interface IAccountHolder {
     /**
@@ -11,16 +11,16 @@ interface IAccountHolder {
     /**
      * Сохранение данных аккаунта пользователя
      *
-     * @param data данные пользователя
+     * @param credentials данные пользователя
      */
-    fun saveAccount(data: AuthData)
+    fun saveAccount(credentials: Credentials)
 
     /**
      * Получение данных аккаунта пользователя
      *
      * @return данные пользователя
      */
-    fun getAccount(): AuthData
+    fun getAccount(): Credentials
 
     /**
      * Удаление всех аккаунтов пользователя
