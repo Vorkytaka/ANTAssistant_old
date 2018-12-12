@@ -1,6 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
@@ -9,6 +10,7 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.Margin
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.UserInfoAdapter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet_credit.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), MainView {
@@ -23,7 +25,15 @@ class MainActivity : BaseActivity(), MainView {
 
         data.adapter = adapter
         data.layoutManager = LinearLayoutManager(baseContext)
-        data.addItemDecoration(MarginDivider(10))
+        data.addItemDecoration(MarginDivider(3))
+
+        val credit = BottomSheetBehavior.from(bs_credit)
+
+        bs_credit_header.setOnClickListener {
+            credit.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        credit.state = BottomSheetBehavior.STATE_SETTLING
     }
 
     override fun onStart() {
@@ -41,6 +51,6 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun showUserData(data: UserDataUI) {
-        adapter.setData(data.data)
+        adapter.setData(data.getList())
     }
 }
