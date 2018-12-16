@@ -39,12 +39,12 @@ class LocalServiceImpl(
         UserPref.tariff_price = data.tariff.price.toFloat()
     }
 
-    override suspend fun hasAccount(): Boolean {
-        return accountHolder.hasAccount()
-    }
-
-    override suspend fun getCredentials(): Credentials {
-        return accountHolder.getAccount()
+    override suspend fun getCredentials(): Credentials? {
+        return if (accountHolder.hasAccount()) {
+            accountHolder.getAccount()
+        } else {
+            null
+        }
     }
 
     override suspend fun setAuthData(data: Credentials) {

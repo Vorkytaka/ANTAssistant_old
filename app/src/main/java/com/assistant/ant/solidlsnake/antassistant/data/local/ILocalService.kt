@@ -16,14 +16,9 @@ interface ILocalService {
     suspend fun saveUserData(data: UserData)
 
     /**
-     * Проверка, есть ли у пользователя аккаунт
+     * Получение авторизационных данных пользователя
      */
-    suspend fun hasAccount(): Boolean
-
-    /**
-     * Получение логина и пароля пользователя
-     */
-    suspend fun getCredentials(): Credentials
+    suspend fun getCredentials(): Credentials?
 
     /**
      * Сохранение логина и пароля пользователя
