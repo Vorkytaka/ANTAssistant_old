@@ -8,23 +8,32 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
+import kotlin.coroutines.CoroutineContext
 
 class RepositoryImpl(
         private val remoteService: IRemoteService,
         private val localService: ILocalService
-) : IRepository {
-    override suspend fun getCredentials(): ReceiveChannel<Credentials?> = GlobalScope.produce {
+) : IRepository, CoroutineScope {
+
+    // todo: Сделать привязку в Job'е
+    // Привязать Context к дополнительной job'е
+    // которая в свою очередь будет привязана к жизненному циклу приложения
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
+
+    override suspend fun getCredentials(): ReceiveChannel<Credentials?> = produce {
         send(localService.getCredentials())
     }
 
-    override suspend fun isLogged(credentials: Credentials): ReceiveChannel<Boolean> = GlobalScope.produce {
+    override suspend fun isLogged(credentials: Credentials): ReceiveChannel<Boolean> = produce {
         send(auth(credentials).receive())
     }
 
-    override suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean> = GlobalScope.produce {
+    override suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean> = produce {
         val result = remoteService.auth(credentials)
 
         if (result) {
@@ -34,7 +43,7 @@ class RepositoryImpl(
         send(result)
     }
 
-    override suspend fun getUserData(): ReceiveChannel<UserData> = GlobalScope.produce {
+    override suspend fun getUserData(): ReceiveChannel<UserData> = produce {
         val localData = localService.getUserData()
         send(UserDataModelMapper().map(localData))
 
@@ -51,7 +60,7 @@ class RepositoryImpl(
         }
     }
 
-    override suspend fun canSetCredit(): ReceiveChannel<Boolean> = GlobalScope.produce {
+    override suspend fun canSetCredit(): ReceiveChannel<Boolean> = produce {
         val credentials = localService.getCredentials()
 
         if (credentials != null) {
@@ -75,7 +84,7 @@ class RepositoryImpl(
         }
     }
 
-    override suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue> = GlobalScope.produce {
+    override suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue> = produce {
         val credentials = localService.getCredentials()
 
         if (credentials != null) {
@@ -107,7 +116,7 @@ class RepositoryImpl(
         }
     }
 
-    override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean> = GlobalScope.produce {
+    override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean> = produce {
         val credentials = localService.getCredentials()
 
         if (credentials != null) {
