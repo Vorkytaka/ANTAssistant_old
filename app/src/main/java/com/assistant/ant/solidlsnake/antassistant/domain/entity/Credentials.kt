@@ -6,4 +6,4 @@ package com.assistant.ant.solidlsnake.antassistant.domain.entity
  * @param login логин пользователя
  * @param password пароль пользователя
  */
-data class AuthData(val login: String, val password: String)
+data class Credentials(val login: String, val password: String)

@@ -4,111 +4,124 @@ import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMapper
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
-import com.assistant.ant.solidlsnake.antassistant.domain.entity.AuthData
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
+import kotlin.coroutines.CoroutineContext
 
 class RepositoryImpl(
         private val remoteService: IRemoteService,
         private val localService: ILocalService
-) : IRepository {
-    override suspend fun isLogged(): ReceiveChannel<Boolean> = GlobalScope.produce {
-        if (!localService.hasAccount()) {
-            send(false)
-            this.close()
-        }
+) : IRepository, CoroutineScope {
 
-        val authData = localService.getAuthData()
+    // todo: Сделать привязку в Job'е
+    // Привязать Context к дополнительной job'е
+    // которая в свою очередь будет привязана к жизненному циклу приложения
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
 
-        send(auth(authData.login, authData.password).receive())
+    override suspend fun getCredentials(): ReceiveChannel<Credentials?> = produce {
+        send(localService.getCredentials())
     }
 
-    override suspend fun auth(login: String, password: String): ReceiveChannel<Boolean> = GlobalScope.produce {
-        val result = remoteService.auth(login, password)
+    override suspend fun isLogged(credentials: Credentials): ReceiveChannel<Boolean> = produce {
+        send(auth(credentials).receive())
+    }
+
+    override suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean> = produce {
+        val result = remoteService.auth(credentials)
 
         if (result) {
-            localService.setAuthData(AuthData(login, password))
+            localService.setAuthData(credentials)
         }
 
         send(result)
     }
 
-    override suspend fun getUserData(): ReceiveChannel<UserData?> = GlobalScope.produce {
+    override suspend fun getUserData(): ReceiveChannel<UserData> = produce {
         val localData = localService.getUserData()
         send(UserDataModelMapper().map(localData))
 
-        val authData = localService.getAuthData()
+        val credentials = localService.getCredentials()
 
-        val remoteData = remoteService.getUserData(authData.login, authData.password)
+        if (credentials != null) {
+            val remoteData = remoteService.getUserData(credentials)
 
-        if (remoteData != null) {
-            val userData = UserDataResponseMapper().map(remoteData)
-            send(userData)
-            localService.saveUserData(userData)
+            if (remoteData != null) {
+                val userData = UserDataResponseMapper().map(remoteData)
+                send(userData)
+                localService.saveUserData(userData)
+            }
         }
     }
 
-    override suspend fun canSetCredit(): ReceiveChannel<Boolean> = GlobalScope.produce {
-        val authData = localService.getAuthData()
+    override suspend fun canSetCredit(): ReceiveChannel<Boolean> = produce {
+        val credentials = localService.getCredentials()
 
-        val remoteData = remoteService.getUserData(authData.login, authData.password)
+        if (credentials != null) {
+            val remoteData = remoteService.getUserData(credentials)
 
-        if (remoteData != null) {
-            val userData = UserDataResponseMapper().map(remoteData)
+            if (remoteData != null) {
+                val userData = UserDataResponseMapper().map(remoteData)
 
-            val credit = userData.state.credit
-            val balance = userData.state.balance
-            val payForDay = userData.tariff.price / 30
+                val credit = userData.state.credit
+                val balance = userData.state.balance
+                val payForDay = userData.tariff.price / 30
 
-            // todo: Проверить правильный подсчет дней
-            val daysLeft = balance / payForDay
+                // todo: Проверить правильный подсчет дней
+                val daysLeft = balance / payForDay
 
-            val canSetCredit = daysLeft <= 1 && credit < 300
-            send(canSetCredit)
-        } else {
-            // todo: Exception
+                val canSetCredit = daysLeft <= 1 && credit < 300
+                send(canSetCredit)
+            } else {
+                // todo: Exception
+            }
         }
     }
 
-    override suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue> = GlobalScope.produce {
-        val authData = localService.getAuthData()
+    override suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue> = produce {
+        val credentials = localService.getCredentials()
 
-        val remoteData = remoteService.getUserData(authData.login, authData.password)
+        if (credentials != null) {
+            val remoteData = remoteService.getUserData(credentials)
 
-        if (remoteData != null) {
-            val userData = UserDataResponseMapper().map(remoteData)
+            if (remoteData != null) {
+                val userData = UserDataResponseMapper().map(remoteData)
 
-            val credit = userData.state.credit
-            val balance = userData.state.balance
-            val payForDay = userData.tariff.price / 30
+                val credit = userData.state.credit
+                val balance = userData.state.balance
+                val payForDay = userData.tariff.price / 30
 
-            // todo: Проверить правильный подсчет дней
-            val daysLeftWithoutCredit = balance / payForDay
-            val canSetCredit = daysLeftWithoutCredit <= 1
+                // todo: Проверить правильный подсчет дней
+                val daysLeftWithoutCredit = balance / payForDay
+                val canSetCredit = daysLeftWithoutCredit <= 1
 
-            if (canSetCredit) {
-                when {
-                    credit < 300 -> send(CreditValue.V_300)
-                    credit == 300 -> send(CreditValue.V_BONUS)
-                    else -> send(CreditValue.V_0)
+                if (canSetCredit) {
+                    when {
+                        credit < 300 -> send(CreditValue.V_300)
+                        credit == 300 -> send(CreditValue.V_BONUS)
+                        else -> send(CreditValue.V_0)
+                    }
+                } else {
+                    send(CreditValue.V_0)
                 }
             } else {
-                send(CreditValue.V_0)
+                // todo: Exception
             }
-        } else {
-            // todo: Exception
         }
     }
 
-    override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean> = GlobalScope.produce {
-        val authData = localService.getAuthData()
+    override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean> = produce {
+        val credentials = localService.getCredentials()
 
-        val successful = remoteService.setCredit(authData.login, authData.password, creditValue)
-
-        send(successful)
+        if (credentials != null) {
+            val successful = remoteService.setCredit(credentials, creditValue)
+            send(successful)
+        }
     }
 }
