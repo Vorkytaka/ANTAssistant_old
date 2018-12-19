@@ -10,9 +10,9 @@ import kotlinx.coroutines.channels.consumeEach
 class GetUserData(
         private val repository: IRepository
 ) : UseCase<Unit, UserData>() {
-    override suspend fun execute(success: (UserData) -> Unit, error: (Throwable) -> Unit) {
+    override suspend fun execute(action: (UserData) -> Unit) {
         repository.getUserData().consumeEach {
-            success(it)
+            action(it)
         }
     }
 }

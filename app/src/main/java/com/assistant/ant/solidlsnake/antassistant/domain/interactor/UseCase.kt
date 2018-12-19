@@ -15,5 +15,5 @@ abstract class UseCase<P, R> {
         return this
     }
 
-    abstract suspend fun execute(success: (R) -> Unit, error: (Throwable) -> Unit)
+    abstract suspend fun execute(action: (R) -> Unit)
 }

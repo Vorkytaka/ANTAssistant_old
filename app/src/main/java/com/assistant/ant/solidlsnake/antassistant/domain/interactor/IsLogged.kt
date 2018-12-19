@@ -9,15 +9,15 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.IsLoggedState
 class IsLogged(
         private val repository: IRepository
 ) : UseCase<Unit, IsLoggedState>() {
-    override suspend fun execute(success: (IsLoggedState) -> Unit, error: (Throwable) -> Unit) {
+    override suspend fun execute(action: (IsLoggedState) -> Unit) {
         val credentials = repository.getCredentials().receiveOrNull()
 
         if (credentials == null) {
-            success(IsLoggedState.Error)
+            action(IsLoggedState.Error)
             return
         }
 
         val auth = repository.auth(credentials).receive()
-        success(if (auth) IsLoggedState.Success else IsLoggedState.AuthError)
+        action(if (auth) IsLoggedState.Success else IsLoggedState.AuthError)
     }
 }

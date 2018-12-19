@@ -19,9 +19,9 @@ class MainPresenter(
     fun getUserData() = GlobalScope.launch(Dispatchers.Main) {
         _view?.setProgress(true)
 
-        getUserDataUseCase.execute({
+        getUserDataUseCase.execute {
             _view?.showUserData(UserDataUI(it))
-        }, {})
+        }
 
         _view?.setProgress(false)
     }

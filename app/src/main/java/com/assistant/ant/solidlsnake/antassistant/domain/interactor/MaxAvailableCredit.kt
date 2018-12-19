@@ -7,9 +7,9 @@ import kotlinx.coroutines.channels.consumeEach
 class MaxAvailableCredit(
         private val repository: IRepository
 ) : UseCase<Unit, CreditValue>() {
-    override suspend fun execute(success: (CreditValue) -> Unit, error: (Throwable) -> Unit) {
+    override suspend fun execute(action: (CreditValue) -> Unit) {
         repository.maxAvailableCredit().consumeEach {
-            success(it)
+            action(it)
         }
     }
 }

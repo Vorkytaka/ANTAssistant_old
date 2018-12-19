@@ -16,12 +16,12 @@ class LaunchPresenter(
     }
 
     private fun checkAuth() = GlobalScope.launch(Dispatchers.Main) {
-        isLoggedUseCase.execute({
+        isLoggedUseCase.execute {
             when (it) {
                 is IsLoggedState.AuthError -> _view?.openMainScreen()
                 is IsLoggedState.Success -> _view?.openMainScreen()
                 is IsLoggedState.Error -> _view?.openAuthScreen()
             }
-        }, {})
+        }
     }
 }

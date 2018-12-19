@@ -2,6 +2,7 @@ package com.assistant.ant.solidlsnake.antassistant.domain.interactor
 
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
+import com.assistant.ant.solidlsnake.antassistant.domain.state.AuthState
 import kotlinx.coroutines.channels.consumeEach
 
 /**
@@ -9,15 +10,14 @@ import kotlinx.coroutines.channels.consumeEach
  */
 class Auth(
         private val repository: IRepository
-) : UseCase<Credentials, Boolean>() {
-    override suspend fun execute(success: (Boolean) -> Unit, error: (Throwable) -> Unit) {
+) : UseCase<Credentials, AuthState>() {
+    override suspend fun execute(action: (AuthState) -> Unit) {
         if (params == null) {
-            error(IllegalStateException("Params must be init"))
-            return
+            throw IllegalStateException()
         }
 
         repository.auth(params!!).consumeEach {
-            success(it)
+            action(if (it) AuthState.Success else AuthState.Error)
         }
     }
 }
