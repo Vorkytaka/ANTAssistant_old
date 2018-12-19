@@ -5,7 +5,7 @@ import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
 class UserDataUI(
-        private val userData: UserData
+        val userData: UserData
 ) {
     fun getList(): List<ListObject> {
         // todo: Получение строк из ресурсов

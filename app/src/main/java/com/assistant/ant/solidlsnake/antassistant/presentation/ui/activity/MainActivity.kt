@@ -23,6 +23,8 @@ class MainActivity : BaseActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(toolbar)
+
         data.adapter = adapter
         data.layoutManager = LinearLayoutManager(baseContext)
         data.addItemDecoration(MarginDivider(3))
@@ -51,6 +53,16 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun showUserData(data: UserDataUI) {
+        ctoolbar.title = data.userData.state.balance.toString() + " \u20BD"
+        val credit = data.userData.state.credit
+        val balance = data.userData.state.balance
+        val payForDay = data.userData.tariff.price / 30
+
+        // todo: Проверить правильный подсчет дней
+        val daysLeft = balance / payForDay
+        tv_days_left.text = daysLeft.toInt().toString()
+
+        tv_credit.text = credit.toString()
         adapter.setData(data.getList())
     }
 }

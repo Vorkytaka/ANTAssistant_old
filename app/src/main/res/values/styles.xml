@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -8,6 +8,18 @@
 
     <style name="MainTheme.LaunchScreen" parent="MainTheme">
         <item name="android:windowBackground">@drawable/launch_screen_background</item>
+    </style>
+
+    <style name="MainTheme.MainScreen" parent="MainTheme" />
+
+    <style name="MainTheme.MainScreen.Toolbar" />
+
+    <style name="MainTheme.MainScreen.Toolbar.Collapsing">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="MainTheme.MainScreen.Toolbar.Expanded">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
 </resources>
