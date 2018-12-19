@@ -1,6 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.IsLogged
+import com.assistant.ant.solidlsnake.antassistant.domain.state.IsLoggedState
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -16,10 +17,10 @@ class LaunchPresenter(
 
     private fun checkAuth() = GlobalScope.launch(Dispatchers.Main) {
         isLoggedUseCase.execute({
-            if (it) {
-                _view?.openMainScreen()
-            } else {
-                _view?.openAuthScreen()
+            when (it) {
+                is IsLoggedState.AuthError -> _view?.openMainScreen()
+                is IsLoggedState.Success -> _view?.openMainScreen()
+                is IsLoggedState.Error -> _view?.openAuthScreen()
             }
         }, {})
     }
