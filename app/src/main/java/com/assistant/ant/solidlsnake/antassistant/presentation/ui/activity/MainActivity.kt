@@ -27,6 +27,10 @@ class MainActivity : BaseActivity(), MainView {
         getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
+    private val creditBottomSheet by lazy {
+        BottomSheetBehavior.from(bs_credit)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,13 +47,12 @@ class MainActivity : BaseActivity(), MainView {
             Toast.makeText(this, R.string.s_main_copy_message, Toast.LENGTH_SHORT).show()
         }
 
-        val credit = BottomSheetBehavior.from(bs_credit)
-
         bs_credit_header.setOnClickListener {
-            credit.state = BottomSheetBehavior.STATE_EXPANDED
+            creditBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
-        credit.state = BottomSheetBehavior.STATE_SETTLING
+        creditBottomSheet.isHideable = true
+        creditBottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     override fun onStart() {
@@ -78,5 +81,9 @@ class MainActivity : BaseActivity(), MainView {
 
         tv_credit.text = credit.toString()
         adapter.setData(data.getList())
+    }
+
+    override fun showCreditSnack() {
+        creditBottomSheet.state = BottomSheetBehavior.STATE_SETTLING
     }
 }
