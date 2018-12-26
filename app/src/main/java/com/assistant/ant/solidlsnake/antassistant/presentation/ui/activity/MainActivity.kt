@@ -1,8 +1,12 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
@@ -19,6 +23,10 @@ class MainActivity : BaseActivity(), MainView {
 
     private val adapter = UserInfoAdapter()
 
+    private val clipboardManager: ClipboardManager by lazy {
+        getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,6 +36,12 @@ class MainActivity : BaseActivity(), MainView {
         data.adapter = adapter
         data.layoutManager = LinearLayoutManager(baseContext)
         data.addItemDecoration(MarginDivider(3))
+
+        adapter.itemClickListener = {
+            val data = ClipData.newPlainText("ANTData", it.info.text)
+            clipboardManager.primaryClip = data
+            Toast.makeText(this, R.string.s_main_copy_message, Toast.LENGTH_SHORT).show()
+        }
 
         val credit = BottomSheetBehavior.from(bs_credit)
 

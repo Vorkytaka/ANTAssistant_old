@@ -11,6 +11,7 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 
 class UserInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val data: MutableList<UserDataUI.ListObject> = ArrayList()
+    var itemClickListener: ((ViewHolder) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -27,6 +28,18 @@ class UserInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.info.text = item.info
             holder.icon.setImageResource(item.iconId)
         }
+    }
+
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        if (holder is ViewHolder) {
+            holder.itemView.setOnClickListener {
+                itemClickListener?.invoke(holder)
+            }
+        }
+    }
+
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        holder.itemView.setOnClickListener(null)
     }
 
     override fun getItemCount(): Int = data.size
