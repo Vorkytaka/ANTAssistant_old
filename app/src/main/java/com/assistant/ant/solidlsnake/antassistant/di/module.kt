@@ -18,15 +18,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 
 val appModule = module {
-    single { Parser() }
-    single { Api() }
-    single<IAccountHolder> { AccountHolderImpl(androidContext()) }
-
-    single<ILocalService> { LocalServiceImpl(get()) }
-    single<IRemoteService> { RemoteServiceImpl(get(), get()) }
-
-    single<IRepository> { RepositoryImpl(get(), get()) }
-
     factory { Auth(get()) }
     factory { GetUserData(get()) }
     factory { IsLogged(get()) }
@@ -36,4 +27,17 @@ val appModule = module {
     factory { AuthPresenter(get()) }
     factory { MainPresenter(get(), get()) }
     factory { LaunchPresenter(get()) }
+}
+
+val dataModule = module {
+    single { Parser() }
+    single { Api() }
+    single<IAccountHolder> { AccountHolderImpl(androidContext()) }
+
+    single<ILocalService> { LocalServiceImpl(get()) }
+    single<IRemoteService> { RemoteServiceImpl(get(), get()) }
+}
+
+val domainModule = module {
+    single<IRepository> { RepositoryImpl(get(), get()) }
 }
