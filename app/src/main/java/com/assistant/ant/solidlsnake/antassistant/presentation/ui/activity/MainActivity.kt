@@ -53,6 +53,10 @@ class MainActivity : BaseActivity(), MainView {
 
         creditBottomSheet.isHideable = true
         creditBottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+
+        swipe_view.setOnRefreshListener {
+            presenter.getUserData()
+        }
     }
 
     override fun onStart() {
@@ -66,7 +70,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun setProgress(progress: Boolean) {
-
+        swipe_view.isRefreshing = progress
     }
 
     override fun showUserData(data: UserDataUI) {
