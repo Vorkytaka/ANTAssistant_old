@@ -3,7 +3,7 @@ package com.assistant.ant.solidlsnake.antassistant.data.local.account
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
-import com.assistant.ant.solidlsnake.antassistant.BuildConfig
+import com.assistant.ant.solidlsnake.antassistant.data.BuildConfig
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 
 class AccountHolderImpl(context: Context) : IAccountHolder {

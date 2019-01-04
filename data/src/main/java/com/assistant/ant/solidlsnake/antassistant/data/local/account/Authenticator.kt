@@ -2,12 +2,10 @@ package com.assistant.ant.solidlsnake.antassistant.data.local.account
 
 import android.accounts.*
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
-import com.assistant.ant.solidlsnake.antassistant.BuildConfig
-import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.AuthActivity
+import com.assistant.ant.solidlsnake.antassistant.data.BuildConfig
 
 class Authenticator(private val context: Context) : AbstractAccountAuthenticator(context) {
     private val handler = Handler()
@@ -37,11 +35,12 @@ class Authenticator(private val context: Context) : AbstractAccountAuthenticator
             return bundle
         }
 
-        val intent = Intent(context, AuthActivity::class.java)
-        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
-        val bundle = Bundle()
-        bundle.putParcelable(AccountManager.KEY_INTENT, intent)
-        return bundle
+//        val intent = Intent(context, AuthActivity::class.java)
+//        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
+//        val bundle = Bundle()
+//        bundle.putParcelable(AccountManager.KEY_INTENT, intent)
+//        return bundle
+        return null
     }
 
     @Throws(NetworkErrorException::class)
