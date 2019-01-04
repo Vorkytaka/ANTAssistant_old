@@ -32,18 +32,12 @@ class RepositoryImpl(
         send(localService.getCredentials())
     }
 
-    override suspend fun isLogged(credentials: Credentials): ReceiveChannel<Boolean> = produce {
-        send(remoteService.auth(credentials))
+    override suspend fun setCredentials(credentials: Credentials) {
+        localService.setCredentials(credentials)
     }
 
     override suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean> = produce {
-        val result = remoteService.auth(credentials)
-
-        if (result) {
-            localService.setAuthData(credentials)
-        }
-
-        send(result)
+        send(remoteService.auth(credentials))
     }
 
     override suspend fun getUserData(): ReceiveChannel<UserData> = produce {

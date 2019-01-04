@@ -23,5 +23,5 @@ interface ILocalService {
     /**
      * Сохранение логина и пароля пользователя
      */
-    suspend fun setAuthData(data: Credentials)
+    suspend fun setCredentials(credentials: Credentials)
 }

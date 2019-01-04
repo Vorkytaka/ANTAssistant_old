@@ -47,8 +47,8 @@ class LocalServiceImpl(
         }
     }
 
-    override suspend fun setAuthData(data: Credentials) {
-        accountHolder.saveAccount(data)
+    override suspend fun setCredentials(credentials: Credentials) {
+        accountHolder.saveAccount(credentials)
     }
 
 }

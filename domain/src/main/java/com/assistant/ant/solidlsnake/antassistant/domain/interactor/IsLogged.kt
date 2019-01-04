@@ -17,7 +17,7 @@ class IsLogged(
             return
         }
 
-        val auth = repository.isLogged(credentials).receive()
+        val auth = repository.auth(credentials).receive()
         action(if (auth) IsLoggedState.Success else IsLoggedState.AuthError)
     }
 }
