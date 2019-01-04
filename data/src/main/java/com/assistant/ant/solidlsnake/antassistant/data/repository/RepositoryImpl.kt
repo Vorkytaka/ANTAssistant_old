@@ -33,7 +33,7 @@ class RepositoryImpl(
     }
 
     override suspend fun isLogged(credentials: Credentials): ReceiveChannel<Boolean> = produce {
-        send(auth(credentials).receive())
+        send(remoteService.auth(credentials))
     }
 
     override suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean> = produce {

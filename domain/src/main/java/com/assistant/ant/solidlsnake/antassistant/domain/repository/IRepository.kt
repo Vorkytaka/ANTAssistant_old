@@ -12,15 +12,15 @@ interface IRepository {
     suspend fun getCredentials(): ReceiveChannel<Credentials?>
 
     /**
-     * Проверка залогинен ли пользователь в приложение
+     * Проверка корректности данных для входа
      *
-     * @return  true если залогинен
-     *          false если нет
+     * @param credentials данные которые необходимо проверить
+     * @return true если данные для входа корректны, иначе false
      */
     suspend fun isLogged(credentials: Credentials): ReceiveChannel<Boolean>
 
     /**
-     * Авторизация пользователя.
+     * Авторизация пользователя
      *
      * @return  true если вход успешен
      *          false иначе
