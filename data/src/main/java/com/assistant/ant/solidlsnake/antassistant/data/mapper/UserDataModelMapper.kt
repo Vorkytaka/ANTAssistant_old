@@ -12,7 +12,8 @@ class UserDataModelMapper : Mapper<UserDataModel, UserData> {
                 from.state_balance,
                 from.state_downloaded,
                 from.state_status,
-                from.state_credit
+                from.state_credit,
+                from.state_smsInfo
         )
 
         val tariff = Tariff(
@@ -25,6 +26,7 @@ class UserDataModelMapper : Mapper<UserDataModel, UserData> {
         return UserData(
                 from.accountName,
                 from.userId,
+                from.dynDns,
                 tariff,
                 state
         )

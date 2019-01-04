@@ -22,5 +22,10 @@ data class State(
         /**
          * Кредит доверия, в рублях
          */
-        val credit: Int
+        val credit: Int,
+
+        /**
+         * SMS-информирование
+         */
+        val smsInfo: Boolean
 )

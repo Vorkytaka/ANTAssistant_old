@@ -16,8 +16,10 @@ class UserDataUI(
                 ListObject("Навазние тарифа", userData.tariff.name, R.drawable.ic_tariff_name),
                 ListObject("Цена за месяц", userData.tariff.price.toInt().toString(), R.drawable.ic_price_month),
                 ListObject("Цена за день", (userData.tariff.price / 30f).toInt().toString(), R.drawable.ic_price_day),
-                ListObject("Скорость загрузки", "${userData.tariff.downloadSpeed}Мб", R.drawable.ic_download_speed),
-                ListObject("Скорость отдачи", "${userData.tariff.uploadSpeed}Мб", R.drawable.ic_upload_speed)
+                ListObject("Скорость загрузки", "${userData.tariff.downloadSpeed} Мб", R.drawable.ic_download_speed),
+                ListObject("Скорость отдачи", "${userData.tariff.uploadSpeed} Мб", R.drawable.ic_upload_speed),
+                ListObject("Скачано за текущий месяц", "${userData.state.downloaded} Мб", R.drawable.ic_downloaded),
+                ListObject("Ваш DynDNS", userData.dynDns, R.drawable.ic_dyn_dns)
         )
     }
 

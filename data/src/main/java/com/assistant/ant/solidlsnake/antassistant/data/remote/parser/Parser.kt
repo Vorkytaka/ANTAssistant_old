@@ -77,6 +77,14 @@ class Parser {
                         val accountName = tables[i + 1].text()
                         data.accountName = accountName
                     }
+                    "Ваш DynDNS" -> {
+                        val dns = tables[i + 1].text()
+                        data.dynDns = dns
+                    }
+                    "SMS-информирование" -> {
+                        val smsInfoString = tables[i + 1].text()
+                        data.state_smsInfo = "Отключено" != smsInfoString
+                    }
                 }
             }
             jobs.add(job)

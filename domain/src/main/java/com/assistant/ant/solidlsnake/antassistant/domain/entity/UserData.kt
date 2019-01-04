@@ -15,6 +15,11 @@ data class UserData(
         val userId: String,
 
         /**
+         * Ваш DynDNS
+         */
+        val dynDns: String,
+
+        /**
          * Информация о тарифе
          */
         val tariff: Tariff,
