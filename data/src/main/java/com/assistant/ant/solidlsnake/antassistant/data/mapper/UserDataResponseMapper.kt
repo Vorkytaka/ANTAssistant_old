@@ -7,7 +7,7 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.Tariff
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 
 class UserDataResponseMapper : Mapper<UserDataResponse, UserData> {
-    override fun map(from: UserDataResponse): UserData {
+    override fun invoke(from: UserDataResponse): UserData {
         val state = State(
                 from.state_balance,
                 from.state_downloaded,
@@ -32,3 +32,4 @@ class UserDataResponseMapper : Mapper<UserDataResponse, UserData> {
         )
     }
 }
+
