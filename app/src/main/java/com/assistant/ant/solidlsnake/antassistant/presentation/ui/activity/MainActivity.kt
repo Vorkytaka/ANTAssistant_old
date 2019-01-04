@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
@@ -57,6 +58,14 @@ class MainActivity : BaseActivity(), MainView {
         swipe_view.setOnRefreshListener {
             presenter.getUserData()
         }
+
+        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, offset ->
+            val enable = offset == 0
+
+            if (enable != swipe_view.isEnabled) {
+                swipe_view.isEnabled = enable
+            }
+        })
     }
 
     override fun onStart() {
