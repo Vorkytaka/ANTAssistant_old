@@ -1,9 +1,11 @@
 package com.assistant.ant.solidlsnake.antassistant.data.repository
 
 import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
-import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataModelMapper
+import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.UserDataResponseMapper
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
+import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
+import com.assistant.ant.solidlsnake.antassistant.domain.Mapper
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
@@ -16,7 +18,9 @@ import kotlin.coroutines.CoroutineContext
 
 class RepositoryImpl(
         private val remoteService: IRemoteService,
-        private val localService: ILocalService
+        private val localService: ILocalService,
+        private val remoteMapper: Mapper<UserDataResponse, UserData>,
+        private val localMapper: Mapper<UserDataModel, UserData>
 ) : IRepository, CoroutineScope {
 
     // todo: Сделать привязку в Job'е
@@ -45,7 +49,7 @@ class RepositoryImpl(
 
     override suspend fun getUserData(): ReceiveChannel<UserData> = produce {
         val localData = localService.getUserData()
-        send(UserDataModelMapper().map(localData))
+        send(localMapper.map(localData))
 
         val credentials = localService.getCredentials()
 
@@ -53,7 +57,7 @@ class RepositoryImpl(
             val remoteData = remoteService.getUserData(credentials)
 
             if (remoteData != null) {
-                val userData = UserDataResponseMapper().map(remoteData)
+                val userData = remoteMapper.map(remoteData)
                 send(userData)
                 localService.saveUserData(userData)
             }
