@@ -1,6 +1,8 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.worker
 
 import android.content.Context
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
@@ -11,6 +13,7 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import kotlinx.coroutines.runBlocking
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import java.util.concurrent.TimeUnit
 
 class UpdateDataWorker(context: Context, params: WorkerParameters) : Worker(context, params), KoinComponent {
 
@@ -36,8 +39,21 @@ class UpdateDataWorker(context: Context, params: WorkerParameters) : Worker(cont
         return@runBlocking Result.failure()
     }
 
+    private fun restart() {
+        val request = OneTimeWorkRequest.Builder(UpdateDataWorker::class.java)
+                .setInitialDelay(24, TimeUnit.HOURS)
+                .build()
+
+        WorkManager.getInstance().enqueue(request)
+    }
+
     override fun doWork(): Result {
-        // todo: перезапуск этого воркера через 24 часа
-        return getData()
+        restart()
+
+        val result = getData()
+        if (result is Result.Success) {
+            // todo: уведомление
+        }
+        return result
     }
 }
