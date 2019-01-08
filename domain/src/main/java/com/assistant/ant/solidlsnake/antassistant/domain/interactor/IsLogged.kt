@@ -10,14 +10,15 @@ class IsLogged(
         private val repository: IRepository
 ) : UseCase<Unit, IsLoggedState>() {
     override suspend fun execute(action: (IsLoggedState) -> Unit) {
-        val credentials = repository.getCredentials().receiveOrNull()
+        val credentials = repository.getCredentials().receive()
 
         if (credentials == null) {
-            action(IsLoggedState.Error)
+            action(IsLoggedState.NoCredentialsError)
             return
         }
 
         val auth = repository.auth(credentials).receive()
-        action(if (auth) IsLoggedState.Success else IsLoggedState.AuthError)
+        val state = if (auth) IsLoggedState.Success else IsLoggedState.AuthError
+        action(state)
     }
 }

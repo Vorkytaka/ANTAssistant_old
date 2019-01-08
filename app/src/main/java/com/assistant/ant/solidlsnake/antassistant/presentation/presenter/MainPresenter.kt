@@ -3,6 +3,8 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.presenter
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.CanSetCredit
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.GetUserData
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.MaxAvailableCredit
+import com.assistant.ant.solidlsnake.antassistant.domain.state.CanSetCreditState
+import com.assistant.ant.solidlsnake.antassistant.domain.state.GetUserDataState
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +25,11 @@ class MainPresenter(
         _view?.setProgress(true)
 
         getUserDataUseCase.execute {
-            _view?.showUserData(UserDataUI(it))
+            when (it) {
+                is GetUserDataState.Result -> {
+                    _view?.showUserData(UserDataUI(it.data))
+                }
+            }
         }
 
         _view?.setProgress(false)
@@ -31,8 +37,10 @@ class MainPresenter(
 
     fun canSetCredit() = GlobalScope.launch(Dispatchers.Main) {
         canSetCredit.execute {
-            if (it) {
-                _view?.showCreditSnack()
+            when (it) {
+                CanSetCreditState.Can -> {
+                    _view?.showCreditSnack()
+                }
             }
         }
     }

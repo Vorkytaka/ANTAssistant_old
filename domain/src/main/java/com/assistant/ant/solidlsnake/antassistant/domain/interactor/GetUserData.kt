@@ -1,18 +1,17 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.interactor
 
-import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
-import kotlinx.coroutines.channels.consumeEach
+import com.assistant.ant.solidlsnake.antassistant.domain.state.GetUserDataState
 
 /**
  * Полученние данных о пользователе
  */
 class GetUserData(
         private val repository: IRepository
-) : UseCase<Unit, UserData>() {
-    override suspend fun execute(action: (UserData) -> Unit) {
-        repository.getUserData().consumeEach {
-            action(it)
+) : UseCase<Unit, GetUserDataState>() {
+    override suspend fun execute(action: (GetUserDataState) -> Unit) {
+        for (data in repository.getUserData()) {
+            action(GetUserDataState.Result(data))
         }
     }
 }

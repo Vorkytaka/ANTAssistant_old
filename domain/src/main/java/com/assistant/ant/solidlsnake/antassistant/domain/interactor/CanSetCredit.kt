@@ -1,14 +1,14 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.interactor
 
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
-import kotlinx.coroutines.channels.consumeEach
+import com.assistant.ant.solidlsnake.antassistant.domain.state.CanSetCreditState
 
 class CanSetCredit(
         private val repository: IRepository
-) : UseCase<Unit, Boolean>() {
-    override suspend fun execute(action: (Boolean) -> Unit) {
-        repository.canSetCredit().consumeEach {
-            action(it)
-        }
+) : UseCase<Unit, CanSetCreditState>() {
+    override suspend fun execute(action: (CanSetCreditState) -> Unit) {
+        val can = repository.canSetCredit().receive()
+        val state = if (can) CanSetCreditState.Can else CanSetCreditState.Cannot
+        action(state)
     }
 }

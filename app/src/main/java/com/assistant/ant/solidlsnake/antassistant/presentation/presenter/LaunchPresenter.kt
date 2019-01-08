@@ -20,7 +20,7 @@ class LaunchPresenter(
             when (it) {
                 is IsLoggedState.AuthError -> _view?.openMainScreen()
                 is IsLoggedState.Success -> _view?.openMainScreen()
-                is IsLoggedState.Error -> _view?.openAuthScreen()
+                is IsLoggedState.NoCredentialsError -> _view?.openAuthScreen()
             }
         }
     }
