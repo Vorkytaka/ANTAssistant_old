@@ -22,24 +22,24 @@ class MainPresenter(
     }
 
     fun getUserData() = GlobalScope.launch(Dispatchers.Main) {
-        _view?.setProgress(true)
+        view?.setProgress(true)
 
         getUserDataUseCase.execute {
             when (it) {
                 is GetUserDataState.Result -> {
-                    _view?.showUserData(UserDataUI(it.data))
+                    view?.showUserData(UserDataUI(it.data))
                 }
             }
         }
 
-        _view?.setProgress(false)
+        view?.setProgress(false)
     }
 
     fun canSetCredit() = GlobalScope.launch(Dispatchers.Main) {
         canSetCredit.execute {
             when (it) {
                 CanSetCreditState.Can -> {
-                    _view?.showCreditSnack()
+                    view?.showCreditSnack()
                 }
             }
         }

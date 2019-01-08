@@ -11,16 +11,16 @@ import kotlinx.coroutines.launch
 class AuthPresenter(private val authUseCase: Auth) : BasePresenter<AuthView>() {
 
     fun auth(login: String, password: String) = GlobalScope.launch(Dispatchers.Main) {
-        _view?.setProgress(true)
+        view?.setProgress(true)
 
         authUseCase.params(Credentials(login, password))
                 .execute {
                     when (it) {
-                        is AuthState.Success -> _view?.success()
-                        is AuthState.Error -> _view?.error()
+                        is AuthState.Success -> view?.success()
+                        is AuthState.Error -> view?.error()
                     }
                 }
 
-        _view?.setProgress(false)
+        view?.setProgress(false)
     }
 }
