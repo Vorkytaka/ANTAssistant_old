@@ -30,11 +30,14 @@ android {
 dependencies {
     implementation project(":domain")
 
-    implementation "com.chibatching.kotpref:kotpref:$kotpref_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-    implementation "org.jsoup:jsoup:$jsoup_version"
-    implementation "com.chibatching.kotpref:kotpref:$kotpref_version"
+    def dependencies = rootProject.ext.data_dependencies
+
+    implementation dependencies.kotlin_stdlib
+    implementation dependencies.coroutines
+    implementation dependencies.coroutines_android
+    implementation dependencies.kotpref
+    implementation dependencies.okhttp
+    implementation dependencies.jsoup
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

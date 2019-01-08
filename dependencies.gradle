@@ -1,0 +1,59 @@
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+ext {
+    android_compile_sdk_version = 28
+    android_min_sdk_version = 15
+    android_target_sdk_version = android_compile_sdk_version
+
+    // gradle
+    gradle_version = '3.1.4'
+
+    // kotlin
+    kotlin_version = '1.3.11'
+    kotlin_stdlib_version = '1.3.0'
+    coroutines_version = '1.0.0'
+
+    // android support
+    support_version = '28.0.0'
+    constraint_version = '1.1.3'
+
+    // other
+    jsoup_version = '1.11.3'
+    koin_version = '1.0.0-RC-1'
+    kotpref_version = '2.6.0'
+    okhttp_version = '3.11.0'
+
+    // testing
+    junit_version = '4.12'
+
+    // Основные зависимости для всех модулей
+    main_dependencies = [
+            kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
+            coroutines_android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    ]
+
+    domain_dependencies =
+            main_dependencies + []
+
+    data_dependencies =
+            main_dependencies + [
+            kotpref: "com.chibatching.kotpref:kotpref:$kotpref_version",
+            okhttp: "com.squareup.okhttp3:okhttp:$okhttp_version",
+            jsoup: "org.jsoup:jsoup:$jsoup_version"]
+
+    app_dependencies =
+            main_dependencies + [
+            koin: "org.koin:koin-android:$koin_version",
+            appcompat: "com.android.support:appcompat-v7:$support_version",
+            cardview: "com.android.support:cardview-v7:$support_version",
+            design: "com.android.support:design:$support_version",
+            kotpref: "com.chibatching.kotpref:kotpref:$kotpref_version",
+            okhttp: "com.squareup.okhttp3:okhttp:$okhttp_version",
+            constraint: "com.android.support.constraint:constraint-layout:$constraint_version"]
+}
