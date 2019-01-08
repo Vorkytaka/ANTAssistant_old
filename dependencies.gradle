@@ -21,6 +21,7 @@ ext {
     // android support
     support_version = '28.0.0'
     constraint_version = '1.1.3'
+    work_manager_version = '1.0.0-beta01'
 
     // other
     jsoup_version = '1.11.3'
@@ -55,5 +56,6 @@ ext {
             design: "com.android.support:design:$support_version",
             kotpref: "com.chibatching.kotpref:kotpref:$kotpref_version",
             okhttp: "com.squareup.okhttp3:okhttp:$okhttp_version",
-            constraint: "com.android.support.constraint:constraint-layout:$constraint_version"]
+            constraint: "com.android.support.constraint:constraint-layout:$constraint_version",
+            work_manager: "android.arch.work:work-runtime:$work_manager_version"]
 }
