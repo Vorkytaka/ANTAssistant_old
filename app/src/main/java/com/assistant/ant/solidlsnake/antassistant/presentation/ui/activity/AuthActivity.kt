@@ -16,13 +16,18 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.view.inputmethod.EditorInfo
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.orEmpty
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
+import com.assistant.ant.solidlsnake.antassistant.presentation.worker.UpdateDataWorker
 import kotlinx.android.synthetic.main.activity_auth.*
 import org.koin.android.ext.android.inject
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class AuthActivity : BaseActivity(), AuthView {
 
@@ -96,6 +101,7 @@ class AuthActivity : BaseActivity(), AuthView {
     }
 
     override fun success() {
+        initUpdater()
         setResult(Activity.RESULT_OK, intent)
         SimpleNavigator.goToMainScreen(this)
     }
@@ -163,5 +169,29 @@ class AuthActivity : BaseActivity(), AuthView {
         startAnimation.playTogether(authContainerAppearance, viewAppearance, btnConfirmAppearance)
         startAnimation.interpolator = OvershootInterpolator(0.5f)
         startAnimation.start()
+    }
+
+    private fun initUpdater() {
+        // Устанавливаем время на 00.01.00:00 следующего дня
+        val next = run {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 1)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            calendar.time.time
+        }
+
+        val now = System.currentTimeMillis()
+
+        val delay = next - now
+
+        val request = OneTimeWorkRequest.Builder(UpdateDataWorker::class.java)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .build()
+
+        WorkManager.getInstance().enqueue(request)
     }
 }
