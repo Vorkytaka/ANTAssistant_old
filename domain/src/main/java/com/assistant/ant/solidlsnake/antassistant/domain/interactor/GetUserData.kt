@@ -10,6 +10,8 @@ class GetUserData(
         private val repository: IRepository
 ) : UseCase<Unit, GetUserDataState>() {
     override suspend fun execute(action: (GetUserDataState) -> Unit) {
-        action(repository.getUserData().receive())
+        for (userData in repository.getUserData()) {
+            action(userData)
+        }
     }
 }
