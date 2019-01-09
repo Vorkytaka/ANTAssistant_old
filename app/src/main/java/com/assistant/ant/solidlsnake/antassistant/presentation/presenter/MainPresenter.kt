@@ -8,8 +8,6 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.CanSetCreditState
 import com.assistant.ant.solidlsnake.antassistant.domain.state.GetUserDataState
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainPresenter(
@@ -23,7 +21,7 @@ class MainPresenter(
         canSetCredit()
     }
 
-    fun getUserData() = GlobalScope.launch(Dispatchers.Main) {
+    fun getUserData() = launch {
         view?.setProgress(true)
 
         getUserDataUseCase.execute {
@@ -37,7 +35,7 @@ class MainPresenter(
         view?.setProgress(false)
     }
 
-    fun canSetCredit() = GlobalScope.launch(Dispatchers.Main) {
+    fun canSetCredit() = launch {
         canSetCredit.execute {
             when (it) {
                 CanSetCreditState.Can -> {
@@ -47,7 +45,7 @@ class MainPresenter(
         }
     }
 
-    fun logout() = GlobalScope.launch(Dispatchers.Main) {
+    fun logout() = launch {
         logoutUseCase.execute {
             view?.logout()
         }

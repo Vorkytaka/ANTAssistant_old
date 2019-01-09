@@ -4,13 +4,11 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.Login
 import com.assistant.ant.solidlsnake.antassistant.domain.state.AuthState
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class AuthPresenter(private val loginUseCase: Login) : BasePresenter<AuthView>() {
 
-    fun auth(login: String, password: String) = GlobalScope.launch(Dispatchers.Main) {
+    fun auth(login: String, password: String) = launch {
         view?.setProgress(true)
 
         loginUseCase.params(Credentials(login, password))
