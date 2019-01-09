@@ -54,8 +54,16 @@ class RepositoryImpl(
         TODO("not implemented")
     }
 
-    override suspend fun getUserData(): ReceiveChannel<GetUserDataState> {
-        TODO("not implemented")
+    override suspend fun getUserData(): ReceiveChannel<GetUserDataState> = produce {
+        val localData = localService.getUserData()
+        send(GetUserDataState.Result(localMapper(localData)))
+
+        localService.getCredentials()?.let { credentials ->
+            remoteService.getUserData(credentials)?.let {
+                val data = remoteMapper(it)
+                send(GetUserDataState.Result(data))
+            }
+        }
     }
 
     override suspend fun canSetCredit(): ReceiveChannel<CanSetCreditState> {
