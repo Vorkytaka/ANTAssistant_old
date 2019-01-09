@@ -39,8 +39,15 @@ class RepositoryImpl(
         send(state)
     }
 
-    override suspend fun login(credentials: Credentials): ReceiveChannel<AuthState> {
-        TODO("not implemented")
+    override suspend fun login(credentials: Credentials): ReceiveChannel<AuthState> = produce {
+        val isLogged = remoteService.auth(credentials)
+
+        if (isLogged) {
+            localService.setCredentials(credentials)
+            send(AuthState.Success)
+        } else {
+            send(AuthState.Error)
+        }
     }
 
     override suspend fun logout(): ReceiveChannel<Nothing> {
