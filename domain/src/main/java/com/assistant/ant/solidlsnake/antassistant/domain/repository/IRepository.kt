@@ -2,53 +2,42 @@ package com.assistant.ant.solidlsnake.antassistant.domain.repository
 
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Credentials
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
-import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
+import com.assistant.ant.solidlsnake.antassistant.domain.state.*
 import kotlinx.coroutines.channels.ReceiveChannel
 
 interface IRepository {
     /**
-     * Получение авторизационных данных пользователя
+     * Проверка залогинен ли пользователь
      */
-    suspend fun getCredentials(): ReceiveChannel<Credentials?>
+    suspend fun isLogged(): ReceiveChannel<IsLoggedState>
 
     /**
-     * Сохранение авторизационных данных пользователя
+     * Авторизация пользователя
      */
-    suspend fun setCredentials(credentials: Credentials)
+    suspend fun login(credentials: Credentials): ReceiveChannel<AuthState>
 
     /**
-     * Проверка корректности данных для входа
-     *
-     * @param credentials данные которые необходимо проверить
-     * @return true если данные для входа корректны, иначе false
+     * Выход из приложения
      */
-    suspend fun auth(credentials: Credentials): ReceiveChannel<Boolean>
+    suspend fun logout(): ReceiveChannel<Nothing>
 
     /**
      * Получение информации о пользователе
      */
-    suspend fun getUserData(): ReceiveChannel<UserData>
+    suspend fun getUserData(): ReceiveChannel<GetUserDataState>
 
     /**
      * Определение, можем ли мы выставить кредит доверия
-     *
-     * @return  true - если можем выставить кредит доверия
-     *          false - иначе
      */
-    suspend fun canSetCredit(): ReceiveChannel<Boolean>
+    suspend fun canSetCredit(): ReceiveChannel<CanSetCreditState>
 
     /**
      * Получение максимально возможного значения кредита доверия
-     *
-     * @return максимально возможный на данный момент кредит значения
      */
-    suspend fun maxAvailableCredit(): ReceiveChannel<CreditValue>
+    suspend fun maxAvailableCredit(): ReceiveChannel<MaxAvailableCreditState>
 
     /**
      * Установление кредита доверия
-     *
-     * @return  true - если кредит доверия установлен успешно
-     *          false - в противном случае
      */
-    suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Boolean>
+    suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Nothing>
 }
