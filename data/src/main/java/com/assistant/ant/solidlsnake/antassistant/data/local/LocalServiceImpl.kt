@@ -51,4 +51,9 @@ class LocalServiceImpl(
         accountHolder.saveAccount(credentials)
     }
 
+    override suspend fun clear() {
+        UserPref.clear()
+        accountHolder.removeAccount()
+    }
+
 }

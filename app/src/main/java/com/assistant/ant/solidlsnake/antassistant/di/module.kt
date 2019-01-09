@@ -29,9 +29,10 @@ val appModule = module {
     factory { IsLogged(get()) }
     factory { CanSetCredit(get()) }
     factory { MaxAvailableCredit(get()) }
+    factory { Logout(get()) }
 
     factory { AuthPresenter(get()) }
-    factory { MainPresenter(get(), get(), get()) }
+    factory { MainPresenter(get(), get(), get(), get()) }
     factory { LaunchPresenter(get()) }
 }
 

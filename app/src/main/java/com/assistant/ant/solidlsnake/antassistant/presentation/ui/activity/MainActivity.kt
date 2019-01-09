@@ -6,9 +6,13 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.assistant.ant.solidlsnake.antassistant.R
+import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.MarginDivider
@@ -19,6 +23,10 @@ import kotlinx.android.synthetic.main.bottom_sheet_credit.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), MainView {
+
+    companion object {
+        private const val MENU_EXIT_ID = 1
+    }
 
     private val presenter: MainPresenter by inject()
 
@@ -78,6 +86,23 @@ class MainActivity : BaseActivity(), MainView {
         presenter.detachView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.add(0, MENU_EXIT_ID, 0, R.string.s_main_logout)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            MENU_EXIT_ID -> {
+                showLogoutDialog()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     override fun setProgress(progress: Boolean) {
         swipe_view.isRefreshing = progress
     }
@@ -98,5 +123,18 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun showCreditSnack() {
         creditBottomSheet.state = BottomSheetBehavior.STATE_SETTLING
+    }
+
+    override fun logout() {
+        SimpleNavigator.goToAuthScreen(this)
+        finish()
+    }
+
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(this)
+                .setMessage(R.string.s_main_logout_message)
+                .setPositiveButton(R.string.yes) { _, _ -> presenter.logout() }
+                .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
+                .show()
     }
 }

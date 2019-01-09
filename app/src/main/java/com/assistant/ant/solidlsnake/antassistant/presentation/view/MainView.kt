@@ -6,4 +6,5 @@ interface MainView : BaseView {
     fun setProgress(progress: Boolean)
     fun showUserData(data: UserDataUI)
     fun showCreditSnack()
+    fun logout()
 }

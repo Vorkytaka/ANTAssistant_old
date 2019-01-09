@@ -50,8 +50,9 @@ class RepositoryImpl(
         }
     }
 
-    override suspend fun logout(): ReceiveChannel<Nothing> {
-        TODO("not implemented")
+    override suspend fun logout(): ReceiveChannel<Unit> = produce {
+        localService.clear()
+        send(Unit)
     }
 
     override suspend fun getUserData(): ReceiveChannel<GetUserDataState> = produce {

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">ANTAssistant</string>
 
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
     <string name="s_auth_login_hint">Логин</string>
     <string name="s_auth_password_hint">Пароль</string>
     <string name="s_auth_confirm_hint">Войти</string>
@@ -8,4 +11,6 @@
     <string name="s_auth_phone_text">Звонок в службу поддержки\n+7 (495) 940–92–11</string>
 
     <string name="s_main_copy_message">Скопировано в буфер обмена</string>
+    <string name="s_main_logout_message">Вы действительно хотите выйти?</string>
+    <string name="s_main_logout">Выйти</string>
 </resources>

@@ -19,7 +19,7 @@ interface IRepository {
     /**
      * Выход из приложения
      */
-    suspend fun logout(): ReceiveChannel<Nothing>
+    suspend fun logout(): ReceiveChannel<Unit>
 
     /**
      * Получение информации о пользователе
