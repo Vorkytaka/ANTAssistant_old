@@ -10,6 +10,6 @@ class IsLogged(
         private val repository: IRepository
 ) : UseCase<Unit, IsLoggedState>() {
     override suspend fun execute(action: (IsLoggedState) -> Unit) {
-        TODO()
+        action(repository.isLogged().receive())
     }
 }

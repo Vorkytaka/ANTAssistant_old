@@ -24,7 +24,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 
 val appModule = module {
-    factory { Auth(get()) }
+    factory { Login(get()) }
     factory { GetUserData(get()) }
     factory { IsLogged(get()) }
     factory { CanSetCredit(get()) }

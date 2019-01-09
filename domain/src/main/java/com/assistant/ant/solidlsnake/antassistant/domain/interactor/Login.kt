@@ -7,10 +7,11 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.AuthState
 /**
  * Авторизация пользователя
  */
-class Auth(
+class Login(
         private val repository: IRepository
 ) : UseCase<Credentials, AuthState>() {
     override suspend fun execute(action: (AuthState) -> Unit) {
-        TODO()
+        val credentials = params ?: throw IllegalStateException()
+        action(repository.login(credentials).receive())
     }
 }

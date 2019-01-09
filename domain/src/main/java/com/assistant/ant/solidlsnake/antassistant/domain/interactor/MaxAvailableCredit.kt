@@ -7,6 +7,6 @@ class MaxAvailableCredit(
         private val repository: IRepository
 ) : UseCase<Unit, MaxAvailableCreditState>() {
     override suspend fun execute(action: (MaxAvailableCreditState) -> Unit) {
-        TODO()
+        action(repository.maxAvailableCredit().receive())
     }
 }

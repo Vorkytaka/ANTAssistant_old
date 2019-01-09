@@ -7,6 +7,6 @@ class CanSetCredit(
         private val repository: IRepository
 ) : UseCase<Unit, CanSetCreditState>() {
     override suspend fun execute(action: (CanSetCreditState) -> Unit) {
-        TODO()
+        action(repository.canSetCredit().receive())
     }
 }
