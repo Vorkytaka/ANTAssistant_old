@@ -13,6 +13,7 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.produce
 import kotlin.coroutines.CoroutineContext
 
 class RepositoryImpl(
@@ -25,8 +26,17 @@ class RepositoryImpl(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
-    override suspend fun isLogged(): ReceiveChannel<IsLoggedState> {
-        TODO("not implemented")
+    override suspend fun isLogged(): ReceiveChannel<IsLoggedState> = produce {
+        val credentials = localService.getCredentials()
+
+        if (credentials == null) {
+            send(IsLoggedState.NoCredentialsError)
+            return@produce
+        }
+
+        val isLogged = remoteService.auth(credentials)
+        val state = if (isLogged) IsLoggedState.Success else IsLoggedState.AuthError
+        send(state)
     }
 
     override suspend fun login(credentials: Credentials): ReceiveChannel<AuthState> {
