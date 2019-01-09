@@ -66,8 +66,8 @@ class RepositoryImpl(
         }
     }
 
-    override suspend fun canSetCredit(): ReceiveChannel<CanSetCreditState> {
-        TODO("not implemented")
+    override suspend fun canSetCredit(): ReceiveChannel<CanSetCreditState> = produce {
+        send(CanSetCreditState.Cannot)
     }
 
     override suspend fun maxAvailableCredit(): ReceiveChannel<MaxAvailableCreditState> {
