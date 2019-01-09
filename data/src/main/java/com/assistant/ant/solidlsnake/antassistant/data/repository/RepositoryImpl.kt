@@ -62,6 +62,7 @@ class RepositoryImpl(
         localService.getCredentials()?.let { credentials ->
             remoteService.getUserData(credentials)?.let {
                 val data = remoteMapper(it)
+                localService.saveUserData(data)
                 send(GetUserDataState.Result(data))
             }
         }
