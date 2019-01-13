@@ -1,7 +1,8 @@
 package com.assistant.ant.solidlsnake.antassistant.data.remote.parser
 
 import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import java.util.regex.Pattern
 
@@ -25,72 +26,66 @@ class Parser {
         data.state_balance = balance
 
         val tables = doc.select("td.tables")
-        val jobs = arrayListOf<Job>()
         for (i in 0 until tables.size step 3) {
-            val job = GlobalScope.launch {
-                when (tables[i].ownText()) {
-                    "Код плательщика" -> {
-                        val userId = tables[i + 1].text()
-                        data.userId = userId
-                    }
-                    "Тариф" -> {
-                        val tariffStr = tables[i + 1].text()
+            when (tables[i].ownText()) {
+                "Код плательщика" -> {
+                    val userId = tables[i + 1].text()
+                    data.userId = userId
+                }
+                "Тариф" -> {
+                    val tariffStr = tables[i + 1].text()
 
-                        val name = tariffStr.substring(0, tariffStr.indexOf(':'))
-                        data.tariff_name = name
+                    val name = tariffStr.substring(0, tariffStr.indexOf(':'))
+                    data.tariff_name = name
 
-                        var pattern = Pattern.compile("\\d{3,}")
-                        var matcher = pattern.matcher(tariffStr)
+                    var pattern = Pattern.compile("\\d{3,}")
+                    var matcher = pattern.matcher(tariffStr)
 
-                        if (matcher.find()) {
-                            val price = Math.round(matcher.group(0).toDouble() / 10.0) * 10.0
-                            data.tariff_price = price
-                        }
+                    if (matcher.find()) {
+                        val price = Math.round(matcher.group(0).toDouble() / 10.0) * 10.0
+                        data.tariff_price = price
+                    }
 
-                        pattern = Pattern.compile("\\d+/\\d+")
-                        matcher = pattern.matcher(tariffStr)
+                    pattern = Pattern.compile("\\d+/\\d+")
+                    matcher = pattern.matcher(tariffStr)
 
-                        if (matcher.find()) {
-                            val speeds = matcher.group().split("/")
+                    if (matcher.find()) {
+                        val speeds = matcher.group().split("/")
 
-                            val downloadSpeed = speeds[0].toInt()
-                            val uploadSpeed = speeds[1].toInt()
+                        val downloadSpeed = speeds[0].toInt()
+                        val uploadSpeed = speeds[1].toInt()
 
-                            data.tariff_downloadSpeed = downloadSpeed
-                            data.tariff_uploadSpeed = uploadSpeed
-                        }
-                    }
-                    "Кредит доверия, руб" -> {
-                        val credit = tables[i + 1].text().toInt()
-                        data.state_credit = credit
-                    }
-                    "Статус учетной записи" -> {
-                        val statusStr = tables[i + 1].text()
-                        val status = statusStr == STATUS_ACTIVE
-                        data.state_status = status
-                    }
-                    "Скачано за текущий месяц" -> {
-                        val downloaded = tables[i + 1].text().replace(" ( Мб. )", "").toInt()
-                        data.state_downloaded = downloaded
-                    }
-                    "Учетная запись" -> {
-                        val accountName = tables[i + 1].text()
-                        data.accountName = accountName
-                    }
-                    "Ваш DynDNS" -> {
-                        val dns = tables[i + 1].text()
-                        data.dynDns = dns
-                    }
-                    "SMS-информирование" -> {
-                        val smsInfoString = tables[i + 1].text()
-                        data.state_smsInfo = "Отключено" != smsInfoString
+                        data.tariff_downloadSpeed = downloadSpeed
+                        data.tariff_uploadSpeed = uploadSpeed
                     }
                 }
+                "Кредит доверия, руб" -> {
+                    val credit = tables[i + 1].text().toInt()
+                    data.state_credit = credit
+                }
+                "Статус учетной записи" -> {
+                    val statusStr = tables[i + 1].text()
+                    val status = statusStr == STATUS_ACTIVE
+                    data.state_status = status
+                }
+                "Скачано за текущий месяц" -> {
+                    val downloaded = tables[i + 1].text().replace(" ( Мб. )", "").toInt()
+                    data.state_downloaded = downloaded
+                }
+                "Учетная запись" -> {
+                    val accountName = tables[i + 1].text()
+                    data.accountName = accountName
+                }
+                "Ваш DynDNS" -> {
+                    val dns = tables[i + 1].text()
+                    data.dynDns = dns
+                }
+                "SMS-информирование" -> {
+                    val smsInfoString = tables[i + 1].text()
+                    data.state_smsInfo = "Отключено" != smsInfoString
+                }
             }
-            jobs.add(job)
         }
-
-        joinAll(*jobs.toTypedArray())
 
         data
     }
