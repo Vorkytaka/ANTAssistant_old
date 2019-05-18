@@ -1,51 +1,60 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
+import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
-import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.MarginDivider
-import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.UserInfoAdapter
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.InfoFragment
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), MainView {
 
-    companion object {
-        private const val MENU_EXIT_ID = 1
-    }
-
     private val presenter: MainPresenter by inject()
 
-    private val adapter = UserInfoAdapter()
+    private val updateAnimator by lazy {
+        val anim = ObjectAnimator.ofFloat(btn_update, View.ROTATION, 0f, -360f)
+        anim.duration = 1000
+        anim.repeatCount = ValueAnimator.INFINITE
+        anim.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                btn_update.isEnabled = false
+            }
 
-    private val clipboardManager: ClipboardManager by lazy {
-        getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            override fun onAnimationEnd(animation: Animator?) {
+                btn_update.isEnabled = true
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+                if (stopUpdateAnimation) {
+                    animation?.end()
+                    stopUpdateAnimation = false
+                }
+            }
+        })
+        anim
     }
+
+
+    private var stopUpdateAnimation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        main_view_pager.adapter = Adapter(supportFragmentManager)
 
-        data.adapter = adapter
-        data.layoutManager = LinearLayoutManager(baseContext)
-        data.addItemDecoration(MarginDivider(3))
-
-        adapter.itemClickListener = {
-            val data = ClipData.newPlainText("ANTData", it.info.text)
-            clipboardManager.primaryClip = data
-            Toast.makeText(this, R.string.s_main_copy_message, Toast.LENGTH_SHORT).show()
-        }
-
-        srl_data.setOnRefreshListener {
+        btn_update.setOnClickListener {
             presenter.getUserData()
         }
     }
@@ -61,7 +70,11 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun setProgress(progress: Boolean) {
-        srl_data.isRefreshing = progress
+        if (progress) {
+            updateAnimator.start()
+        } else {
+            stopUpdateAnimation = true
+        }
     }
 
     override fun showUserData(data: UserDataUI) {
@@ -75,7 +88,7 @@ class MainActivity : BaseActivity(), MainView {
         tv_days_value.text = daysLeft.toInt().toString()
 
         tv_credit_value.text = credit.toString()
-        adapter.setData(data.getList())
+//        adapter.setData(data.getList())
     }
 
     override fun showCreditSnack() {
@@ -93,5 +106,13 @@ class MainActivity : BaseActivity(), MainView {
                 .setPositiveButton(R.string.yes) { _, _ -> presenter.logout() }
                 .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
                 .show()
+    }
+
+    private class Adapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+        override fun getItem(p0: Int): Fragment {
+            return InfoFragment()
+        }
+
+        override fun getCount(): Int = 1
     }
 }

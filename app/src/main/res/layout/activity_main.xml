@@ -34,6 +34,16 @@
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
 
+            <ImageView
+                android:id="@+id/btn_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_update"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_deposit_hint"
                 android:layout_width="wrap_content"
@@ -106,28 +116,14 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_data"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_base_info">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/data"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            tools:listitem="@layout/item_user_info" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        app:layout_constraintTop_toBottomOf="@+id/card_base_info" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/menu"
