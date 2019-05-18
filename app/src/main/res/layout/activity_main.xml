@@ -31,7 +31,8 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/tv_deposit_hint"
@@ -47,8 +48,9 @@
                 android:id="@+id/tv_deposit_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="36sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="40sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_deposit_hint"
@@ -58,8 +60,11 @@
                 android:id="@+id/tv_days_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Дней осталось"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_credit_hint"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_deposit_value" />
 
@@ -67,8 +72,9 @@
                 android:id="@+id/tv_days_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_days_hint"
                 app:layout_constraintStart_toStartOf="@+id/tv_days_hint"
                 app:layout_constraintTop_toBottomOf="@+id/tv_days_hint"
@@ -81,17 +87,19 @@
                 android:text="Кредит доверия"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_deposit_value" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_days_hint"
+                app:layout_constraintTop_toTopOf="@+id/tv_days_hint" />
 
             <TextView
                 android:id="@+id/tv_credit_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_credit_hint"
                 app:layout_constraintStart_toStartOf="@+id/tv_credit_hint"
-                app:layout_constraintTop_toBottomOf="@+id/tv_credit_hint"
+                app:layout_constraintTop_toTopOf="@+id/tv_days_value"
                 tools:text="300" />
 
         </android.support.constraint.ConstraintLayout>
@@ -105,6 +113,7 @@
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
