@@ -76,10 +76,19 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun setProgress(progress: Boolean) {
-
     }
 
     override fun showUserData(data: UserDataUI) {
+        tv_deposit_value.text = data.userData.state.balance.toString() + " \u20BD"
+        val credit = data.userData.state.credit
+        val balance = data.userData.state.balance
+        val payForDay = data.userData.tariff.price / 30
+
+//         todo: Проверить правильный подсчет дней
+        val daysLeft = balance / payForDay
+        tv_days_value.text = daysLeft.toInt().toString()
+
+        tv_credit_value.text = credit.toString()
         adapter.setData(data.getList())
     }
 
