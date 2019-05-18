@@ -6,8 +6,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
@@ -46,6 +44,10 @@ class MainActivity : BaseActivity(), MainView {
             clipboardManager.primaryClip = data
             Toast.makeText(this, R.string.s_main_copy_message, Toast.LENGTH_SHORT).show()
         }
+
+        srl_data.setOnRefreshListener {
+            presenter.getUserData()
+        }
     }
 
     override fun onStart() {
@@ -58,24 +60,8 @@ class MainActivity : BaseActivity(), MainView {
         presenter.detachView()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menu.add(0, MENU_EXIT_ID, 0, R.string.s_main_logout)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            MENU_EXIT_ID -> {
-                showLogoutDialog()
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
-
     override fun setProgress(progress: Boolean) {
+        srl_data.isRefreshing = progress
     }
 
     override fun showUserData(data: UserDataUI) {
