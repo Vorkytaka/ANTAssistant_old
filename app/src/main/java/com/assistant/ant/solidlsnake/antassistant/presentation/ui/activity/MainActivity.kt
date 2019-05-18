@@ -4,8 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -19,7 +17,6 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.Margin
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.UserInfoAdapter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.bottom_sheet_credit.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), MainView {
@@ -36,15 +33,9 @@ class MainActivity : BaseActivity(), MainView {
         getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
-    private val creditBottomSheet by lazy {
-        BottomSheetBehavior.from(bs_credit)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setSupportActionBar(toolbar)
 
         data.adapter = adapter
         data.layoutManager = LinearLayoutManager(baseContext)
@@ -55,25 +46,6 @@ class MainActivity : BaseActivity(), MainView {
             clipboardManager.primaryClip = data
             Toast.makeText(this, R.string.s_main_copy_message, Toast.LENGTH_SHORT).show()
         }
-
-        bs_credit_header.setOnClickListener {
-            creditBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-
-        creditBottomSheet.isHideable = true
-        creditBottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-
-        swipe_view.setOnRefreshListener {
-            presenter.getUserData()
-        }
-
-        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, offset ->
-            val enable = offset == 0
-
-            if (enable != swipe_view.isEnabled) {
-                swipe_view.isEnabled = enable
-            }
-        })
     }
 
     override fun onStart() {
@@ -104,25 +76,15 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun setProgress(progress: Boolean) {
-        swipe_view.isRefreshing = progress
+
     }
 
     override fun showUserData(data: UserDataUI) {
-        ctoolbar.title = data.userData.state.balance.toString() + " \u20BD"
-        val credit = data.userData.state.credit
-        val balance = data.userData.state.balance
-        val payForDay = data.userData.tariff.price / 30
-
-        // todo: Проверить правильный подсчет дней
-        val daysLeft = balance / payForDay
-        tv_days_left.text = daysLeft.toInt().toString()
-
-        tv_credit.text = credit.toString()
         adapter.setData(data.getList())
     }
 
     override fun showCreditSnack() {
-        creditBottomSheet.state = BottomSheetBehavior.STATE_SETTLING
+//        creditBottomSheet.state = BottomSheetBehavior.STATE_SETTLING
     }
 
     override fun logout() {
