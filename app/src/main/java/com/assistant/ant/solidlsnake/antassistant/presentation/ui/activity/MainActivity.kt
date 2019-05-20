@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AlertDialog
 import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
@@ -126,14 +125,6 @@ class MainActivity : BaseActivity(), MainView {
     override fun logout() {
         SimpleNavigator.goToAuthScreen(this)
         finish()
-    }
-
-    private fun showLogoutDialog() {
-        AlertDialog.Builder(this)
-                .setMessage(R.string.s_main_logout_message)
-                .setPositiveButton(R.string.yes) { _, _ -> presenter.logout() }
-                .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
-                .show()
     }
 
     private inner class Adapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {

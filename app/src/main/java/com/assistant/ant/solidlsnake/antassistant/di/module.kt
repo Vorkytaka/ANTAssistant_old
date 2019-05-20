@@ -20,6 +20,7 @@ import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
+import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 
@@ -32,8 +33,9 @@ val appModule = module {
     factory { Logout(get()) }
 
     factory { AuthPresenter(get()) }
-    factory { MainPresenter(get(), get(), get(), get()) }
+    factory { MainPresenter(get(), get(), get()) }
     factory { LaunchPresenter(get()) }
+    factory { SettingsPresenter(get()) }
 }
 
 val dataModule = module {
