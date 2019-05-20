@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
 import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
@@ -14,6 +15,7 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.InfoFragment
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.SettingsFragment
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.toInfinite
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,6 +42,8 @@ class MainActivity : BaseActivity(), MainView {
 
     private val infoFragment: InfoFragment = InfoFragment()
 
+    private val settingsFragment: SettingsFragment = SettingsFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,6 +52,39 @@ class MainActivity : BaseActivity(), MainView {
         btn_update.setOnClickListener {
             presenter.getUserData()
         }
+
+        menu.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> {
+                    main_view_pager.currentItem = 0
+                    true
+                }
+                R.id.settings -> {
+                    main_view_pager.currentItem = 1
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+
+        main_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(p0: Int) {}
+
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
+
+            override fun onPageSelected(p0: Int) {
+                when (p0) {
+                    0 -> {
+                        menu.selectedItemId = R.id.home
+                    }
+                    1 -> {
+                        menu.selectedItemId = R.id.settings
+                    }
+                }
+            }
+        })
     }
 
     override fun onStart() {
@@ -100,10 +137,14 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     private inner class Adapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
-        override fun getItem(p0: Int): Fragment {
-            return infoFragment
+        override fun getItem(item: Int): Fragment {
+            return when (item) {
+                0 -> infoFragment
+                1 -> settingsFragment
+                else -> throw IllegalStateException()
+            }
         }
 
-        override fun getCount(): Int = 1
+        override fun getCount(): Int = 2
     }
 }
