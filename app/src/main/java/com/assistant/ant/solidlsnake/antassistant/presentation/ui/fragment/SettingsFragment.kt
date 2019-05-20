@@ -29,6 +29,7 @@ class SettingsFragment : Fragment(), SettingsView {
             settings_notification_switcher.isChecked = checked
             TransitionManager.beginDelayedTransition(view as ViewGroup)
             settings_notification_time.visibility = if (checked) View.VISIBLE else View.GONE
+            settings_notification_days.visibility = if (checked) View.VISIBLE else View.GONE
         }
     }
 
