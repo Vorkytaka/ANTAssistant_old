@@ -1,6 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment
 
 import android.os.Bundle
+import android.support.transition.TransitionManager
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
@@ -22,6 +23,13 @@ class SettingsFragment : Fragment(), SettingsView {
         presenter.attachView(this)
 
         btn_logout.setOnClickListener { showLogoutDialog() }
+
+        settings_notification.setOnClickListener {
+            val checked = !settings_notification_switcher.isChecked
+            settings_notification_switcher.isChecked = checked
+            TransitionManager.beginDelayedTransition(view as ViewGroup)
+            settings_notification_time.visibility = if (checked) View.VISIBLE else View.GONE
+        }
     }
 
     override fun onDestroy() {
