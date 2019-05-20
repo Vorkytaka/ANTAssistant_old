@@ -38,6 +38,8 @@ class MainActivity : BaseActivity(), MainView {
                 })
     }
 
+    private val infoFragment: InfoFragment = InfoFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -77,7 +79,7 @@ class MainActivity : BaseActivity(), MainView {
         tv_days_value.text = daysLeft.toInt().toString()
 
         tv_credit_value.text = credit.toString()
-//        adapter.setData(data.getList())
+        infoFragment.setData(data)
     }
 
     override fun showCreditSnack() {
@@ -97,9 +99,9 @@ class MainActivity : BaseActivity(), MainView {
                 .show()
     }
 
-    private class Adapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private inner class Adapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         override fun getItem(p0: Int): Fragment {
-            return InfoFragment()
+            return infoFragment
         }
 
         override fun getCount(): Int = 1
