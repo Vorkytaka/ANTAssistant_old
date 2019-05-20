@@ -3,7 +3,6 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -15,6 +14,7 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.InfoFragment
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.toInfinite
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
@@ -24,30 +24,19 @@ class MainActivity : BaseActivity(), MainView {
     private val presenter: MainPresenter by inject()
 
     private val updateAnimator by lazy {
-        val anim = ObjectAnimator.ofFloat(btn_update, View.ROTATION, 0f, -360f)
-        anim.duration = 1000
-        anim.repeatCount = ValueAnimator.INFINITE
-        anim.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
-                btn_update.isEnabled = false
-            }
+        ObjectAnimator.ofFloat(btn_update, View.ROTATION, 0f, -360f)
+                .setDuration(1000)
+                .toInfinite()
+                .addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animation: Animator?) {
+                        btn_update.isEnabled = false
+                    }
 
-            override fun onAnimationEnd(animation: Animator?) {
-                btn_update.isEnabled = true
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {
-                if (stopUpdateAnimation) {
-                    animation?.end()
-                    stopUpdateAnimation = false
-                }
-            }
-        })
-        anim
+                    override fun onAnimationEnd(animation: Animator?) {
+                        btn_update.isEnabled = true
+                    }
+                })
     }
-
-
-    private var stopUpdateAnimation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +62,7 @@ class MainActivity : BaseActivity(), MainView {
         if (progress) {
             updateAnimator.start()
         } else {
-            stopUpdateAnimation = true
+            updateAnimator.endOnNext()
         }
     }
 
