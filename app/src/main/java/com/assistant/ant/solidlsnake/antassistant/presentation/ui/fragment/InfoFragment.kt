@@ -1,25 +1,17 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment
 
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
-import com.assistant.ant.solidlsnake.antassistant.presentation.model.generateList
-import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.MarginDivider
-import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.UserInfoAdapter
 import kotlinx.android.synthetic.main.fragment_info.*
 
 class InfoFragment : Fragment() {
-
-    private val adapter = UserInfoAdapter()
 
     private val clipboardManager: ClipboardManager by lazy {
         requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -29,21 +21,17 @@ class InfoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_info, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        data.adapter = adapter
-        data.layoutManager = LinearLayoutManager(requireContext())
-        data.addItemDecoration(MarginDivider(3))
-
-        adapter.itemClickListener = {
-            val data = ClipData.newPlainText("ANTData", it.info.text)
-            clipboardManager.primaryClip = data
-            Toast.makeText(context, R.string.s_main_copy_message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     fun setData(data: UserData) {
-        adapter.setData(data.generateList())
+        tv_account_name_value.text = data.accountName
+        tv_user_id_value.text = data.userId
+        iv_status_image.setImageResource(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
+        tv_status_value.text = if (data.state.status) "Активна" else "Неактивна"
+        tv_tariff_name_value.text = data.tariff.name
+        tv_price_month_value.text = data.tariff.price.toString()
+        tv_price_day_value.text = data.pricePerDay.toString()
+        tv_downloaded_value.text = data.state.downloaded.toString()
+        tv_download_speed_value.text = data.tariff.downloadSpeed.toString()
+        tv_upload_speed_value.text = data.tariff.uploadSpeed.toString()
+        tv_dyn_dns_value.text = data.dynDns
     }
 }
