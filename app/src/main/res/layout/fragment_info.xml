@@ -9,6 +9,7 @@
     android:overScrollMode="never"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
+    android:scrollbars="none"
     tools:ignore="NewApi,UnusedAttribute">
 
     <LinearLayout
