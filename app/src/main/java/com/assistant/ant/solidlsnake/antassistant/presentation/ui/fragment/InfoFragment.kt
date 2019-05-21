@@ -27,11 +27,15 @@ class InfoFragment : Fragment() {
         iv_status_image.setImageResource(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
         tv_status_value.text = if (data.state.status) "Активна" else "Неактивна"
         tv_tariff_name_value.text = data.tariff.name
-        tv_price_month_value.text = data.tariff.price.toString()
-        tv_price_day_value.text = data.pricePerDay.toString()
-        tv_downloaded_value.text = data.state.downloaded.toString()
-        tv_download_speed_value.text = data.tariff.downloadSpeed.toString()
-        tv_upload_speed_value.text = data.tariff.uploadSpeed.toString()
+        tv_price_month_value.text = formatStringWithRuble.format(data.tariff.price)
+        tv_price_day_value.text = formatStringWithRuble.format(data.pricePerDay)
+        tv_downloaded_value.text = "${data.state.downloaded} Мб"
+        tv_download_speed_value.text = "${data.tariff.downloadSpeed} Мб"
+        tv_upload_speed_value.text = "${data.tariff.uploadSpeed} Мб"
         tv_dyn_dns_value.text = data.dynDns
+    }
+
+    companion object {
+        private const val formatStringWithRuble = "%.1f \u20BD"
     }
 }
