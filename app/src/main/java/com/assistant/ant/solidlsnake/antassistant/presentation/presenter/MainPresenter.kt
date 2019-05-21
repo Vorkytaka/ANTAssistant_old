@@ -5,7 +5,6 @@ import com.assistant.ant.solidlsnake.antassistant.domain.interactor.GetUserData
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.MaxAvailableCredit
 import com.assistant.ant.solidlsnake.antassistant.domain.state.CanSetCreditState
 import com.assistant.ant.solidlsnake.antassistant.domain.state.GetUserDataState
-import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.coroutines.launch
 
@@ -25,7 +24,7 @@ class MainPresenter(
         getUserDataUseCase.execute {
             when (it) {
                 is GetUserDataState.Result -> {
-                    view?.showUserData(UserDataUI(it.data))
+                    view?.showUserData(it.data)
                 }
             }
         }

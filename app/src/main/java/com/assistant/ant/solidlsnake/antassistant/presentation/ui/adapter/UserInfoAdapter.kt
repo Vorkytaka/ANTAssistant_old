@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.assistant.ant.solidlsnake.antassistant.R
-import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
+import com.assistant.ant.solidlsnake.antassistant.presentation.model.ListObject
 
 class UserInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val data: MutableList<UserDataUI.ListObject> = ArrayList()
+    private val data: MutableList<ListObject> = ArrayList()
     var itemClickListener: ((ViewHolder) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
@@ -44,7 +44,7 @@ class UserInfoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = data.size
 
-    fun setData(data: Collection<UserDataUI.ListObject>) {
+    fun setData(data: Collection<ListObject>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()

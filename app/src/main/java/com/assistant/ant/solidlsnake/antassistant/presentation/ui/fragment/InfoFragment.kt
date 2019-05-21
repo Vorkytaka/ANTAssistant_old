@@ -11,7 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.assistant.ant.solidlsnake.antassistant.R
-import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
+import com.assistant.ant.solidlsnake.antassistant.presentation.model.generateList
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.MarginDivider
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.adapter.UserInfoAdapter
 import kotlinx.android.synthetic.main.fragment_info.*
@@ -42,7 +43,7 @@ class InfoFragment : Fragment() {
         }
     }
 
-    fun setData(data: UserDataUI) {
-        adapter.setData(data.getList())
+    fun setData(data: UserData) {
+        adapter.setData(data.generateList())
     }
 }

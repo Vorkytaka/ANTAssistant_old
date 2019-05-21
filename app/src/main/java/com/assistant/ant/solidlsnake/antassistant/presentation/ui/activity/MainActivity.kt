@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
-import com.assistant.ant.solidlsnake.antassistant.presentation.model.UserDataUI
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.InfoFragment
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.SettingsFragment
@@ -104,11 +104,11 @@ class MainActivity : BaseActivity(), MainView {
         }
     }
 
-    override fun showUserData(data: UserDataUI) {
-        tv_deposit_value.text = data.userData.state.balance.toString() + " \u20BD"
-        val credit = data.userData.state.credit
-        val balance = data.userData.state.balance
-        val payForDay = data.userData.tariff.price / 30
+    override fun showUserData(data: UserData) {
+        tv_deposit_value.text = data.state.balance.toString() + " \u20BD"
+        val credit = data.state.credit
+        val balance = data.state.balance
+        val payForDay = data.tariff.price / 30
 
 //         todo: Проверить правильный подсчет дней
         val daysLeft = balance / payForDay

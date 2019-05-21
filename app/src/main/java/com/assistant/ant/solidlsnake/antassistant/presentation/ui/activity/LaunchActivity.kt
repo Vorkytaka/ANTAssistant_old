@@ -16,10 +16,12 @@ class LaunchActivity : BaseActivity(), LaunchView {
     }
 
     override fun openAuthScreen() {
+        overridePendingTransition(0, 0)
         SimpleNavigator.goToAuthScreen(this)
     }
 
     override fun openMainScreen() {
         SimpleNavigator.goToMainScreen(this)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }
