@@ -105,7 +105,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun showUserData(data: UserData) {
-        tv_deposit_value.text = data.state.balance.toString() + " \u20BD"
+        tv_deposit_value.text = "%.1f \u20BD".format(data.state.balance)
         val credit = data.state.credit
 
         tv_days_value.text = data.daysLeft.toString()
