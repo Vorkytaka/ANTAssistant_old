@@ -16,7 +16,7 @@ fun UserData.generateList() = listOf(
         ListObject("Состояние", if (this.state.status) "Активна" else "Неактивна", if (this.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off),
         ListObject("Навазние тарифа", this.tariff.name, R.drawable.ic_tariff_name),
         ListObject("Цена за месяц", this.tariff.price.toInt().toString(), R.drawable.ic_price_month),
-        ListObject("Цена за день", (this.tariff.price / 30f).toInt().toString(), R.drawable.ic_price_day),
+        ListObject("Цена за день", this.pricePerDay.toString(), R.drawable.ic_price_day),
         ListObject("Скорость загрузки", "${this.tariff.downloadSpeed} Мб", R.drawable.ic_download_speed),
         ListObject("Скорость отдачи", "${this.tariff.uploadSpeed} Мб", R.drawable.ic_upload_speed),
         ListObject("Скачано за текущий месяц", "${this.state.downloaded} Мб", R.drawable.ic_downloaded),

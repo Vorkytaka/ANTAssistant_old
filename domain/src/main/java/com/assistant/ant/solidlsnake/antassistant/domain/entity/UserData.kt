@@ -28,4 +28,8 @@ data class UserData(
          * Текущее состояние учетной записи
          */
         val state: State
-)
+) {
+    val pricePerDay: Double = this.tariff.price / 30
+
+    val daysLeft: Int = ((this.state.balance + this.state.credit) / pricePerDay).toInt()
+}

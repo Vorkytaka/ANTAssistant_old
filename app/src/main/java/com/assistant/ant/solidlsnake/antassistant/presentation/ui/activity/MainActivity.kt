@@ -107,12 +107,8 @@ class MainActivity : BaseActivity(), MainView {
     override fun showUserData(data: UserData) {
         tv_deposit_value.text = data.state.balance.toString() + " \u20BD"
         val credit = data.state.credit
-        val balance = data.state.balance
-        val payForDay = data.tariff.price / 30
 
-//         todo: Проверить правильный подсчет дней
-        val daysLeft = balance / payForDay
-        tv_days_value.text = daysLeft.toInt().toString()
+        tv_days_value.text = data.daysLeft.toString()
 
         tv_credit_value.text = credit.toString()
         infoFragment.setData(data)
