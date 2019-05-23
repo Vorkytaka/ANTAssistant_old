@@ -2,13 +2,13 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.transition.TransitionManager
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.assistant.ant.solidlsnake.antassistant.R
+import com.assistant.ant.solidlsnake.antassistant.domain.entity.Settings
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.LaunchActivity
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.SettingsView
@@ -27,11 +27,7 @@ class SettingsFragment : Fragment(), SettingsView {
         btn_logout.setOnClickListener { showLogoutDialog() }
 
         settings_notification.setOnClickListener {
-            val checked = !settings_notification_switcher.isChecked
-            settings_notification_switcher.isChecked = checked
-            TransitionManager.beginDelayedTransition(view as ViewGroup)
-            settings_notification_time.visibility = if (checked) View.VISIBLE else View.GONE
-            settings_notification_days.visibility = if (checked) View.VISIBLE else View.GONE
+            presenter.notificationSettings(!settings_notification_switcher.isChecked)
         }
     }
 
@@ -53,5 +49,9 @@ class SettingsFragment : Fragment(), SettingsView {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         requireActivity().startActivity(intent)
         requireActivity().finish()
+    }
+
+    override fun handleSettings(settings: Settings) {
+
     }
 }

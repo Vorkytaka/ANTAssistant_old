@@ -22,17 +22,17 @@ class InfoFragment : Fragment() {
     }
 
     fun setData(data: UserData) {
-        tv_account_name_value.text = data.accountName
-        tv_user_id_value.text = data.userId
-        iv_status_image.setImageResource(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
-        tv_status_value.text = if (data.state.status) "Активна" else "Неактивна"
-        tv_tariff_name_value.text = data.tariff.name
-        tv_price_month_value.text = formatStringWithRuble.format(data.tariff.price)
-        tv_price_day_value.text = formatStringWithRuble.format(data.pricePerDay)
-        tv_downloaded_value.text = "${data.state.downloaded} Мб"
-        tv_download_speed_value.text = "${data.tariff.downloadSpeed} Мб"
-        tv_upload_speed_value.text = "${data.tariff.uploadSpeed} Мб"
-        tv_dyn_dns_value.text = data.dynDns
+        tv_account_name_value?.text = data.accountName
+        tv_user_id_value?.text = data.userId
+        iv_status_image?.setImageResource(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
+        tv_status_value?.text = if (data.state.status) "Активна" else "Неактивна"
+        tv_tariff_name_value?.text = data.tariff.name
+        tv_price_month_value?.text = formatStringWithRuble.format(data.tariff.price)
+        tv_price_day_value?.text = formatStringWithRuble.format(data.pricePerDay)
+        tv_downloaded_value?.text = "${data.state.downloaded} Мб"
+        tv_download_speed_value?.text = "${data.tariff.downloadSpeed} Мб"
+        tv_upload_speed_value?.text = "${data.tariff.uploadSpeed} Мб"
+        tv_dyn_dns_value?.text = data.dynDns
     }
 
     companion object {

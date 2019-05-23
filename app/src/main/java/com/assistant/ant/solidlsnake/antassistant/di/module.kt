@@ -13,10 +13,12 @@ import com.assistant.ant.solidlsnake.antassistant.data.remote.net.Api
 import com.assistant.ant.solidlsnake.antassistant.data.remote.parser.Parser
 import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
 import com.assistant.ant.solidlsnake.antassistant.data.repository.RepositoryImpl
+import com.assistant.ant.solidlsnake.antassistant.data.repository.SettingsRepositoryImpl
 import com.assistant.ant.solidlsnake.antassistant.domain.Mapper
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.*
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
+import com.assistant.ant.solidlsnake.antassistant.domain.repository.ISettingsRepository
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
@@ -25,17 +27,10 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 
 val appModule = module {
-    factory { Login(get()) }
-    factory { GetUserData(get()) }
-    factory { IsLogged(get()) }
-    factory { CanSetCredit(get()) }
-    factory { MaxAvailableCredit(get()) }
-    factory { Logout(get()) }
-
     factory { AuthPresenter(get()) }
     factory { MainPresenter(get(), get(), get()) }
     factory { LaunchPresenter(get()) }
-    factory { SettingsPresenter(get()) }
+    factory { SettingsPresenter(get(), get(), get()) }
 }
 
 val dataModule = module {
@@ -51,5 +46,16 @@ val dataModule = module {
 }
 
 val domainModule = module {
+    factory { Login(get()) }
+    factory { GetUserData(get()) }
+    factory { IsLogged(get()) }
+    factory { CanSetCredit(get()) }
+    factory { MaxAvailableCredit(get()) }
+    factory { Logout(get()) }
+
+    factory { SaveSettings(get()) }
+    factory { GetSettings(get()) }
+
     single<IRepository> { RepositoryImpl(get(), get(), get("REMOTE"), get("LOCAL")) }
+    single<ISettingsRepository> { SettingsRepositoryImpl() }
 }
