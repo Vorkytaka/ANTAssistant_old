@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    android:paddingTop="16dp"
+    android:paddingTop="40dp"
     android:paddingBottom="16dp"
     android:scrollbars="none"
     tools:ignore="NewApi,UnusedAttribute">
