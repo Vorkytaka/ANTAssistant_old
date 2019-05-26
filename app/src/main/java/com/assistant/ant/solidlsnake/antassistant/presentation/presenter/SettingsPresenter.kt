@@ -57,6 +57,19 @@ class SettingsPresenter(
         }
     }
 
+    fun changeNotificationDays(days: Int) {
+        settings = settings.copy(
+                notificationDays = days
+        )
+
+        launch {
+            saveSettingsUseCase.params(settings)
+                    .execute {
+                        view?.handleSettings(it)
+                    }
+        }
+    }
+
     fun changeEcconomTraffic(enabled: Boolean) {
         settings = settings.copy(
                 economyTraffic = enabled

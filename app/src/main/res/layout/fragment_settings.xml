@@ -91,6 +91,7 @@
             android:text="Уведомлять за" />
 
         <TextView
+            android:id="@+id/settings_notification_days_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"

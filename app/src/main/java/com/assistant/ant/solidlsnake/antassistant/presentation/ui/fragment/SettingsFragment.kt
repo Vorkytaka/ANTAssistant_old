@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Settings
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
@@ -41,6 +42,23 @@ class SettingsFragment : Fragment(), SettingsView {
                     0,
                     true
             ).show()
+        }
+        settings_notification_days.setOnClickListener {
+            val numberPicker = NumberPicker(activity)
+            numberPicker.wrapSelectorWheel = false
+            numberPicker.minValue = 1
+            numberPicker.maxValue = 7
+            numberPicker.value = 3
+
+            AlertDialog.Builder(requireActivity())
+                    .setTitle("За сколько дней уведомлять")
+                    .setView(numberPicker)
+                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                        presenter.changeNotificationDays(numberPicker.value)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
+                    .show()
         }
         settings_traffic.setOnClickListener {
             presenter.changeEcconomTraffic(!settings_traffic_switcher.isChecked)
@@ -82,5 +100,6 @@ class SettingsFragment : Fragment(), SettingsView {
         settings_auto_credit_switcher.isChecked = settings.autoCredit
 
         settings_notification_time_value.text = "%02d:%02d".format(settings.notificationHour, settings.notificationMinute)
+        settings_notification_days_value.text = settings.notificationDays.toString()
     }
 }
