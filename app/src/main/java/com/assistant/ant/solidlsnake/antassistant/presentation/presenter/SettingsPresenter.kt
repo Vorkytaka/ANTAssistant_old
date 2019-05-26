@@ -43,6 +43,20 @@ class SettingsPresenter(
         }
     }
 
+    fun changeNotificationTime(hour: Int, minute: Int) {
+        settings = settings.copy(
+                notificationHour = hour,
+                notificationMinute = minute
+        )
+
+        launch {
+            saveSettingsUseCase.params(settings)
+                    .execute {
+                        view?.handleSettings(it)
+                    }
+        }
+    }
+
     fun changeEcconomTraffic(enabled: Boolean) {
         settings = settings.copy(
                 economyTraffic = enabled

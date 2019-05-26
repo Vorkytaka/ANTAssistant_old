@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.transition.TransitionManager
@@ -29,6 +30,17 @@ class SettingsFragment : Fragment(), SettingsView {
 
         settings_notification.setOnClickListener {
             presenter.changeNotification(!settings_notification_switcher.isChecked)
+        }
+        settings_notification_time.setOnClickListener {
+            TimePickerDialog(
+                    activity,
+                    TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                        presenter.changeNotificationTime(hour, minute)
+                    },
+                    12,
+                    0,
+                    true
+            ).show()
         }
         settings_traffic.setOnClickListener {
             presenter.changeEcconomTraffic(!settings_traffic_switcher.isChecked)
@@ -68,5 +80,7 @@ class SettingsFragment : Fragment(), SettingsView {
 
         settings_traffic_switcher.isChecked = settings.economyTraffic
         settings_auto_credit_switcher.isChecked = settings.autoCredit
+
+        settings_notification_time_value.text = "%02d:%02d".format(settings.notificationHour, settings.notificationMinute)
     }
 }
