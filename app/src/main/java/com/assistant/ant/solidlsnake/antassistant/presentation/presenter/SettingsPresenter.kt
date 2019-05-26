@@ -19,6 +19,7 @@ class SettingsPresenter(
         launch {
             getSettingsUseCase.execute {
                 settings = it
+                view?.handleSettings(settings)
             }
         }
     }
@@ -29,9 +30,35 @@ class SettingsPresenter(
         }
     }
 
-    fun notificationSettings(enabled: Boolean) {
+    fun changeNotification(enabled: Boolean) {
         settings = settings.copy(
                 notification = enabled
+        )
+
+        launch {
+            saveSettingsUseCase.params(settings)
+                    .execute {
+                        view?.handleSettings(it)
+                    }
+        }
+    }
+
+    fun changeEcconomTraffic(enabled: Boolean) {
+        settings = settings.copy(
+                economyTraffic = enabled
+        )
+
+        launch {
+            saveSettingsUseCase.params(settings)
+                    .execute {
+                        view?.handleSettings(it)
+                    }
+        }
+    }
+
+    fun changeAutoCredit(enabled: Boolean) {
+        settings = settings.copy(
+                autoCredit = enabled
         )
 
         launch {
