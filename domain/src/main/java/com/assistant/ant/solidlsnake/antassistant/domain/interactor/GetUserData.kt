@@ -9,9 +9,10 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.GetUserDataState
 class GetUserData(
         private val repository: IRepository
 ) : UseCase<Unit, GetUserDataState>() {
-    override suspend fun execute(action: (GetUserDataState) -> Unit) {
-        for (userData in repository.getUserData()) {
-            action(userData)
-        }
+    override suspend fun useCaseAction(): GetUserDataState {
+//        for (userData in repository.getUserData()) {
+//            return userData
+//        }
+        return repository.getUserData().receive()
     }
 }

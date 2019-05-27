@@ -6,7 +6,7 @@ import com.assistant.ant.solidlsnake.antassistant.domain.repository.ISettingsRep
 class GetSettings(
         private val repository: ISettingsRepository
 ) : UseCase<Unit, Settings>() {
-    override suspend fun execute(action: (Settings) -> Unit) {
-        action(repository.getSettings())
+    override suspend fun useCaseAction(): Settings {
+        return repository.getSettings()
     }
 }
