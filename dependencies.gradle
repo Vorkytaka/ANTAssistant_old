@@ -25,7 +25,7 @@ ext {
 
     // other
     jsoup_version = '1.11.3'
-    koin_version = '1.0.0-RC-1'
+    koin_version = '2.0.1'
     kotpref_version = '2.6.0'
     okhttp_version = '3.11.0'
 

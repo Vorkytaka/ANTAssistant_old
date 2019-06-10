@@ -23,7 +23,8 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchP
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
 val appModule = module {
     factory { AuthPresenter(get()) }
@@ -37,8 +38,8 @@ val dataModule = module {
     single { Api() }
     single<IAccountHolder> { AccountHolderImpl(androidContext()) }
 
-    single<Mapper<UserDataResponse, UserData>>("REMOTE") { UserDataResponse::toUserData }
-    single<Mapper<UserDataModel, UserData>>("LOCAL") { UserDataModel::toUserData }
+    single<Mapper<UserDataResponse, UserData>>(named("REMOTE")) { UserDataResponse::toUserData }
+    single<Mapper<UserDataModel, UserData>>(named("LOCAL")) { UserDataModel::toUserData }
 
     single<ILocalService> { LocalServiceImpl(get()) }
     single<IRemoteService> { RemoteServiceImpl(get(), get()) }
@@ -55,6 +56,6 @@ val domainModule = module {
     factory { SaveSettings(get()) }
     factory { GetSettings(get()) }
 
-    single<IRepository> { RepositoryImpl(get(), get(), get("REMOTE"), get("LOCAL")) }
+    single<IRepository> { RepositoryImpl(get(), get(), get(named("REMOTE")), get(named("LOCAL"))) }
     single<ISettingsRepository> { SettingsRepositoryImpl() }
 }
