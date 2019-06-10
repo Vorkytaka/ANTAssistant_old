@@ -18,11 +18,11 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.Setti
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.toInfinite
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
+import org.koin.android.scope.currentScope
 
 class MainActivity : BaseActivity(), MainView {
 
-    private val presenter: MainPresenter by inject()
+    private val presenter: MainPresenter by currentScope.inject()
 
     private val updateAnimator by lazy {
         ObjectAnimator.ofFloat(btn_update, View.ROTATION, 0f, -360f)

@@ -25,13 +25,13 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPre
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import com.assistant.ant.solidlsnake.antassistant.presentation.worker.UpdateDataWorker
 import kotlinx.android.synthetic.main.activity_auth.*
-import org.koin.android.ext.android.inject
+import org.koin.android.scope.currentScope
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AuthActivity : BaseActivity(), AuthView {
 
-    private val presenter: AuthPresenter by inject()
+    private val presenter: AuthPresenter by currentScope.inject()
 
     private var mAccountAuthenticatorResponse: AccountAuthenticatorResponse? = null
     private var mResultBundle: Bundle? = null

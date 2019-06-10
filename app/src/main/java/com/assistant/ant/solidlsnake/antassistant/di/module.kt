@@ -22,15 +22,30 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPre
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.AuthActivity
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.LaunchActivity
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.MainActivity
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.SettingsFragment
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule = module {
-    factory { AuthPresenter(get()) }
-    factory { MainPresenter(get(), get(), get()) }
-    factory { LaunchPresenter(get()) }
-    factory { SettingsPresenter(get(), get(), get()) }
+    scope(named<AuthActivity>()) {
+        scoped { AuthPresenter(get()) }
+    }
+
+    scope(named<MainActivity>()) {
+        scoped { MainPresenter(get(), get(), get()) }
+    }
+
+    scope(named<LaunchActivity>()) {
+        scoped { LaunchPresenter(get()) }
+    }
+
+    scope(named<SettingsFragment>()) {
+        scoped { SettingsPresenter(get(), get(), get()) }
+    }
 }
 
 val dataModule = module {

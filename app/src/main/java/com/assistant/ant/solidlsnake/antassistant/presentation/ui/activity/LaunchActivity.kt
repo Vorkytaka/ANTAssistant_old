@@ -4,11 +4,11 @@ import android.os.Bundle
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
-import org.koin.android.ext.android.inject
+import org.koin.android.scope.currentScope
 
 class LaunchActivity : BaseActivity(), LaunchView {
 
-    private val presenter: LaunchPresenter by inject()
+    private val presenter: LaunchPresenter by currentScope.inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

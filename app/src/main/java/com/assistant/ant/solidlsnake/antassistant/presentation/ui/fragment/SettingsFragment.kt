@@ -16,10 +16,11 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.Setting
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.LaunchActivity
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.SettingsView
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.android.ext.android.inject
+import org.koin.android.scope.currentScope
 
 class SettingsFragment : Fragment(), SettingsView {
-    private val presenter: SettingsPresenter by inject()
+
+    private val presenter: SettingsPresenter by currentScope.inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_settings, container, false)
 
