@@ -6,4 +6,4 @@ package com.assistant.ant.solidlsnake.antassistant.domain
  * @param X тип из которого преобразуем
  * @param Y тип в который преобразуем
  */
-typealias Mapper<X, Y> = (X) -> Y
+typealias Mapper<X, Y> = X.() -> Y
