@@ -10,7 +10,8 @@ import com.assistant.ant.solidlsnake.antassistant.R
 class NotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        val notification = NotificationCompat.Builder(context, "Main")
+        val channelId = context.getString(R.string.notification_channel_main_id)
+        val notification = NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Hello")
                 .setContentText("Here's body")

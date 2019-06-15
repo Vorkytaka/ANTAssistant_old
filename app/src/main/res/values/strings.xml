@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">ANTAssistant</string>
 
+    <string name="notification_channel_main_id">Main</string>
+    <string name="notification_channel_main_name">Основной</string>
+
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
