@@ -55,6 +55,7 @@ ext {
             appcompat: "com.android.support:appcompat-v7:$support_version",
             cardview: "com.android.support:cardview-v7:$support_version",
             design: "com.android.support:design:$support_version",
+            support: "com.android.support:support-compat:$support_version",
             kotpref: "com.chibatching.kotpref:kotpref:$kotpref_version",
             okhttp: "com.squareup.okhttp3:okhttp:$okhttp_version",
             constraint: "com.android.support.constraint:constraint-layout:$constraint_version",
