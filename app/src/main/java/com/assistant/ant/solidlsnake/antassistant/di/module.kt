@@ -4,6 +4,7 @@ import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
 import com.assistant.ant.solidlsnake.antassistant.data.local.LocalServiceImpl
 import com.assistant.ant.solidlsnake.antassistant.data.local.account.AccountHolderImpl
 import com.assistant.ant.solidlsnake.antassistant.data.local.account.IAccountHolder
+import com.assistant.ant.solidlsnake.antassistant.data.local.alarm.IAlarmUtils
 import com.assistant.ant.solidlsnake.antassistant.data.local.model.UserDataModel
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.toUserData
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
@@ -18,6 +19,7 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.*
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.ISettingsRepository
+import com.assistant.ant.solidlsnake.antassistant.presentation.broadcast.AlarmUtilsImpl
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
@@ -58,6 +60,8 @@ val dataModule = module {
 
     single<ILocalService> { LocalServiceImpl(get()) }
     single<IRemoteService> { RemoteServiceImpl(get(), get()) }
+
+    single<IAlarmUtils> { AlarmUtilsImpl(androidContext()) }
 }
 
 val domainModule = module {

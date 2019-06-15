@@ -51,6 +51,8 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
+
+        <receiver android:name=".presentation.broadcast.NotificationReceiver" />
     </application>
 
 </manifest>
