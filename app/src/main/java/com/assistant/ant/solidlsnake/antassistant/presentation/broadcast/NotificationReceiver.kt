@@ -6,15 +6,29 @@ import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.assistant.ant.solidlsnake.antassistant.R
+import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
+import com.assistant.ant.solidlsnake.antassistant.data.mapper.toUserData
+import kotlinx.coroutines.runBlocking
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class NotificationReceiver : BroadcastReceiver() {
+class NotificationReceiver : BroadcastReceiver(), KoinComponent {
 
-    override fun onReceive(context: Context, intent: Intent?) {
+    private val localService: ILocalService by inject()
+
+    override fun onReceive(context: Context, intent: Intent?) = runBlocking {
+        val daysLeft = localService.getUserData().toUserData().daysLeft
+        val message = context.resources.getQuantityString(
+                R.plurals.notification_internet_out_message,
+                daysLeft,
+                daysLeft
+        )
+
         val channelId = context.getString(R.string.notification_channel_main_id)
         val notification = NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Hello")
-                .setContentText("Here's body")
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .build()

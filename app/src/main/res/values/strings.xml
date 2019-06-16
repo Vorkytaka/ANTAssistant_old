@@ -16,4 +16,13 @@
     <string name="s_main_copy_message">Скопировано в буфер обмена</string>
     <string name="s_main_logout_message">Вы действительно хотите выйти?</string>
     <string name="s_main_logout">Выйти</string>
+
+    <plurals name="notification_internet_out_message">
+        <item quantity="zero">Интернет отключат сегодня</item>
+        <item quantity="one">Интернет отключат через %1$d день</item>
+        <item quantity="two">Интернет отключат через %1$d дня</item>
+        <item quantity="few">Интернет отключат через %1$d дня</item>
+        <item quantity="many">Интернет отключат через %1$d дней</item>
+        <item quantity="other">Интернет отключат через %1$d дней</item>
+    </plurals>
 </resources>
