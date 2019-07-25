@@ -3,6 +3,7 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -23,6 +24,8 @@ import org.koin.android.scope.currentScope
 class MainActivity : BaseActivity(), MainView {
 
     private val presenter: MainPresenter by currentScope.inject()
+
+    private var currentDeposit: Float = 0.0f
 
     private val updateAnimator by lazy {
         ObjectAnimator.ofFloat(btn_update, View.ROTATION, 0f, -360f)
@@ -105,7 +108,13 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     override fun showUserData(data: UserData) {
-        tv_deposit_value.text = "%.1f \u20BD".format(data.state.balance)
+        val to = data.state.balance.toFloat()
+        val animation = ValueAnimator.ofFloat(currentDeposit, to)
+        animation.duration = 1000L
+        animation.addUpdateListener { tv_deposit_value.text = "%.1f \u20BD".format(it.animatedValue) }
+        animation.start()
+        currentDeposit = to
+
         val credit = data.state.credit
 
         tv_days_value.text = data.daysLeft.toString()
