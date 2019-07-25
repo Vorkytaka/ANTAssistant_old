@@ -15,4 +15,6 @@ object UserPref : KotprefModel() {
     var tariff_downloadSpeed by intPref(default = 0)
     var tariff_uploadSpeed by intPref(default = 0)
     var tariff_price by floatPref(default = 0f)
+
+    var lastSync by longPref(default = -1)
 }

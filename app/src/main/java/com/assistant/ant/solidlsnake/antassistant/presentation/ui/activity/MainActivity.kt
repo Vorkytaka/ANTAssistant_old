@@ -114,6 +114,10 @@ class MainActivity : BaseActivity(), MainView {
         infoFragment.setData(data)
     }
 
+    override fun showCachedTime(time: Long) {
+        // todo
+    }
+
     override fun showCreditSnack() {
 //        creditBottomSheet.state = BottomSheetBehavior.STATE_SETTLING
     }

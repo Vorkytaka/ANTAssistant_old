@@ -17,7 +17,10 @@ class NotificationReceiver : BroadcastReceiver(), KoinComponent {
     private val localService: ILocalService by inject()
 
     override fun onReceive(context: Context, intent: Intent?) = runBlocking {
-        val daysLeft = localService.getUserData().toUserData().daysLeft
+        val userData = localService.getUserData()
+                ?: return@runBlocking
+
+        val daysLeft = userData.toUserData().daysLeft
         val message = context.resources.getQuantityString(
                 R.plurals.notification_internet_out_message,
                 daysLeft,

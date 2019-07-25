@@ -9,7 +9,11 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 class LocalServiceImpl(
         private val accountHolder: IAccountHolder
 ) : ILocalService {
-    override suspend fun getUserData(): UserDataModel {
+    override suspend fun getUserData(): UserDataModel? {
+        if (UserPref.lastSync < 0) {
+            return null
+        }
+
         val data = UserDataModel()
 
         data.accountName = UserPref.accountName
@@ -22,6 +26,7 @@ class LocalServiceImpl(
         data.tariff_downloadSpeed = UserPref.tariff_downloadSpeed
         data.tariff_uploadSpeed = UserPref.tariff_uploadSpeed
         data.tariff_price = UserPref.tariff_price.toDouble()
+        data.lastSync = UserPref.lastSync
 
         return data
     }
@@ -37,6 +42,7 @@ class LocalServiceImpl(
         UserPref.tariff_downloadSpeed = data.tariff.downloadSpeed
         UserPref.tariff_uploadSpeed = data.tariff.uploadSpeed
         UserPref.tariff_price = data.tariff.price.toFloat()
+        UserPref.lastSync = System.currentTimeMillis()
     }
 
     override suspend fun getCredentials(): Credentials? {

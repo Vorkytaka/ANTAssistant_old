@@ -15,4 +15,6 @@ class UserDataModel {
     var tariff_downloadSpeed: Int = 0
     var tariff_uploadSpeed: Int = 0
     var tariff_price: Double = 0.0
+
+    var lastSync: Long = -1L
 }

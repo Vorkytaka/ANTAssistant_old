@@ -8,7 +8,7 @@ interface ILocalService {
     /**
      * Получение закэшированных данных пользователя
      */
-    suspend fun getUserData(): UserDataModel
+    suspend fun getUserData(): UserDataModel?
 
     /**
      * Сохранение данных пользователя в кэш

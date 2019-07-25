@@ -26,6 +26,13 @@ class MainPresenter(
                 is GetUserDataState.Result -> {
                     view?.showUserData(it.data)
                 }
+                is GetUserDataState.CachedResult -> {
+                    view?.showUserData(it.data)
+                    view?.showCachedTime(it.date)
+                }
+                is GetUserDataState.NoUserData -> {
+
+                }
             }
         }
 

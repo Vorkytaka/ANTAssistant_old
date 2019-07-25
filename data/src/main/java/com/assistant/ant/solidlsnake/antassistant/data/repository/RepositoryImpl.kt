@@ -42,9 +42,6 @@ class RepositoryImpl(
     }
 
     override suspend fun getUserData(): GetUserDataState {
-        val localData = localService.getUserData()
-        GetUserDataState.Result(localMapper(localData))
-
         localService.getCredentials()?.let { credentials ->
             remoteService.getUserData(credentials)?.let {
                 val data = remoteMapper(it)
@@ -52,6 +49,12 @@ class RepositoryImpl(
                 return GetUserDataState.Result(data)
             }
         }
+
+        val localData = localService.getUserData()
+        if (localData != null) {
+            return GetUserDataState.CachedResult(localMapper(localData), localData.lastSync)
+        }
+
         return GetUserDataState.NoUserData
     }
 
