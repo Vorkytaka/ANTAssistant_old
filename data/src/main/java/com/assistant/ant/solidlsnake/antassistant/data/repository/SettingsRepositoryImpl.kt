@@ -4,8 +4,15 @@ import com.assistant.ant.solidlsnake.antassistant.data.local.pref.SettingsPref
 import com.assistant.ant.solidlsnake.antassistant.data.local.pref.toSettings
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Settings
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.ISettingsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
-class SettingsRepositoryImpl : ISettingsRepository {
+class SettingsRepositoryImpl : ISettingsRepository, CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO
+
     override suspend fun getSettings(): Settings {
         return Settings(
                 SettingsPref.notification,

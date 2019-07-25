@@ -6,11 +6,11 @@ import com.assistant.ant.solidlsnake.antassistant.domain.repository.ISettingsRep
 class SaveSettings(
         private val repository: ISettingsRepository
 ) : UseCase<Settings, Settings>() {
-    override suspend fun execute(action: (Settings) -> Unit) {
+    override suspend fun doOnBackground(): Settings {
         val params = this.params ?: throw IllegalStateException()
 
         // todo: validation
 
-        action(repository.saveSettings(params))
+        return repository.saveSettings(params)
     }
 }

@@ -1,5 +1,8 @@
 package com.assistant.ant.solidlsnake.antassistant.domain.interactor
 
+import kotlinx.coroutines.*
+
+
 /**
  * @param   <P> (Parameters) тип данных,
  *          передаваемых в виде параметра
@@ -7,13 +10,32 @@ package com.assistant.ant.solidlsnake.antassistant.domain.interactor
  * @param   <R> (Response) тип данных,
  *          возвращаемый после выполнения
  */
-abstract class UseCase<P, R> {
+abstract class UseCase<P, R>(
+        private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.IO,
+        private val foregroundDispatcher: CoroutineDispatcher = Dispatchers.Main
+) {
     protected var params: P? = null
+    private var job: Job = Job()
 
     fun params(params: P): UseCase<P, R> {
         this.params = params
         return this
     }
 
-    abstract suspend fun execute(action: (R) -> Unit)
+    protected abstract suspend fun doOnBackground(): R
+
+    fun execute(action: (R) -> Unit) {
+        cancel()
+        job = Job()
+
+        CoroutineScope(foregroundDispatcher + job).launch {
+            val result = withContext(backgroundDispatcher) { doOnBackground() }
+            action(result)
+        }
+    }
+
+    fun cancel() {
+        job.cancelChildren()
+        job.cancel()
+    }
 }

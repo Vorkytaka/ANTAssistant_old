@@ -5,7 +5,5 @@ import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 class Logout(
         private val repository: IRepository
 ) : UseCase<Nothing, Unit>() {
-    override suspend fun execute(action: (Unit) -> Unit) {
-        action(repository.logout().receive())
-    }
+    override suspend fun doOnBackground() = repository.logout()
 }

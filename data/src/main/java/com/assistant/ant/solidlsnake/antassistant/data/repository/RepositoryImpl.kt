@@ -10,73 +10,60 @@ import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import com.assistant.ant.solidlsnake.antassistant.domain.repository.IRepository
 import com.assistant.ant.solidlsnake.antassistant.domain.state.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.produce
-import kotlin.coroutines.CoroutineContext
 
 class RepositoryImpl(
         private val remoteService: IRemoteService,
         private val localService: ILocalService,
         private val remoteMapper: Mapper<UserDataResponse, UserData>,
         private val localMapper: Mapper<UserDataModel, UserData>
-) : IRepository, CoroutineScope {
+) : IRepository {
 
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO
-
-    override suspend fun isLogged(): ReceiveChannel<IsLoggedState> = produce {
+    override suspend fun isLogged(): IsLoggedState {
         val credentials = localService.getCredentials()
-
-        if (credentials == null) {
-            send(IsLoggedState.NoCredentialsError)
-            return@produce
-        }
+                ?: return IsLoggedState.NoCredentialsError
 
         val isLogged = remoteService.auth(credentials)
-        val state = if (isLogged) IsLoggedState.Success else IsLoggedState.AuthError
-        send(state)
+        return if (isLogged) IsLoggedState.Success else IsLoggedState.AuthError
     }
 
-    override suspend fun login(credentials: Credentials): ReceiveChannel<AuthState> = produce {
+    override suspend fun login(credentials: Credentials): AuthState {
         val isLogged = remoteService.auth(credentials)
 
-        if (isLogged) {
+        return if (isLogged) {
             localService.setCredentials(credentials)
-            send(AuthState.Success)
+            AuthState.Success
         } else {
-            send(AuthState.Error)
+            AuthState.Error
         }
     }
 
-    override suspend fun logout(): ReceiveChannel<Unit> = produce {
+    override suspend fun logout() {
         localService.clear()
-        send(Unit)
     }
 
-    override suspend fun getUserData(): ReceiveChannel<GetUserDataState> = produce {
+    override suspend fun getUserData(): GetUserDataState {
         val localData = localService.getUserData()
-        send(GetUserDataState.Result(localMapper(localData)))
+        GetUserDataState.Result(localMapper(localData))
 
         localService.getCredentials()?.let { credentials ->
             remoteService.getUserData(credentials)?.let {
                 val data = remoteMapper(it)
                 localService.saveUserData(data)
-                send(GetUserDataState.Result(data))
+                return GetUserDataState.Result(data)
             }
         }
+        return GetUserDataState.NoUserData
     }
 
-    override suspend fun canSetCredit(): ReceiveChannel<CanSetCreditState> = produce {
-        send(CanSetCreditState.Cannot)
+    override suspend fun canSetCredit(): CanSetCreditState {
+        return CanSetCreditState.Cannot
     }
 
-    override suspend fun maxAvailableCredit(): ReceiveChannel<MaxAvailableCreditState> = produce {
-        send(MaxAvailableCreditState.Result(CreditValue.V_300))
+    override suspend fun maxAvailableCredit(): MaxAvailableCreditState {
+        return MaxAvailableCreditState.Result(CreditValue.V_300)
     }
 
-    override suspend fun setCredit(creditValue: CreditValue): ReceiveChannel<Nothing> {
+    override suspend fun setCredit(creditValue: CreditValue) {
         TODO("not implemented")
     }
 }

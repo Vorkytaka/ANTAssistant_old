@@ -9,7 +9,5 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.IsLoggedState
 class IsLogged(
         private val repository: IRepository
 ) : UseCase<Unit, IsLoggedState>() {
-    override suspend fun execute(action: (IsLoggedState) -> Unit) {
-        action(repository.isLogged().receive())
-    }
+    override suspend fun doOnBackground(): IsLoggedState = repository.isLogged()
 }

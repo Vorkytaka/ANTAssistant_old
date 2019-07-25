@@ -6,7 +6,5 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.MaxAvailableCredi
 class MaxAvailableCredit(
         private val repository: IRepository
 ) : UseCase<Unit, MaxAvailableCreditState>() {
-    override suspend fun execute(action: (MaxAvailableCreditState) -> Unit) {
-        action(repository.maxAvailableCredit().receive())
-    }
+    override suspend fun doOnBackground(): MaxAvailableCreditState = repository.maxAvailableCredit()
 }

@@ -6,7 +6,5 @@ import com.assistant.ant.solidlsnake.antassistant.domain.state.CanSetCreditState
 class CanSetCredit(
         private val repository: IRepository
 ) : UseCase<Unit, CanSetCreditState>() {
-    override suspend fun execute(action: (CanSetCreditState) -> Unit) {
-        action(repository.canSetCredit().receive())
-    }
+    override suspend fun doOnBackground(): CanSetCreditState = repository.canSetCredit()
 }
