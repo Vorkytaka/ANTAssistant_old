@@ -3,6 +3,8 @@ package com.assistant.ant.solidlsnake.antassistant.data.remote.net
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.CreditValue
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import okhttp3.*
 import java.io.IOException
 
@@ -104,10 +106,37 @@ class Api {
             }
 
             override fun onFailure(call: Call, e: IOException) {
-                deferred.cancel(e)
+                deferred.cancel()
             }
         })
 
         return deferred
+    }
+
+    private fun Call.toReceiveChannel(): ReceiveChannel<ResponseBody> {
+        val channel = Channel<ResponseBody>(1)
+
+        channel.invokeOnClose {
+            if (channel.isClosedForSend) {
+                this.cancel()
+            }
+        }
+
+        this.enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    channel.offer(body)
+                } else {
+                    channel.close()
+                }
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                channel.close()
+            }
+        })
+
+        return channel
     }
 }
