@@ -17,245 +17,65 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+            android:id="@+id/info_account_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
+            app:cardElevation="2dp"
+            app:iconSrc="@drawable/ic_account_name"
+            app:iconTint="@color/colorAccent"
+            app:title="Имя пользователя" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_account_name"
-                    android:tint="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Имя пользователя"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_account_name_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="—"
-                        android:textColor="#636363"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
+        <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+            android:id="@+id/info_user_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
+            app:cardElevation="2dp"
+            app:iconSrc="@drawable/ic_user_id"
+            app:iconTint="@color/colorAccent"
+            app:title="Код плательщика" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_user_id"
-                    android:tint="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Код плательщика"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_user_id_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="—"
-                        android:textColor="#636363"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
+        <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+            android:id="@+id/info_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
+            app:cardElevation="2dp"
+            app:iconSrc="@drawable/ic_state_on"
+            app:iconTint="@color/colorAccent"
+            app:title="Состояние" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_status_image"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_state_on"
-                    android:tint="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Состояние"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_status_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="—"
-                        android:textColor="#636363"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
+        <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+            android:id="@+id/info_tariff_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_tariff_name"
-                    android:tint="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Название тарифа"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_tariff_name_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="—"
-                        android:textColor="#636363"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+            app:cardElevation="2dp"
+            app:iconSrc="@drawable/ic_tariff_name"
+            app:iconTint="@color/colorAccent"
+            app:title="Название тарифа" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.CardView
+            <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+                android:id="@+id/info_price_month"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -264,59 +84,14 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:iconSrc="@drawable/ic_price_month"
+                app:iconTint="@color/colorAccent"
+                app:title="Цена за месяц" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_price_month"
-                        android:tint="@color/colorAccent" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Цена за месяц"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tv_price_month_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:text="—"
-                            android:textColor="#636363"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+                android:id="@+id/info_price_day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -325,125 +100,34 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_price_day"
-                        android:tint="@color/colorAccent" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Цена за день"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tv_price_day_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:lines="1"
-                            android:text="—"
-                            android:textColor="#636363"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
+                app:cardElevation="2dp"
+                app:iconSrc="@drawable/ic_price_day"
+                app:iconTint="@color/colorAccent"
+                app:title="Цена за день" />
 
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+            android:id="@+id/info_downloaded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_downloaded"
-                    android:tint="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Скачано за текущий месяц"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_downloaded_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="—"
-                        android:textColor="#636363"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+            app:cardElevation="2dp"
+            app:iconSrc="@drawable/ic_downloaded"
+            app:iconTint="@color/colorAccent"
+            app:title="Скачано за текущий месяц" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.CardView
+            <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+                android:id="@+id/info_download_speed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -452,59 +136,14 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:iconSrc="@drawable/ic_download_speed"
+                app:iconTint="@color/colorAccent"
+                app:title="Скорость загрузки" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_download_speed"
-                        android:tint="@color/colorAccent" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Скорость загрузки"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tv_download_speed_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:text="—"
-                            android:textColor="#636363"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
+            <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+                android:id="@+id/info_upload_speed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -513,118 +152,26 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="0dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_upload_speed"
-                        android:tint="@color/colorAccent" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Скорость отдачи"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/tv_upload_speed_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:lines="1"
-                            android:text="—"
-                            android:textColor="#636363"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
+                app:cardElevation="2dp"
+                app:iconSrc="@drawable/ic_upload_speed"
+                app:iconTint="@color/colorAccent"
+                app:title="Скорость отдачи" />
 
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
+            android:id="@+id/info_dyndns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_dyn_dns"
-                    android:tint="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="Ваш DynDNS"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_dyn_dns_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="—"
-                        android:textColor="#636363"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+            app:cardElevation="2dp"
+            app:iconSrc="@drawable/ic_dyn_dns"
+            app:iconTint="@color/colorAccent"
+            app:title="Ваш DynDNS" />
 
     </LinearLayout>
 
