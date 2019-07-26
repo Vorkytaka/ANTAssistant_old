@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.support.annotation.DrawableRes
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.ImageViewCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
@@ -148,5 +149,17 @@ class InfoView @JvmOverloads constructor(
 
     fun setIconTint(color: Int) {
         ImageViewCompat.setImageTintList(icon, ColorStateList.valueOf(color))
+    }
+
+    override fun setOnClickListener(listener: OnClickListener?) {
+        super.setOnClickListener(listener)
+
+        if (listener == null) {
+            this.foreground = null
+        } else {
+            val outValue = TypedValue()
+            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+            this.foreground = ContextCompat.getDrawable(context, outValue.resourceId)
+        }
     }
 }
