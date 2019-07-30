@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.ImageViewCompat
@@ -54,6 +55,13 @@ class InfoView @JvmOverloads constructor(
             field = value
         }
 
+    @ColorInt
+    public var iconTint: Int = Color.BLACK
+        set(value) {
+            ImageViewCompat.setImageTintList(_icon, ColorStateList.valueOf(value))
+            field = value
+        }
+
     private val _linearLayout: LinearLayout
     private val _innerLinearLayout: LinearLayout
     private val _icon: ImageView
@@ -97,9 +105,9 @@ class InfoView @JvmOverloads constructor(
             val valueString = attributes.getString(R.styleable.InfoView_value)
 
             setIconId(iconSrc)
-            setIconTint(iconTint)
-            title = titleString!!
-            value = valueString
+            this.iconTint = iconTint
+            this.title = titleString!!
+            this.value = valueString
         } finally {
             attributes.recycle()
         }
@@ -161,10 +169,6 @@ class InfoView @JvmOverloads constructor(
             val drawable = context.resources.getDrawable(id)
             icon = drawable
         }
-    }
-
-    fun setIconTint(color: Int) {
-        ImageViewCompat.setImageTintList(_icon, ColorStateList.valueOf(color))
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
