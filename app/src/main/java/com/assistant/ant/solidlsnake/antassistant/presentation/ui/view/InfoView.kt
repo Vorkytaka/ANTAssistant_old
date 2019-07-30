@@ -32,6 +32,16 @@ class InfoView @JvmOverloads constructor(
             field = value
         }
 
+    public var value: String? = null
+        set(value) {
+            this._value.text = if (value.isNullOrBlank()) {
+                "—"
+            } else {
+                value
+            }
+            field = value
+        }
+
     private val _linearLayout: LinearLayout
     private val _innerLinearLayout: LinearLayout
     private val _icon: ImageView
@@ -77,7 +87,7 @@ class InfoView @JvmOverloads constructor(
             setIcon(iconSrc)
             setIconTint(iconTint)
             title = titleString!!
-            setValue(valueString)
+            value = valueString
         } finally {
             attributes.recycle()
         }
@@ -130,14 +140,6 @@ class InfoView @JvmOverloads constructor(
             layoutParams = lp
         }
 
-    }
-
-    fun setValue(value: String?) {
-        this._value.text = if (value.isNullOrBlank()) {
-            "—"
-        } else {
-            value
-        }
     }
 
     fun setIcon(@DrawableRes resId: Int) {

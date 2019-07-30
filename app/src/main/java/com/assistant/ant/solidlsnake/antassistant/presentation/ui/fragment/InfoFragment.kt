@@ -22,17 +22,17 @@ class InfoFragment : Fragment() {
     }
 
     fun setData(data: UserData) {
-        info_account_name?.setValue(data.accountName)
-        info_user_id?.setValue(data.userId)
+        info_account_name?.value = data.accountName
+        info_user_id?.value = data.userId
         info_status?.setIcon(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
-        info_status?.setValue(if (data.state.status) "Активна" else "Неактивна")
-        info_tariff_name?.setValue(data.tariff.name)
-        info_price_month?.setValue(formatStringWithRuble.format(data.tariff.price))
-        info_price_day?.setValue(formatStringWithRuble.format(data.pricePerDay))
-        info_downloaded?.setValue("${data.state.downloaded} Мб")
-        info_download_speed?.setValue("${data.tariff.downloadSpeed} Мб")
-        info_upload_speed?.setValue("${data.tariff.uploadSpeed} Мб")
-        info_dyndns?.setValue(data.dynDns)
+        info_status?.value = if (data.state.status) "Активна" else "Неактивна"
+        info_tariff_name?.value = data.tariff.name
+        info_price_month?.value = formatStringWithRuble.format(data.tariff.price)
+        info_price_day?.value = formatStringWithRuble.format(data.pricePerDay)
+        info_downloaded?.value = "${data.state.downloaded} Мб"
+        info_download_speed?.value = "${data.tariff.downloadSpeed} Мб"
+        info_upload_speed?.value = "${data.tariff.uploadSpeed} Мб"
+        info_dyndns?.value = data.dynDns
     }
 
     companion object {
