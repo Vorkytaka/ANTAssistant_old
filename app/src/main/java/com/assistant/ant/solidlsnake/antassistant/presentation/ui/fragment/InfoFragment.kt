@@ -24,7 +24,7 @@ class InfoFragment : Fragment() {
     fun setData(data: UserData) {
         info_account_name?.value = data.accountName
         info_user_id?.value = data.userId
-        info_status?.setIcon(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
+        info_status?.setIconId(if (data.state.status) R.drawable.ic_state_on else R.drawable.ic_state_off)
         info_status?.value = if (data.state.status) "Активна" else "Неактивна"
         info_tariff_name?.value = data.tariff.name
         info_price_month?.value = formatStringWithRuble.format(data.tariff.price)

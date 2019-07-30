@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
@@ -38,6 +39,17 @@ class InfoView @JvmOverloads constructor(
                 "—"
             } else {
                 value
+            }
+            field = value
+        }
+
+    public var icon: Drawable? = null
+        set(value) {
+            if (value == null) {
+                _icon.visibility = View.GONE
+            } else {
+                _icon.visibility = View.VISIBLE
+                _icon.setImageDrawable(value)
             }
             field = value
         }
@@ -84,7 +96,7 @@ class InfoView @JvmOverloads constructor(
             val titleString = attributes.getString(R.styleable.InfoView_title)
             val valueString = attributes.getString(R.styleable.InfoView_value)
 
-            setIcon(iconSrc)
+            setIconId(iconSrc)
             setIconTint(iconTint)
             title = titleString!!
             value = valueString
@@ -142,12 +154,12 @@ class InfoView @JvmOverloads constructor(
 
     }
 
-    fun setIcon(@DrawableRes resId: Int) {
-        if (resId == 0) {
-            _icon.visibility = View.GONE
+    fun setIconId(@DrawableRes id: Int) {
+        if (id == 0) {
+            icon = null
         } else {
-            _icon.visibility = View.VISIBLE
-            _icon.setImageResource(resId)
+            val drawable = context.resources.getDrawable(id)
+            icon = drawable
         }
     }
 
