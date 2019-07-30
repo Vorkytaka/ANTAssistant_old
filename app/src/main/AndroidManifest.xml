@@ -38,7 +38,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.ui.activity.MainActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="orientation|screenSize|screenLayout"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
