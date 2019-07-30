@@ -26,34 +26,40 @@ class InfoView @JvmOverloads constructor(
         defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
 
-    private val linearLayout: LinearLayout
-    private val innerLinearLayout: LinearLayout
-    private val icon: ImageView
-    private val title: TextView
-    private val value: TextView
+    public var title: String = ""
+        set(value) {
+            this._title.text = value
+            field = value
+        }
+
+    private val _linearLayout: LinearLayout
+    private val _innerLinearLayout: LinearLayout
+    private val _icon: ImageView
+    private val _title: TextView
+    private val _value: TextView
 
     /**
      * Инициализация внутренних View
      */
     init {
-        linearLayout = LinearLayout(context)
-        linearLayout.orientation = LinearLayout.HORIZONTAL
+        _linearLayout = LinearLayout(context)
+        _linearLayout.orientation = LinearLayout.HORIZONTAL
 
-        icon = ImageView(context)
-        linearLayout.addView(icon)
+        _icon = ImageView(context)
+        _linearLayout.addView(_icon)
 
-        innerLinearLayout = LinearLayout(context)
-        innerLinearLayout.orientation = LinearLayout.VERTICAL
+        _innerLinearLayout = LinearLayout(context)
+        _innerLinearLayout.orientation = LinearLayout.VERTICAL
 
-        title = TextView(context)
-        innerLinearLayout.addView(title)
+        _title = TextView(context)
+        _innerLinearLayout.addView(_title)
 
-        value = TextView(context)
-        innerLinearLayout.addView(value)
+        _value = TextView(context)
+        _innerLinearLayout.addView(_value)
 
-        linearLayout.addView(innerLinearLayout)
+        _linearLayout.addView(_innerLinearLayout)
 
-        addView(linearLayout)
+        addView(_linearLayout)
     }
 
     /**
@@ -70,7 +76,7 @@ class InfoView @JvmOverloads constructor(
 
             setIcon(iconSrc)
             setIconTint(iconTint)
-            setTitle(titleString!!)
+            title = titleString!!
             setValue(valueString)
         } finally {
             attributes.recycle()
@@ -80,12 +86,12 @@ class InfoView @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
-        linearLayout.apply {
+        _linearLayout.apply {
             val padding = 10.dpToPx()
             setPadding(padding, padding, padding, padding)
         }
 
-        icon.apply {
+        _icon.apply {
             val lp = layoutParams as LinearLayout.LayoutParams
             val size = 25.dpToPx()
             val marginStart = 5.dpToPx()
@@ -101,7 +107,7 @@ class InfoView @JvmOverloads constructor(
 
         val textMarginStart = 20.dpToPx()
 
-        title.apply {
+        _title.apply {
             typeface = Typeface.create("sans-serif-light", Typeface.NORMAL)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
 
@@ -113,7 +119,7 @@ class InfoView @JvmOverloads constructor(
             layoutParams = lp
         }
 
-        value.apply {
+        _value.apply {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
 
             val lp = layoutParams as LinearLayout.LayoutParams
@@ -126,12 +132,8 @@ class InfoView @JvmOverloads constructor(
 
     }
 
-    fun setTitle(title: String) {
-        this.title.text = title
-    }
-
     fun setValue(value: String?) {
-        this.value.text = if (value.isNullOrBlank()) {
+        this._value.text = if (value.isNullOrBlank()) {
             "—"
         } else {
             value
@@ -140,15 +142,15 @@ class InfoView @JvmOverloads constructor(
 
     fun setIcon(@DrawableRes resId: Int) {
         if (resId == 0) {
-            icon.visibility = View.GONE
+            _icon.visibility = View.GONE
         } else {
-            icon.visibility = View.VISIBLE
-            icon.setImageResource(resId)
+            _icon.visibility = View.VISIBLE
+            _icon.setImageResource(resId)
         }
     }
 
     fun setIconTint(color: Int) {
-        ImageViewCompat.setImageTintList(icon, ColorStateList.valueOf(color))
+        ImageViewCompat.setImageTintList(_icon, ColorStateList.valueOf(color))
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
