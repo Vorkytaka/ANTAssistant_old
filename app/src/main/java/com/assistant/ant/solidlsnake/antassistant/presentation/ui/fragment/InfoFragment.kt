@@ -1,5 +1,6 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment
 
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
@@ -9,12 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
+import com.assistant.ant.solidlsnake.antassistant.presentation.ui.view.InfoView
 import kotlinx.android.synthetic.main.fragment_info.*
 
 class InfoFragment : Fragment() {
 
     private val clipboardManager: ClipboardManager by lazy {
         requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+
+    private val copyClickListener = View.OnClickListener {
+        if (it is InfoView) {
+            val msg = ClipData.newPlainText("ANTAssistant", it.value)
+            clipboardManager.primaryClip = msg
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
