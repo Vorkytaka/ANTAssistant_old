@@ -1,4 +1,4 @@
-package com.assistant.ant.solidlsnake.antassistant.domain.interactor
+package com.assistant.ant.solidlsnake.antassistant.domain.interactor.common
 
 import kotlinx.coroutines.*
 
