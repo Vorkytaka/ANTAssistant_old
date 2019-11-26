@@ -4,7 +4,6 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.transition.TransitionManager
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +11,18 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Settings
+import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterFragment
+import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
+import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.PresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.LaunchActivity
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.SettingsView
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.android.scope.currentScope
+import org.koin.android.ext.android.inject
 
-class SettingsFragment : Fragment(), SettingsView {
+class SettingsFragment : PresenterFragment(), SettingsView {
 
-    private val presenter: SettingsPresenter by currentScope.inject()
+    private val presenter: SettingsPresenter by lazy { this.getPresenterProvider(inject<PresenterFactory>().value).get(SettingsPresenter::class.java) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_settings, container, false)
 

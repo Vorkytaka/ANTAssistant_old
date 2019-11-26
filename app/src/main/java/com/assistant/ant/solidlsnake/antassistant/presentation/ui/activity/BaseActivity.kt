@@ -1,6 +1,5 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
-import android.support.v7.app.AppCompatActivity
+import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterActivity
 
-abstract class BaseActivity : AppCompatActivity() {
-}
+abstract class BaseActivity : PresenterActivity()

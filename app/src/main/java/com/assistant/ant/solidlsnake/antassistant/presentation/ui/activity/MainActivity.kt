@@ -12,18 +12,20 @@ import android.support.v4.view.ViewPager
 import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
+import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
+import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.PresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.InfoFragment
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.SettingsFragment
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.toInfinite
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.scope.currentScope
+import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), MainView {
 
-    private val presenter: MainPresenter by currentScope.inject()
+    private val presenter: MainPresenter by lazy { this.getPresenterProvider(inject<PresenterFactory>().value).get(MainPresenter::class.java) }
 
     private var currentDeposit: Float = 0.0f
 

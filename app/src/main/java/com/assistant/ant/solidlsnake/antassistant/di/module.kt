@@ -24,6 +24,7 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPre
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
+import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.PresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.AuthActivity
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.LaunchActivity
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.MainActivity
@@ -48,6 +49,8 @@ val appModule = module {
     scope(named<SettingsFragment>()) {
         scoped { SettingsPresenter(get(), get(), get()) }
     }
+
+    factory { PresenterFactory(get(), get(), get(), get(), get(), get(), get(), get()) }
 }
 
 val dataModule = module {

@@ -2,7 +2,7 @@ package com.assistant.ant.solidlsnake.antassistant.mvp
 
 import android.support.v4.app.Fragment
 
-class PresenterFragment : Fragment(), PresenterStoreOwner {
+abstract class PresenterFragment : Fragment(), PresenterStoreOwner {
     private var presenterStore: PresenterStore? = null
 
     override fun onDestroy() {
