@@ -19,21 +19,20 @@ import android.view.inputmethod.EditorInfo
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.assistant.ant.solidlsnake.antassistant.R
+import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
 import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.orEmpty
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
-import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.PresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import com.assistant.ant.solidlsnake.antassistant.presentation.worker.UpdateDataWorker
 import kotlinx.android.synthetic.main.activity_auth.*
-import org.koin.android.ext.android.inject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AuthActivity : BaseActivity(), AuthView {
 
-    private val presenter: AuthPresenter by lazy { this.getPresenterProvider(inject<PresenterFactory>().value).get(AuthPresenter::class.java) }
+    private val presenter: AuthPresenter by lazy { this.getPresenterProvider(applicationModule.presenterFactory).get(AuthPresenter::class.java) }
 
     private var mAccountAuthenticatorResponse: AccountAuthenticatorResponse? = null
     private var mResultBundle: Bundle? = null

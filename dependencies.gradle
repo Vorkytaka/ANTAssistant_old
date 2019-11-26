@@ -25,7 +25,6 @@ ext {
 
     // other
     jsoup_version = '1.11.3'
-    koin_version = '2.0.1'
     kotpref_version = '2.6.0'
     okhttp_version = '3.11.0'
 
@@ -50,8 +49,6 @@ ext {
 
     app_dependencies =
             main_dependencies + [
-            koin: "org.koin:koin-android:$koin_version",
-            koin_scope: "org.koin:koin-android-scope:$koin_version",
             appcompat: "com.android.support:appcompat-v7:$support_version",
             cardview: "com.android.support:cardview-v7:$support_version",
             design: "com.android.support:design:$support_version",

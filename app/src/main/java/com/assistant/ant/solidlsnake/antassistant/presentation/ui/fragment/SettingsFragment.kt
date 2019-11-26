@@ -10,19 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import com.assistant.ant.solidlsnake.antassistant.R
+import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.Settings
 import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterFragment
 import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.SettingsPresenter
-import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.PresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity.LaunchActivity
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.SettingsView
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.android.ext.android.inject
 
 class SettingsFragment : PresenterFragment(), SettingsView {
 
-    private val presenter: SettingsPresenter by lazy { this.getPresenterProvider(inject<PresenterFactory>().value).get(SettingsPresenter::class.java) }
+    private val presenter: SettingsPresenter by lazy { this.getPresenterProvider(applicationModule.presenterFactory).get(SettingsPresenter::class.java) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_settings, container, false)
 

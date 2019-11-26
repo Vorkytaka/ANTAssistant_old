@@ -8,13 +8,12 @@ import android.support.v4.app.NotificationManagerCompat
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
 import com.assistant.ant.solidlsnake.antassistant.data.mapper.toUserData
+import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
 import kotlinx.coroutines.runBlocking
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
-class NotificationReceiver : BroadcastReceiver(), KoinComponent {
+class NotificationReceiver : BroadcastReceiver() {
 
-    private val localService: ILocalService by inject()
+    private val localService: ILocalService = applicationModule.localService
 
     override fun onReceive(context: Context, intent: Intent?) = runBlocking {
         val userData = localService.getUserData()

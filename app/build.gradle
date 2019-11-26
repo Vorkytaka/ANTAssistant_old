@@ -38,8 +38,6 @@ dependencies {
     implementation dependencies.kotlin_stdlib
     implementation dependencies.coroutines
     implementation dependencies.coroutines_android
-    implementation dependencies.koin
-    implementation dependencies.koin_scope
     implementation dependencies.appcompat
     implementation dependencies.cardview
     implementation dependencies.design

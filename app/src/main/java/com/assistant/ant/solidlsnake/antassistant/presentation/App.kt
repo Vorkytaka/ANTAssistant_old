@@ -6,21 +6,14 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import com.assistant.ant.solidlsnake.antassistant.R
-import com.assistant.ant.solidlsnake.antassistant.di.appModule
-import com.assistant.ant.solidlsnake.antassistant.di.dataModule
-import com.assistant.ant.solidlsnake.antassistant.di.domainModule
+import com.assistant.ant.solidlsnake.antassistant.di.AppComponent
 import com.chibatching.kotpref.Kotpref
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Kotpref.init(this)
-        startKoin {
-            androidContext(this@App)
-            modules(listOf(appModule, dataModule, domainModule))
-        }
+        AppComponent.init(this)
         createNotificationChannel()
     }
 

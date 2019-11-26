@@ -8,19 +8,17 @@ import androidx.work.WorkerParameters
 import com.assistant.ant.solidlsnake.antassistant.data.local.ILocalService
 import com.assistant.ant.solidlsnake.antassistant.data.remote.IRemoteService
 import com.assistant.ant.solidlsnake.antassistant.data.remote.response.UserDataResponse
+import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
 import com.assistant.ant.solidlsnake.antassistant.domain.Mapper
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
 import kotlinx.coroutines.runBlocking
-import org.koin.core.KoinComponent
-import org.koin.core.inject
-import org.koin.core.qualifier.named
 import java.util.concurrent.TimeUnit
 
-class UpdateDataWorker(context: Context, params: WorkerParameters) : Worker(context, params), KoinComponent {
+class UpdateDataWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
-    private val remoteService: IRemoteService by inject()
-    private val localService: ILocalService by inject()
-    private val mapper: Mapper<UserDataResponse, UserData> by inject(named("REMOTE"))
+    private val remoteService: IRemoteService = applicationModule.remoteService
+    private val localService: ILocalService = applicationModule.localService
+    private val mapper: Mapper<UserDataResponse, UserData> = applicationModule.remoteMapper
 
     private fun getData() = runBlocking {
         val credentials = localService.getCredentials()

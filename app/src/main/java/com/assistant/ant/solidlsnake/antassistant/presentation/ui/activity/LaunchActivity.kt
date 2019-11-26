@@ -1,16 +1,15 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
 import android.os.Bundle
+import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
 import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
-import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.PresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
-import org.koin.android.ext.android.inject
 
 class LaunchActivity : BaseActivity(), LaunchView {
 
-    private val presenter: LaunchPresenter by lazy { this.getPresenterProvider(inject<PresenterFactory>().value).get(LaunchPresenter::class.java) }
+    private val presenter: LaunchPresenter by lazy { this.getPresenterProvider(applicationModule.presenterFactory).get(LaunchPresenter::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
