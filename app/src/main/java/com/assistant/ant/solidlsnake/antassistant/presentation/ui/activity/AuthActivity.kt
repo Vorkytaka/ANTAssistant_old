@@ -20,19 +20,22 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
-import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
+import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.orEmpty
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
+import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory.AuthPresenterFactory
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.AuthView
 import com.assistant.ant.solidlsnake.antassistant.presentation.worker.UpdateDataWorker
 import kotlinx.android.synthetic.main.activity_auth.*
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
 
-class AuthActivity : BaseActivity(), AuthView {
+class AuthActivity : BasePresenterActivity<AuthPresenter>(), AuthView {
 
-    private val presenter: AuthPresenter by lazy { this.getPresenterProvider(applicationModule.presenterFactory).get(AuthPresenter::class.java) }
+    override val presenterClazz: Class<AuthPresenter> = AuthPresenter::class.java
+    override val presenterFactory: PresenterProvider.Factory = AuthPresenterFactory(applicationModule.loginUseCase)
 
     private var mAccountAuthenticatorResponse: AccountAuthenticatorResponse? = null
     private var mResultBundle: Bundle? = null
@@ -134,7 +137,7 @@ class AuthActivity : BaseActivity(), AuthView {
         val btnConfirmAppearance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val x = btn_confirm.measuredWidth / 2
             val y = btn_confirm.measuredHeight / 2
-            val endRadius = Math.max(btn_confirm.width, btn_confirm.height)
+            val endRadius = max(btn_confirm.width, btn_confirm.height)
 
             ViewAnimationUtils.createCircularReveal(
                     btn_confirm,
