@@ -24,7 +24,7 @@ class PresenterProvider(
 ) {
     constructor(storeOwner: PresenterStoreOwner, factory: Factory) : this(storeOwner.getPresenterStore(), factory)
 
-    fun <P : Presenter> get(modelClass: Class<P>): P {
+    operator fun <P : Presenter> get(modelClass: Class<P>): P {
         val name = modelClass.canonicalName ?: throw Exception()
         return get("$DEFAULT_KEY:$name", modelClass)
     }
