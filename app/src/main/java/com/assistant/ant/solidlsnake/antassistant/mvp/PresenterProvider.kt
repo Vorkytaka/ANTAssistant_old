@@ -24,14 +24,14 @@ class PresenterProvider(
 ) {
     constructor(storeOwner: PresenterStoreOwner, factory: Factory) : this(storeOwner.getPresenterStore(), factory)
 
-    operator fun <P : Presenter> get(modelClass: Class<P>): P {
+    operator fun <V : MvpView, P : Presenter<V>> get(modelClass: Class<P>): P {
         val name = modelClass.canonicalName ?: throw Exception()
         return get("$DEFAULT_KEY:$name", modelClass)
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <P : Presenter> get(key: String, modelClass: Class<P>): P {
-        var presenter = presenterStore.get(key)
+    fun <V : MvpView, P : Presenter<V>> get(key: String, modelClass: Class<P>): P {
+        var presenter = presenterStore.get<V>(key)
 
         if (presenter != null && modelClass.isInstance(presenter)) {
             return presenter as P
@@ -47,11 +47,11 @@ class PresenterProvider(
     }
 
     interface Factory {
-        fun <P : Presenter> create(modelClass: Class<P>): P
+        fun <V : MvpView, P : Presenter<V>> create(modelClass: Class<P>): P
     }
 
     class NewInstanceFactory : Factory {
-        override fun <P : Presenter> create(modelClass: Class<P>): P {
+        override fun <V : MvpView, P : Presenter<V>> create(modelClass: Class<P>): P {
             return modelClass.newInstance()
         }
     }

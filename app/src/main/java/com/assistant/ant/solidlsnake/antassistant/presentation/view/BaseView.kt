@@ -1,3 +1,5 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.view
 
-interface BaseView
+import com.assistant.ant.solidlsnake.antassistant.mvp.MvpView
+
+interface BaseView : MvpView

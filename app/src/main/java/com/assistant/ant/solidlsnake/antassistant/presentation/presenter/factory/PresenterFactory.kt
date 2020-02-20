@@ -1,6 +1,7 @@
 package com.assistant.ant.solidlsnake.antassistant.presentation.presenter.factory
 
 import com.assistant.ant.solidlsnake.antassistant.domain.interactor.*
+import com.assistant.ant.solidlsnake.antassistant.mvp.MvpView
 import com.assistant.ant.solidlsnake.antassistant.mvp.Presenter
 import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.AuthPresenter
@@ -18,7 +19,7 @@ class PresenterFactory(
         private val getSettingsUseCase: GetSettings,
         private val saveSettingsUseCase: SaveSettings
 ) : PresenterProvider.Factory {
-    override fun <P : Presenter> create(modelClass: Class<P>): P {
+    override fun <V : MvpView, P : Presenter<V>> create(modelClass: Class<P>): P {
         return when {
             modelClass.isAssignableFrom(AuthPresenter::class.java) -> {
                 AuthPresenter(logicUseCase) as P

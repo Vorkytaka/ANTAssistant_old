@@ -1,17 +1,17 @@
 package com.assistant.ant.solidlsnake.antassistant.mvp
 
 class PresenterStore {
-    private val map = hashMapOf<String, Presenter>()
+    private val map = hashMapOf<String, Presenter<*>>()
 
-    fun put(key: String, presenter: Presenter) {
+    fun put(key: String, presenter: Presenter<*>) {
         val oldPresenter = map.put(key, presenter)
-        oldPresenter?.onCleared()
+        oldPresenter?.onDestroy()
     }
 
-    fun get(key: String): Presenter? = map[key]
+    fun <V : MvpView> get(key: String): Presenter<V>? = map[key] as? Presenter<V>
 
     fun clear() {
-        map.values.forEach(Presenter::onCleared)
+        map.values.forEach(Presenter<*>::onDestroy)
         map.clear()
     }
 }
