@@ -2,14 +2,15 @@ package com.assistant.ant.solidlsnake.antassistant.presentation.ui.activity
 
 import android.os.Bundle
 import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
-import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
+import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.LaunchPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.LaunchView
 
-class LaunchActivity : BaseActivity(), LaunchView {
+class LaunchActivity : BaseActivity<LaunchView, LaunchPresenter>(), LaunchView {
 
-    private val presenter: LaunchPresenter by lazy { this.getPresenterProvider(applicationModule.presenterFactory).get(LaunchPresenter::class.java) }
+    override val presenterClazz: Class<LaunchPresenter> = LaunchPresenter::class.java
+    override val presenterFactory: PresenterProvider.Factory? = applicationModule.presenterFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

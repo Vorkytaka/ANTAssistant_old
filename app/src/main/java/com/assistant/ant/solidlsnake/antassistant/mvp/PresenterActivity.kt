@@ -2,7 +2,13 @@ package com.assistant.ant.solidlsnake.antassistant.mvp
 
 import android.support.v7.app.AppCompatActivity
 
-abstract class PresenterActivity : AppCompatActivity(), PresenterStoreOwner {
+abstract class PresenterActivity<V : MvpView, P : Presenter<V>> : AppCompatActivity(), PresenterStoreOwner, MvpView {
+    abstract val presenterClazz: Class<P>
+
+    protected open val presenterFactory: PresenterProvider.Factory? = null
+
+    protected val presenter: P by lazy { getPresenterProvider(presenterFactory)[presenterClazz] }
+
     private var presenterStore: PresenterStore? = null
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {

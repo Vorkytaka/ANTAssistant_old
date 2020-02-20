@@ -13,7 +13,7 @@ import android.view.View
 import com.assistant.ant.solidlsnake.antassistant.R
 import com.assistant.ant.solidlsnake.antassistant.di.applicationModule
 import com.assistant.ant.solidlsnake.antassistant.domain.entity.UserData
-import com.assistant.ant.solidlsnake.antassistant.mvp.getPresenterProvider
+import com.assistant.ant.solidlsnake.antassistant.mvp.PresenterProvider
 import com.assistant.ant.solidlsnake.antassistant.presentation.SimpleNavigator
 import com.assistant.ant.solidlsnake.antassistant.presentation.presenter.MainPresenter
 import com.assistant.ant.solidlsnake.antassistant.presentation.ui.fragment.InfoFragment
@@ -22,9 +22,10 @@ import com.assistant.ant.solidlsnake.antassistant.presentation.ui.toInfinite
 import com.assistant.ant.solidlsnake.antassistant.presentation.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(), MainView {
+class MainActivity : BaseActivity<MainView, MainPresenter>(), MainView {
 
-    private val presenter: MainPresenter by lazy { this.getPresenterProvider(applicationModule.presenterFactory).get(MainPresenter::class.java) }
+    override val presenterClazz: Class<MainPresenter> = MainPresenter::class.java
+    override val presenterFactory: PresenterProvider.Factory? = applicationModule.presenterFactory
 
     private var currentDeposit: Float = 0.0f
 

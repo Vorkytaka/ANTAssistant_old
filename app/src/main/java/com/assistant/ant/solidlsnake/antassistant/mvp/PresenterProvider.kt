@@ -1,10 +1,12 @@
 package com.assistant.ant.solidlsnake.antassistant.mvp
 
-fun PresenterActivity.getPresenterProvider(factory: PresenterProvider.Factory = PresenterProvider.NewInstanceFactory()): PresenterProvider {
+fun <V : MvpView, P : Presenter<V>> PresenterActivity<V, P>.getPresenterProvider(factory: PresenterProvider.Factory? = null): PresenterProvider {
+    val factory = factory ?: PresenterProvider.NewInstanceFactory()
     return PresenterProvider(this, factory)
 }
 
-fun PresenterFragment.getPresenterProvider(factory: PresenterProvider.Factory = PresenterProvider.NewInstanceFactory()): PresenterProvider {
+fun PresenterFragment.getPresenterProvider(factory: PresenterProvider.Factory? = null): PresenterProvider {
+    val factory = factory ?: PresenterProvider.NewInstanceFactory()
     return PresenterProvider(this, factory)
 }
 

@@ -32,7 +32,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
 
-class AuthActivity : BasePresenterActivity<AuthView, AuthPresenter>(), AuthView {
+class AuthActivity : BaseActivity<AuthView, AuthPresenter>(), AuthView {
 
     override val presenterClazz: Class<AuthPresenter> = AuthPresenter::class.java
     override val presenterFactory: PresenterProvider.Factory = AuthPresenterFactory(applicationModule.loginUseCase)
